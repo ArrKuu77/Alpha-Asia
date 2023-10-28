@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.maxContent {
+  width: max-content;
+}
+.active {
+  background: rgb(104 117 245 / var(--tw-bg-opacity));
+  color: wheat;
+}
