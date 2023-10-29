@@ -19,25 +19,49 @@ const ReportForm = () => {
       id: 1,
       name: "GI-Boost",
       SName: "GI",
-      price: 19200,
+      price: 17700,
     },
     {
       id: 2,
       name: "Hepa-Boost",
       SName: "HP",
-      price: 25800,
+      price: 23800,
     },
     {
       id: 3,
       name: "4G-Boost",
       SName: "4G",
-      price: 72000,
+      price: 66000,
     },
     {
       id: 4,
       name: "PantoTop-40",
       SName: "PT",
       price: 22000,
+    },
+    {
+      id: 5,
+      name: "Multi-Gin",
+      SName: "MG",
+      price: 21000,
+    },
+    {
+      id: 6,
+      name: "Immune-5",
+      SName: "IMU",
+      price: 15200,
+    },
+    {
+      id: 7,
+      name: "Alpha-Lady",
+      SName: "ALD",
+      price: 23800,
+    },
+    {
+      id: 8,
+      name: "Liver-Boost",
+      SName: "LB",
+      price: 22500,
     },
   ]);
   const [Lists, setLists] = useState([]);
@@ -193,6 +217,22 @@ const ReportForm = () => {
           {
             quantity: 0,
             name: "PantoTop-40",
+          },
+          {
+            name: "Multi-Gin",
+            quantity: 0,
+          },
+          {
+            name: "Immune-5",
+            quantity: 0,
+          },
+          {
+            name: "Alpha-Lady",
+            quantity: 0,
+          },
+          {
+            name: "Liver-Boost",
+            quantity: 0,
           },
         ])
       );

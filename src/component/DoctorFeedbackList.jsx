@@ -54,7 +54,7 @@ const DoctorFeedbackList = ({
                 <th className="border border-slate-900 p-2">
                   Action plan form next call
                 </th>
-                <th className="border border-slate-900 p-2">Edit & Delete</th>
+                <th className="border border-slate-900 p-2">Update & Delete</th>
                 {/* <th className=" text-center">Edit</th> */}
               </tr>
             </thead>

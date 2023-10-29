@@ -9,12 +9,17 @@ const ClearDoctorLists = ({
 }) => {
   const DoctorNameDate = useRef();
   const AllClearDoctorListsDate = () => {
-    DoctorListsDate.map((lists) => {
-      localStorage.removeItem(`${lists}`);
-    });
-    localStorage.removeItem("DoctorListsDate");
-    setDoctorListsDate([]);
-    // setDoctorListsDate()
+    let text = "Do you want to clear Doctorlists!\n OK or Cancel.";
+    if (confirm(text) == true) {
+      DoctorListsDate.map((lists) => {
+        localStorage.removeItem(`${lists}`);
+      });
+      localStorage.removeItem("DoctorListsDate");
+      setDoctorListsDate([]);
+      // setDoctorListsDate()
+    } else {
+      return;
+    }
   };
   const ClearDoctorListsDate = () => {
     if (!DoctorNameDate.current.value) {
