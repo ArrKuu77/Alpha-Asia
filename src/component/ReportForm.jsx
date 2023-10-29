@@ -124,7 +124,7 @@ const ReportForm = () => {
     localStorage.setItem(DoctorNameDate, JSON.stringify([...DeleteDoctor]));
   };
   const [EditDoctor, setEditDoctor] = useState();
-  const EditDoctorList = (id, DoctorNameDate) => {
+  const EditDoctorList = (id) => {
     const currentDoctor = DoctorList.find((list) => list.id == id);
     setEditDoctor(currentDoctor);
     // setShortName(currentDoctor.ShortName.filter((name) => name));

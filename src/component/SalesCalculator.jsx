@@ -7,7 +7,7 @@ const SalesCalculator = ({ Lists }) => {
   const Todaysales = Lists.reduce((pv, cv) => pv + cv.amount, 0);
 
   const [TotalSales, setTotalSales] = useState(
-    TotalsalesLGet == null ? 0 : parseInt(TotalsalesLGet)
+    TotalsalesLGet == null ? 0 : parseInt(TotalsalesLGet.TotalSale)
   );
   console.log(TotalSales);
 

@@ -8,14 +8,15 @@ const SalesForm = () => {
       : JSON.parse(localStorage.getItem("QuantityList"))
   );
   const todaySale =
-    JSON.parse(localStorage.getItem("TotalSales")) == null
+    JSON.parse(localStorage.getItem("TotalSales")).Todaysales == null
       ? 0
-      : parseInt(JSON.parse(localStorage.getItem("TotalSales")));
+      : JSON.parse(localStorage.getItem("TotalSales")).Todaysales;
   console.log(QuantityList);
+  console.log(todaySale);
 
   const TotalsalesLGet = JSON.parse(localStorage.getItem("TotalSales"));
   const [TotalSales, setTotalSales] = useState(
-    TotalsalesLGet == null ? 0 : parseInt(TotalsalesLGet)
+    TotalsalesLGet == null ? 0 : parseInt(TotalsalesLGet.TotalSale)
   );
   const TotaltargetLGet = localStorage.getItem("Target");
   const [TotaltargetSales, setTotaltargetSales] = useState(

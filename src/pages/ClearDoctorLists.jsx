@@ -13,6 +13,8 @@ const ClearDoctorLists = ({
       localStorage.removeItem(`${lists}`);
     });
     localStorage.removeItem("DoctorListsDate");
+    setDoctorListsDate([]);
+    // setDoctorListsDate()
   };
   const ClearDoctorListsDate = () => {
     if (!DoctorNameDate.current.value) {

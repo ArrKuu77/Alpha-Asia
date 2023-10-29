@@ -9,9 +9,9 @@ const Navbar = () => {
         <a href="https://flowbite.com/" className="flex items-center">
           <img
             src="https://cdn.dribbble.com/users/5094913/screenshots/12342536/media/416dddc51a00a5b336239e565e2ccc37.jpg"
-            className="h-8 border border-white  rounded-full mr-3"
+            className=" h-12  border-2 border-white rounded-full mr-3"
           />
-          <span className="self-center text-lg font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center text-lg font-semibold whitespace-nowrap text-white">
             Alpha Asia Daily Report
           </span>
         </a>

@@ -23,16 +23,18 @@ const ReportDoctorForm = ({
 }) => {
   // console.log(Lists);
   const formRef = useRef();
-  const DoctorNameDate = useRef();
+  let DoctorNameDate = useRef("");
+  // console.log(DoctorNameDate.current.value);
+
   // let ShortName = [];
-  let [controlPageWidth, setcontrolPageWidth] = useState(false);
-  console.log(controlPageWidth);
+  // let [controlPageWidth, setcontrolPageWidth] = useState(false);
+  // console.log(controlPageWidth);
 
   const hundalarSubmit = (event) => {
     if (DoctorListsDate.length > 6) {
       alert("You DoctorList is Full!");
     } else {
-      setcontrolPageWidth(true);
+      // setcontrolPageWidth(true);
       event.preventDefault();
       if (DoctorListsDate.length == 0) {
         setDoctorListsDate([...DoctorListsDate, DoctorNameDate.current.value]);
@@ -83,7 +85,7 @@ const ReportDoctorForm = ({
     <Template>
       <div
         className={`relative  bg-slate-500 ${
-          !controlPageWidth ? "w-screen" : "w-full"
+          DoctorList.length == 0 ? "w-screen" : "w-full"
         }`}
       >
         <form ref={formRef} id="DoctorForm" onSubmit={hundalarSubmit}></form>
@@ -109,13 +111,13 @@ const ReportDoctorForm = ({
                   null
                 ) {
                   console.log(arrayDoctor);
-                  setcontrolPageWidth(true);
-                  console.log(controlPageWidth);
+                  // setcontrolPageWidth(true);
+                  // console.log(controlPageWidth);
                   setDoctor([...arrayDoctor]);
                   console.log(DoctorList);
                 } else {
-                  setcontrolPageWidth(false);
-                  console.log(controlPageWidth);
+                  // setcontrolPageWidth(false);
+                  // console.log(controlPageWidth);
                   setDoctor([]);
                 }
                 // }
@@ -180,7 +182,7 @@ const ReportDoctorForm = ({
                 <div
                   key={currentItem.id}
                   className={`flex items-center justify-between${
-                    !controlPageWidth ? "   w-1/2" : " w-1/6"
+                    DoctorList.length == 0 ? "   w-1/2" : " w-1/6"
                   }`}
                 >
                   <input

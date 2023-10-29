@@ -15,16 +15,16 @@ const EditDoctorForm = ({
   // const [check, setcheck] = useState();
 
   const [customer, setcustomer] = useState();
-  const [doctorName, setdoctorName] = useState();
+  // const [doctorName, setdoctorName] = useState();
   const [nextPlan, setnextPlan] = useState();
 
   const hundalarSubmit = () => {
-    console.log(customer, doctorName, nextPlan);
+    console.log(customer, nextPlan);
     setDoctor(
       DoctorList.map((list) => {
         if (list.id == EditDoctor.id) {
           console.log("hehe");
-          list.DoctorName = doctorName;
+          list.DoctorName = EditDoctor.DoctorName;
           list.CustomerFeedback = customer;
           list.NextPlan = nextPlan;
           list.ShortName = ShortName;
