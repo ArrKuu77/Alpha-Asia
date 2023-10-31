@@ -16,7 +16,7 @@ const ProductForm = ({
 }) => {
   console.log(Product);
   const formRef = useRef();
-  let [currentPrice, setCurrentPrice] = useState(19200);
+  let [currentPrice, setCurrentPrice] = useState(17700);
   // console.log(currentPrice);
   const hundalarSubmit = (event) => {
     event.preventDefault();

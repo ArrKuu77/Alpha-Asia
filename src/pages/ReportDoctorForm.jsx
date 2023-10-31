@@ -38,6 +38,10 @@ const ReportDoctorForm = ({
       // setcontrolPageWidth(true);
       event.preventDefault();
       if (DoctorListsDate.length == 0) {
+        if (!DoctorNameDate.current.value) {
+          alert("Please select a day!");
+          return;
+        }
         setDoctorListsDate([...DoctorListsDate, DoctorNameDate.current.value]);
         localStorage.setItem(
           "DoctorListsDate",
@@ -45,6 +49,10 @@ const ReportDoctorForm = ({
         );
         console.log([...DoctorListsDate, DoctorNameDate.current.value]);
       } else {
+        if (!DoctorNameDate.current.value) {
+          alert("Please select a day!");
+          return;
+        }
         const CurrentDcotorListsDate = DoctorListsDate.find(
           (list) => list == DoctorNameDate.current.value
         );

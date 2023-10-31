@@ -21,14 +21,15 @@ const ReadyDoctorList = ({
     const input = pdfRef.current;
     html2canvas(input).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("landscape", "mm", "a4", true);
+      const pdf = new jsPDF("landscape", "px", "a4", true, true);
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imageWidth = canvas.width;
       const imageHeight = canvas.height;
       const ratio = Math.min(pdfWidth / imageWidth, pdfHeight / imageHeight);
       const imgX = (pdfWidth - imageWidth * ratio) / 2;
-      const imgY = 30;
+      const imgY = 0;
+      console.log(imageWidth, imageHeight);
       pdf.addImage(
         imgData,
         "PNG",
@@ -45,9 +46,9 @@ const ReadyDoctorList = ({
     <>
       {DoctorList.length > 0 ? (
         <Template>
-          <div className="  maxContent bg-slate-500 pt-2 p-2 ">
-            <div className=" px-4" ref={pdfRef}>
-              <div className="flex justify-between items-center">
+          <div className="  maxContent bg-slate-500 pt-2 p-1 ">
+            <div className=" p-3 widthFull" ref={pdfRef}>
+              <div className="flex justify-between items-center ">
                 <div className=" flex items-center">
                   <label htmlFor="" className=" font-medium text-xl block  ">
                     MR Name -
@@ -100,7 +101,7 @@ const ReadyDoctorList = ({
                   {DoctorList.map((list, index) => {
                     return (
                       <tr key={index} className="border border-slate-900">
-                        <td className="border p-3 border-slate-900 flex justify-between align-items-center">
+                        <td className="border p-3 border-slate-900 text-center">
                           {" "}
                           {index + 1}.{" "}
                         </td>

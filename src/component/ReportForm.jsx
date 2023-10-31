@@ -151,7 +151,7 @@ const ReportForm = () => {
   const EditDoctorList = (id) => {
     const currentDoctor = DoctorList.find((list) => list.id == id);
     setEditDoctor(currentDoctor);
-    // setShortName(currentDoctor.ShortName.filter((name) => name));
+    setShortName(currentDoctor.ShortName.filter((name) => name));
     console.log(EditDoctor);
   };
   const [QuantityList, setQuantityList] = useState(

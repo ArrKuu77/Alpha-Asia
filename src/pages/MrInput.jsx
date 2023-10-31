@@ -13,6 +13,12 @@ const MrInput = ({ setTownship }) => {
     <Template>
       <div className="bg-slate-500 text-center w-screen h-screen pb-2">
         <form className=" mb-4 pt-4">
+          <div className=" mb-2">
+            <span className="self-center underline text-2xl  font-semibold whitespace-nowrap text-black">
+              Alpha Asia Daily Report Form
+            </span>
+          </div>
+
           <label className="block">
             <span className="block text-xl font-medium text-black	">Target</span>
             <input

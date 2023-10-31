@@ -107,10 +107,25 @@ TownShip
 TownShip
 </p> */}
         </label>
-
+        <div className=" flex  justify-center items-center m-2">
+          <h1 className=" font-medium text-xl inline-block  ">Call Purpose</h1>
+          {ShortName.map((name, index) => {
+            return (
+              <label
+                key={index}
+                // htmlFor="teal-checkbox"
+                className=" text-lg font-medium  dark:text-gray-300"
+              >
+                {"-  " + name + ","}
+              </label>
+            );
+          })}
+        </div>
         <div className=" flex flex-col justify-center items-center m-2">
           {Product.map((currentItem) => {
-            return (
+            return ShortName.includes(currentItem.SName) ? (
+              ""
+            ) : (
               <div
                 key={currentItem.id}
                 className=" flex items-center justify-between w-1/6 "

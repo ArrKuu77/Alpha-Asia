@@ -6,7 +6,10 @@ const Navbar = () => {
   return (
     <nav className="bg-slate-900 border-gray-200 dark:bg-gray-900 ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 relative">
-        <a href="https://flowbite.com/" className="flex items-center">
+        <a
+          href="https://www.facebook.com/profile.php?id=100092398663187"
+          className="flex items-center"
+        >
           <img
             src="https://cdn.dribbble.com/users/5094913/screenshots/12342536/media/416dddc51a00a5b336239e565e2ccc37.jpg"
             className=" h-12  border-2 border-white rounded-full mr-3"

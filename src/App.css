@@ -5,6 +5,9 @@
 .maxContent {
   width: max-content;
 }
+.widthFull {
+  width: 1400px;
+}
 .active {
   background: rgb(104 117 245 / var(--tw-bg-opacity));
   color: wheat;
