@@ -77,6 +77,7 @@ const ReportDoctorForm = ({
           formData.get("DoctorName"),
           formData.get("CustomerFeedback"),
           formData.get("NextPlan"),
+          formData.get("CallPurpose"),
           ShortName,
           DoctorNameDate.current.value
         );
@@ -146,6 +147,19 @@ const ReportDoctorForm = ({
             <input
               required
               name="DoctorName"
+              form="DoctorForm"
+              type="text"
+              className=" border-solid border-2  border-red-800	text-black	"
+              placeholder="Doctor Name"
+            />
+          </div>
+          <div className="col col-md-3">
+            <label htmlFor="" className=" text-2xl block  ">
+              Call Purpose
+            </label>
+            <input
+              required
+              name="CallPurpose"
               form="DoctorForm"
               type="text"
               className=" border-solid border-2  border-red-800	text-black	"

@@ -67,7 +67,7 @@ const SalesForm = () => {
                     <span className="  text-xl font-medium text-black	">
                       Total {list.name} -{" "}
                     </span>
-                    <p className="  text-lg  border-b-2 border-black  ps-2  mb-2">
+                    <p className="  text-lg    border-black  ps-2  mb-2">
                       {list.quantity}
                     </p>
                   </label>

@@ -47,9 +47,7 @@ const DoctorFeedbackList = ({
                       {list.DoctorName}{" "}
                     </td>
                     <td className="border p-3 border-slate-900">
-                      {list.ShortName.length <= 0
-                        ? "-"
-                        : list.ShortName.map((name) => name + ",")}
+                      {list.CallPurpose}
                     </td>
                     <td className="border p-3 border-slate-900">
                       {list.ShortName.length <= 0

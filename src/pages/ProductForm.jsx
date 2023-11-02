@@ -23,7 +23,7 @@ const ProductForm = ({
     const formData = new FormData(formRef.current);
     addList(formData.get("item-id"), parseInt(formData.get("quantity")));
     formRef.current.reset();
-    setCurrentPrice(19200);
+    setCurrentPrice(17700);
   };
   const OnchangePrice = () => {
     const formData = new FormData(formRef.current);

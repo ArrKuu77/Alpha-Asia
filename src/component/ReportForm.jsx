@@ -71,6 +71,7 @@ const ReportForm = () => {
     DoctorName,
     CustomerFeedback,
     NextPlan,
+    CallPurpose,
     currentShortName,
     DoctorNameDate
   ) => {
@@ -82,6 +83,7 @@ const ReportForm = () => {
       DoctorName,
       CustomerFeedback,
       NextPlan,
+      CallPurpose,
       ShortName: currentShortName,
       id: Date.now(),
     };

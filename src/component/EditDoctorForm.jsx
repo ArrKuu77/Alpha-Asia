@@ -25,6 +25,7 @@ const EditDoctorForm = ({
         if (list.id == EditDoctor.id) {
           console.log("hehe");
           list.DoctorName = EditDoctor.DoctorName;
+          list.CallPurpose = EditDoctor.CallPurpose;
           list.CustomerFeedback = customer;
           list.NextPlan = nextPlan;
           list.ShortName = ShortName;
@@ -67,7 +68,14 @@ const EditDoctorForm = ({
             {EditDoctor.DoctorName}
           </span>
         </div>
-
+        <div className="col col-md-3 mb-3 ">
+          <label htmlFor="" className=" font-medium text-2xl block  ">
+            Call Purpose
+          </label>
+          <span className="block text-2xl  text-black 	">
+            {EditDoctor.CallPurpose}
+          </span>
+        </div>
         <label className="block">
           <span className="block text-xl font-medium text-black	">
             Customer Feedback

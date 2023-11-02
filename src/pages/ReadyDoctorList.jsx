@@ -16,6 +16,17 @@ const ReadyDoctorList = ({
 }) => {
   console.log(DoctorList);
   const pdfRef = useRef();
+  // const downloadPDFpage = (D, w) => {
+  //   console.log(D, w, CurrentDate);
+  //   const input = pdfRef.current;
+  //   html2canvas(input).then((canvas) => {
+  //     var imgData = canvas.toDataURL("image/png");
+  //     const doc = new jsPDF("landscape", "px", "a4", true, true);
+  //     var imgHeight = (canvas.height * 208) / canvas.width;
+  //     doc.addImage(imgData, 0, 0, 208, imgHeight);
+  //     doc.save("result.pdf");
+  //   });
+  // };
   const downloadPDF = (D, w) => {
     console.log(D, w, CurrentDate);
     const input = pdfRef.current;
@@ -110,9 +121,7 @@ const ReadyDoctorList = ({
                           {list.DoctorName}{" "}
                         </td>
                         <td className="border p-3 border-slate-900">
-                          {list.ShortName.length <= 0
-                            ? "-"
-                            : list.ShortName.map((name) => name + ",")}
+                          {list.CallPurpose}
                         </td>
                         <td className="border p-3 border-slate-900">
                           {list.ShortName.length <= 0
