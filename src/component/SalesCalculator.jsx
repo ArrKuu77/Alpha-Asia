@@ -30,11 +30,14 @@ const SalesCalculator = ({ Lists }) => {
   console.log(TotalSales);
   const changeTotalSales = useRef();
   const ChangeTotalSalesFunction = () => {
-    console.log(changeTotalSales.current.value);
-    localStorage.setItem("TotalSales", changeTotalSales.current.value);
-    const TotalAmount = localStorage.getItem("TotalSales");
-    console.log(TotalAmount);
-    setTotalSales(parseInt(TotalAmount));
+    if (changeTotalSales.current.value == "") {
+      alert("Please fail total amount!");
+    } else {
+      localStorage.setItem("TotalSales", changeTotalSales.current.value);
+      const TotalAmount = localStorage.getItem("TotalSales");
+      console.log(TotalAmount);
+      setTotalSales(parseInt(TotalAmount));
+    }
   };
   return (
     <div className=" mt-2">
