@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const SalesCalculator = ({ Lists }) => {
+const SalesCalculator = ({ Lists, TotalSales, setTotalSales }) => {
   // console.log(JSON.parse(localStorage.getItem("TotalSales")));
   const TotalsalesLGet = JSON.parse(localStorage.getItem("TotalSales"));
   console.log(TotalsalesLGet);
   const Todaysales = Lists.reduce((pv, cv) => pv + cv.amount, 0);
 
-  const [TotalSales, setTotalSales] = useState(
-    TotalsalesLGet == null ? 0 : parseInt(TotalsalesLGet.TotalSale)
-  );
+  // const [TotalSales, setTotalSales] = useState(
+  //   TotalsalesLGet == null ? 0 : parseInt(TotalsalesLGet.TotalSale)
+  // );
   console.log(TotalSales);
 
   // useEffect()
@@ -33,8 +33,16 @@ const SalesCalculator = ({ Lists }) => {
     if (changeTotalSales.current.value == "") {
       alert("Please fail total amount!");
     } else {
-      localStorage.setItem("TotalSales", changeTotalSales.current.value);
-      const TotalAmount = localStorage.getItem("TotalSales");
+      localStorage.setItem(
+        "TotalSales",
+        JSON.stringify({
+          TotalSale: changeTotalSales.current.value,
+          Todaysales,
+        })
+      );
+      const TotalAmount = JSON.parse(
+        localStorage.getItem("TotalSales")
+      ).TotalSale;
       console.log(TotalAmount);
       setTotalSales(parseInt(TotalAmount));
     }

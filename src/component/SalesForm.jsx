@@ -8,7 +8,7 @@ const SalesForm = () => {
       : JSON.parse(localStorage.getItem("QuantityList"))
   );
   const todaySale =
-    JSON.parse(localStorage.getItem("TotalSales")).Todaysales == null
+    JSON.parse(localStorage.getItem("TotalSales")) == null
       ? 0
       : JSON.parse(localStorage.getItem("TotalSales")).Todaysales;
   console.log(QuantityList);

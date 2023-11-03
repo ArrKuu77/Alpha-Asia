@@ -5,6 +5,8 @@ import AddProductCalculator from "./AddProductCalculator";
 
 const ProductList = ({
   // noProductSpan,
+  TotalSales,
+  setTotalSales,
   QuantityList,
   AddQuantityFuction,
   Lists,
@@ -72,7 +74,11 @@ const ProductList = ({
               </tr>
             </tfoot>
           </table>
-          <SalesCalculator Lists={Lists} />
+          <SalesCalculator
+            Lists={Lists}
+            TotalSales={TotalSales}
+            setTotalSales={setTotalSales}
+          />
           <AddProductCalculator
             Lists={Lists}
             // noProductSpan={noProductSpan}
