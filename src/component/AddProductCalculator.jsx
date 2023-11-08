@@ -17,7 +17,7 @@ const AddProductCalculator = ({
           AddQuantityFuction(setnoProductSpan);
           // setnoProductSpan(true);
           setnextButton(true);
-          console.log(nextButton);
+          // console.log(nextButton);
         }}
         className="  bg-orange-600  text-xl font-medium text-black p-2 rounded  mt-2 mb-2	"
       >
@@ -27,7 +27,7 @@ const AddProductCalculator = ({
         Product Quantity
       </h1>
       {QuantityList.map((list, index) => {
-        console.log(list.quantity);
+        // console.log(list.quantity);
         return (
           list.quantity > 0 && (
             <label

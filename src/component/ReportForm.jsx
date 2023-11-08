@@ -63,6 +63,12 @@ const ReportForm = () => {
       SName: "LB",
       price: 22500,
     },
+    {
+      id: 9,
+      name: "Pregnan Boost",
+      SName: "PGB",
+      price: 28300,
+    },
   ]);
   const [Lists, setLists] = useState([]);
   const [DoctorList, setDoctor] = useState([]);
@@ -163,24 +169,51 @@ const ReportForm = () => {
     //   : JSON.parse(localStorage.getItem("QuantityList"))
   );
   const [changeName, setchangeName] = useState(true);
-  console.log(QuantityList);
+  // console.log(QuantityList);
 
   const AddQuantityFuction = (setnoProductSpan) => {
     // console.log(setnoProductSpan);
     setchangeName(false);
     const QuantityListLS =
       JSON.parse(localStorage.getItem("QuantityList")) == null ? false : true;
-    console.log(QuantityListLS);
+    // console.log(QuantityListLS);
     if (QuantityListLS) {
-      console.log(QuantityList);
+      // console.log(QuantityList);
       setQuantityList(JSON.parse(localStorage.getItem("QuantityList")));
       for (let x = 0; x < QuantityList.length; x++) {
         const currentList = Lists.find(
           (list) => list.item.name == QuantityList[x].name
         );
 
-        console.log(typeof currentList, currentList);
+        const currentListAdd = Lists.find(
+          (list) => list.item.id > QuantityList.length
+        );
+        // console.log(currentListAdd, QuantityList);
+
+        if (currentListAdd) {
+          setQuantityList([
+            ...QuantityList,
+            {
+              name: currentListAdd.item.name,
+              quantity: currentListAdd.quantity,
+            },
+          ]);
+          // console.log(QuantityList);
+          localStorage.setItem(
+            "QuantityList",
+            JSON.stringify([
+              ...QuantityList,
+              {
+                name: currentListAdd.item.name,
+                quantity: currentListAdd.quantity,
+              },
+            ])
+          );
+          setnoProductSpan(false);
+        }
         if (currentList) {
+          // console.log(typeof currentList, currentList);
+
           setQuantityList(
             QuantityList.map((list) => {
               if (list.name == currentList.item.name) {
@@ -196,8 +229,8 @@ const ReportForm = () => {
             // )
           );
           setnoProductSpan(false);
+          localStorage.setItem("QuantityList", JSON.stringify(QuantityList));
         }
-        localStorage.setItem("QuantityList", JSON.stringify(QuantityList));
       }
     } else {
       localStorage.setItem(
@@ -236,13 +269,17 @@ const ReportForm = () => {
             name: "Liver-Boost",
             quantity: 0,
           },
+          {
+            name: "Pregnan Boost",
+            quantity: 0,
+          },
         ])
       );
       setnoProductSpan(true);
       // console.log(noProductSpan);
       setQuantityList(JSON.parse(localStorage.getItem("QuantityList")));
     }
-    console.log(QuantityList.length);
+    // console.log(QuantityList.length);
     // if (QuantityList.length == 0) {
     //   // console.log("kfdgdjfd");
     //   let newList = [];
@@ -258,7 +295,7 @@ const ReportForm = () => {
     // }
   };
   const [ShortName, setShortName] = useState([]);
-  console.log(ShortName);
+  // console.log(ShortName);
 
   // const AddShortNameFunction = (event) => {
   //   const Shorttrue = ShortName.includes(event);
@@ -276,15 +313,15 @@ const ReportForm = () => {
   // };
 
   const [CurrentDate, setCurrentDate] = useState();
-  console.log(CurrentDate);
+  // console.log(CurrentDate);
   const [DoctorListsDate, setDoctorListsDate] = useState(
     localStorage.getItem("DoctorListsDate") == null
       ? []
       : JSON.parse(localStorage.getItem("DoctorListsDate"))
   );
-  console.log(DoctorListsDate);
+  // console.log(DoctorListsDate);
   const [Township, setTownship] = useState();
-  console.log(Township);
+  // console.log(Township);
   return (
     <div className=" bg-slate-500      ">
       <div className="  text-center">

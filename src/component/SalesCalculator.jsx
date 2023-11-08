@@ -3,17 +3,17 @@ import React, { useEffect, useRef, useState } from "react";
 const SalesCalculator = ({ Lists, TotalSales, setTotalSales }) => {
   // console.log(JSON.parse(localStorage.getItem("TotalSales")));
   const TotalsalesLGet = JSON.parse(localStorage.getItem("TotalSales"));
-  console.log(TotalsalesLGet);
+  // console.log(TotalsalesLGet);
   const Todaysales = Lists.reduce((pv, cv) => pv + cv.amount, 0);
 
   // const [TotalSales, setTotalSales] = useState(
   //   TotalsalesLGet == null ? 0 : parseInt(TotalsalesLGet.TotalSale)
   // );
-  console.log(TotalSales);
+  // console.log(TotalSales);
 
   // useEffect()
   const AddTotalSales = () => {
-    console.log(TotalSales);
+    // console.log(TotalSales);
     localStorage.setItem(
       "TotalSales",
       JSON.stringify({
@@ -24,10 +24,10 @@ const SalesCalculator = ({ Lists, TotalSales, setTotalSales }) => {
     const TotalAmount = JSON.parse(
       localStorage.getItem("TotalSales")
     ).TotalSale;
-    console.log(TotalAmount);
+    // console.log(TotalAmount);
     setTotalSales(parseInt(TotalAmount));
   };
-  console.log(TotalSales);
+  // console.log(TotalSales);
   const changeTotalSales = useRef();
   const ChangeTotalSalesFunction = () => {
     if (changeTotalSales.current.value == "") {
@@ -43,7 +43,7 @@ const SalesCalculator = ({ Lists, TotalSales, setTotalSales }) => {
       const TotalAmount = JSON.parse(
         localStorage.getItem("TotalSales")
       ).TotalSale;
-      console.log(TotalAmount);
+      // console.log(TotalAmount);
       setTotalSales(parseInt(TotalAmount));
     }
   };
