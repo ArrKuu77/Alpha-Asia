@@ -32,7 +32,7 @@ const ReportDoctorForm = ({
 
   console.log(DoctorListsDate.length);
   const hundalarSubmit = (event) => {
-    if (DoctorListsDate.length > 5) {
+    if (DoctorListsDate.length > 6) {
       alert("You DoctorList is Full!");
     } else {
       // setcontrolPageWidth(true);

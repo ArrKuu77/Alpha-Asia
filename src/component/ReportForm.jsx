@@ -11,6 +11,7 @@ import MrInput from "../pages/MrInput";
 import EditDoctorForm from "./EditDoctorForm";
 import ReadyDoctorList from "../pages/ReadyDoctorList";
 import ClearDoctorLists from "../pages/ClearDoctorLists";
+import NotFound from "../pages/NotFound";
 // import { list } from "postcss";
 
 const ReportForm = () => {
@@ -368,6 +369,7 @@ const ReportForm = () => {
               />
             }
           />
+          <Route path="*" element={<NotFound />} />
           <Route
             path="/ClearDoctorLists"
             element={
