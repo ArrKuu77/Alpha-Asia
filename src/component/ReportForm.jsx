@@ -102,6 +102,7 @@ const ReportForm = () => {
       DoctorNameDate,
       JSON.stringify([...DoctorList, NewDoctorlist])
     );
+    setShortName([...ShortName]);
     // }
   };
   // console.log(DoctorList);
@@ -141,7 +142,7 @@ const ReportForm = () => {
   const DeleteItem = (id) => {
     setLists(
       Lists.filter((list) => {
-        console.log(list.id, id);
+        // console.log(list.id, id);
         return list.id !== id;
       })
     );

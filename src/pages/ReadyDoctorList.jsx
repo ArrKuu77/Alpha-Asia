@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import SalesForm from "../component/SalesForm";
 import { TiDelete } from "react-icons/ti";
 import { LiaUserEditSolid } from "react-icons/lia";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import Template from "../component/Template";
+import html2pdf from "html2pdf.js/dist/html2pdf.bundle";
 
 const ReadyDoctorList = ({
   DoctorList,
@@ -27,31 +28,48 @@ const ReadyDoctorList = ({
   //     doc.save("result.pdf");
   //   });
   // };
+
   const downloadPDF = (D, w) => {
     console.log(D, w, CurrentDate);
-    const input = pdfRef.current;
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("landscape", "px", "a4", true, true);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imageWidth = canvas.width;
-      const imageHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imageWidth, pdfHeight / imageHeight);
-      const imgX = (pdfWidth - imageWidth * ratio) / 2;
-      const imgY = 0;
-      console.log(imageWidth, imageHeight);
-      pdf.addImage(
-        imgData,
-        "PNG",
-        imgX,
-        imgY,
-        imageWidth * ratio,
-        imageHeight * ratio
-      );
-      D !== null && pdf.save(`${CurrentDate + " " + D}`);
-      w !== null && pdf.save(`${CurrentDate + " " + w}`);
-    });
+    console.log(pdfRef.current.offsetWidth);
+
+    var opt = {
+      margin: 0.5,
+      filename: `${D ? CurrentDate + D : CurrentDate + w}`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: {
+        width: window.innerWidth,
+        scale: 2,
+      },
+      jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+    };
+    console.log(opt, pdfRef.current);
+    html2pdf().set(opt).from(pdfRef.current).save();
+    // const input = pdfRef.current;
+    // html2canvas(input).then((canvas) => {
+    //   const imgData = canvas.toDataURL("image/png");
+    // const pdf = new jsPDF("landscape", "px", "a4", true, true);
+    // const pdfWidth = pdf.internal.pageSize.getWidth();
+    //   const pdfHeight = pdf.internal.pageSize.getHeight();
+    //   const imageWidth = canvas.width;
+    //   const imageHeight = canvas.height;
+    //   const ratio = Math.min(pdfWidth / imageWidth, pdfHeight / imageHeight);
+    //   const imgX = (pdfWidth - imageWidth * ratio) / 2;
+    //   const imgY = 0;
+    //   console.log(imageWidth, imageHeight);
+    //   pdf.addImage(
+    //     imgData,
+    //     "PNG",
+    //     imgX,
+    //     imgY,
+    //     imageWidth * ratio,
+    //     imageHeight * ratio
+    //   );
+    //   console.log(saveDone);
+    //   D !== null && pdf.save(`${CurrentDate + " " + D}`);
+    //   w !== null && pdf.save(`${CurrentDate + " " + w}`);
+    //   console.log(saveDone);
+    // });
   };
   return (
     <>
@@ -145,13 +163,13 @@ const ReadyDoctorList = ({
             <div className=" ">
               <button
                 className="bg-indigo-500 p-2 rounded-md border-gray-900 border-2 mx-auto mt-2 text-start block"
-                onClick={downloadPDF.bind(null, "DailyReport", null)}
+                onClick={downloadPDF.bind(null, "  DailyReport", null)}
               >
                 Download PDF For Daily
               </button>
               <button
                 className="bg-indigo-500 p-2 rounded-md border-gray-900 border-2 mx-auto mt-2 text-start block"
-                onClick={downloadPDF.bind(null, null, "WeeklyReport")}
+                onClick={downloadPDF.bind(null, null, "  WeeklyReport")}
               >
                 Download PDF For Weekly
               </button>
