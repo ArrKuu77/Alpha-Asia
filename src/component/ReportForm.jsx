@@ -97,12 +97,12 @@ const ReportForm = () => {
     console.log(Lists);
 
     setDoctor([...DoctorList, NewDoctorlist]);
-    setShortName(currentShortName);
+    setShortName([]);
     localStorage.setItem(
       DoctorNameDate,
       JSON.stringify([...DoctorList, NewDoctorlist])
     );
-    setShortName([...ShortName]);
+    // setShortName([...ShortName]);
     // }
   };
   // console.log(DoctorList);

@@ -72,7 +72,6 @@ const ReportDoctorForm = ({
       if (DoctorNameDate.current.value) {
         const formData = new FormData(formRef.current);
         console.log(ShortName);
-        console.log();
         createTable(
           formData.get("DoctorName"),
           formData.get("CustomerFeedback"),
@@ -209,7 +208,7 @@ const ReportDoctorForm = ({
                   }`}
                 >
                   <input
-                    // form="DoctorForm"
+                    form="DoctorForm"
                     name="checkBox"
                     onClick={(event) => {
                       const Shorttrue = ShortName.includes(event.target.value);
