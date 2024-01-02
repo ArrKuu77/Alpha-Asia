@@ -16,7 +16,7 @@ const ProductForm = ({
   DeleteItem,
   ItemListShowFunction,
 }) => {
-  console.log(Product);
+  // console.log(Product);
   const formRef = useRef();
   let [currentPrice, setCurrentPrice] = useState(17700);
   // console.log(currentPrice);

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import Swal from "sweetalert2";
 
 const SalesCalculator = ({ Lists, TotalSales, setTotalSales }) => {
   // console.log(JSON.parse(localStorage.getItem("TotalSales")));
@@ -14,18 +15,37 @@ const SalesCalculator = ({ Lists, TotalSales, setTotalSales }) => {
   // useEffect()
   const AddTotalSales = () => {
     // console.log(TotalSales);
-    localStorage.setItem(
-      "TotalSales",
-      JSON.stringify({
-        TotalSale: TotalSales + Todaysales,
-        Todaysales,
-      })
-    );
-    const TotalAmount = JSON.parse(
-      localStorage.getItem("TotalSales")
-    ).TotalSale;
-    // console.log(TotalAmount);
-    setTotalSales(parseInt(TotalAmount));
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#228b22",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Add TotalSale!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.setItem(
+          "TotalSales",
+          JSON.stringify({
+            TotalSale: TotalSales + Todaysales,
+            Todaysales,
+          })
+        );
+        const TotalAmount = JSON.parse(
+          localStorage.getItem("TotalSales")
+        ).TotalSale;
+        // console.log(TotalAmount);
+        setTotalSales(parseInt(TotalAmount));
+
+        Swal.fire({
+          title: "Add TotalSale",
+          text: "Total Sale has been added.",
+          icon: "success",
+        });
+      }
+    });
   };
   // console.log(TotalSales);
   const changeTotalSales = useRef();

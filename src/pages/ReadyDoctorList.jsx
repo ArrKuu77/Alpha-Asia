@@ -6,6 +6,8 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import Template from "../component/Template";
 import html2pdf from "html2pdf.js/dist/html2pdf.bundle";
+import Swal from "sweetalert2";
+import { MdSimCardDownload } from "react-icons/md";
 
 const ReadyDoctorList = ({
   DoctorList,
@@ -29,22 +31,119 @@ const ReadyDoctorList = ({
   //   });
   // };
 
+  const [DoctorCallList, setDoctorCallList] = useState(
+    localStorage.getItem("DoctorCallList") == null
+      ? []
+      : JSON.parse(localStorage.getItem("DoctorCallList"))
+  );
+  const [doctorArray, setdoctorArray] = useState(
+    DoctorCallList.map((doctor) => doctor.DoctorName.toLowerCase())
+  );
+  console.log(DoctorCallList);
+  console.log(doctorArray);
   const downloadPDF = (D, w) => {
-    console.log(D, w, CurrentDate);
-    console.log(pdfRef.current.offsetWidth);
-
-    var opt = {
-      margin: 0.5,
-      filename: `${D ? CurrentDate + D : CurrentDate + w}`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: {
-        width: window.innerWidth,
-        scale: 2,
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
       },
-      jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
-    };
-    console.log(opt, pdfRef.current);
-    html2pdf().set(opt).from(pdfRef.current).save();
+      buttonsStyling: true,
+    });
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure Download PDF File?",
+        text: "You won't be able to revert this!",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Download it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          if (D) {
+            const newDoctor = DoctorList.map((doctor) => {
+              return {
+                DoctorName: doctor.DoctorName,
+                DoctorFrequency: 1,
+                DoctorState: "Empty",
+              };
+            });
+            DoctorCallList.map((doctorCall) => {
+              newDoctor.map((newdoctor) => {
+                if (
+                  doctorCall.DoctorName.toLowerCase() ==
+                  newdoctor.DoctorName.toLowerCase()
+                ) {
+                  doctorCall.DoctorFrequency += 1;
+                }
+                return doctorCall;
+              });
+            });
+
+            localStorage.setItem(
+              "DoctorCallList",
+              JSON.stringify([...DoctorCallList])
+            );
+
+            const trueDoctor = newDoctor.filter((ndoctor) => {
+              console.log(doctorArray.includes(ndoctor.DoctorName));
+              if (doctorArray.includes(ndoctor.DoctorName.toLowerCase())) {
+                console.log(ndoctor);
+              } else {
+                console.log(ndoctor);
+
+                return ndoctor;
+              }
+            });
+            console.log(trueDoctor);
+            setDoctorCallList([...DoctorCallList, ...trueDoctor]);
+            setdoctorArray([
+              ...doctorArray,
+              ...trueDoctor.map((d) => d.DoctorName.toLowerCase()),
+            ]);
+            localStorage.setItem(
+              "DoctorCallList",
+              JSON.stringify([...trueDoctor, ...DoctorCallList])
+            );
+          }
+
+          console.log(D, w, CurrentDate);
+          console.log(pdfRef.current.offsetWidth, pdfRef.current.offsetHeight);
+          // console.log(window.innerWidth + 300);
+
+          var opt = {
+            margin: 0.5,
+            filename: `${D ? CurrentDate + D : CurrentDate + w}`,
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: {
+              // windowWidth:2000,
+
+              width: pdfRef.current.offsetWidth,
+              scale: 1.5,
+            },
+            jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+          };
+          console.log(opt, pdfRef.current);
+          html2pdf().set(opt).from(pdfRef.current).save();
+
+          swalWithBootstrapButtons.fire({
+            title: "Download!",
+            text: "Your file has been Download.",
+            icon: "success",
+          });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancle",
+            text: "The file was not downloaded ",
+            icon: "error",
+          });
+        }
+      });
+
     // const input = pdfRef.current;
     // html2canvas(input).then((canvas) => {
     //   const imgData = canvas.toDataURL("image/png");
@@ -76,7 +175,7 @@ const ReadyDoctorList = ({
       {DoctorList.length > 0 ? (
         <Template>
           <div className="  maxContent bg-slate-500 pt-2 p-1 ">
-            <div className=" p-3 widthFull" ref={pdfRef}>
+            <div className=" p-3 w-full  maxContent" ref={pdfRef}>
               <div className="flex justify-between items-center ">
                 <div className=" flex items-center">
                   <label htmlFor="" className=" font-medium text-xl block  ">

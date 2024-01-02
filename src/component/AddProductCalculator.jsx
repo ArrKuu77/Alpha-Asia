@@ -26,7 +26,7 @@ const AddProductCalculator = ({
       <h1 className=" font-bold text-2xl  underline p-2  mb-2  ">
         Product Quantity
       </h1>
-      {QuantityList.map((list, index) => {
+      {QuantityList?.map((list, index) => {
         // console.log(list.quantity);
         return (
           list.quantity > 0 && (

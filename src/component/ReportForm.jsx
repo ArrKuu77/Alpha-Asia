@@ -12,6 +12,8 @@ import EditDoctorForm from "./EditDoctorForm";
 import ReadyDoctorList from "../pages/ReadyDoctorList";
 import ClearDoctorLists from "../pages/ClearDoctorLists";
 import NotFound from "../pages/NotFound";
+import DoctorCallList from "../pages/DoctorCallList";
+import Swal from "sweetalert2";
 // import { list } from "postcss";
 
 const ReportForm = () => {
@@ -26,13 +28,13 @@ const ReportForm = () => {
       id: 2,
       name: "Hepa-Boost",
       SName: "HP",
-      price: 23800,
+      price: 25800,
     },
     {
       id: 3,
       name: "4G-Boost",
       SName: "4G",
-      price: 66000,
+      price: 72000,
     },
     {
       id: 4,
@@ -50,7 +52,7 @@ const ReportForm = () => {
       id: 6,
       name: "Immune-5",
       SName: "IMU",
-      price: 15200,
+      price: 17200,
     },
     {
       id: 7,
@@ -73,7 +75,6 @@ const ReportForm = () => {
   ]);
   const [Lists, setLists] = useState([]);
   const [DoctorList, setDoctor] = useState([]);
-
   const createTable = (
     DoctorName,
     CustomerFeedback,
@@ -172,69 +173,18 @@ const ReportForm = () => {
   );
   const [changeName, setchangeName] = useState(true);
   // console.log(QuantityList);
+  // console.log(changeName);
 
   const AddQuantityFuction = (setnoProductSpan) => {
-    // console.log(setnoProductSpan);
     setchangeName(false);
+    setQuantityList(JSON.parse(localStorage.getItem("QuantityList")));
+
     const QuantityListLS =
       JSON.parse(localStorage.getItem("QuantityList")) == null ? false : true;
-    // console.log(QuantityListLS);
-    if (QuantityListLS) {
-      // console.log(QuantityList);
-      setQuantityList(JSON.parse(localStorage.getItem("QuantityList")));
-      for (let x = 0; x < QuantityList.length; x++) {
-        const currentList = Lists.find(
-          (list) => list.item.name == QuantityList[x].name
-        );
 
-        const currentListAdd = Lists.find(
-          (list) => list.item.id > QuantityList.length
-        );
-        // console.log(currentListAdd, QuantityList);
+    if (!QuantityListLS) {
+      setnoProductSpan(true);
 
-        if (currentListAdd) {
-          setQuantityList([
-            ...QuantityList,
-            {
-              name: currentListAdd.item.name,
-              quantity: currentListAdd.quantity,
-            },
-          ]);
-          // console.log(QuantityList);
-          localStorage.setItem(
-            "QuantityList",
-            JSON.stringify([
-              ...QuantityList,
-              {
-                name: currentListAdd.item.name,
-                quantity: currentListAdd.quantity,
-              },
-            ])
-          );
-          setnoProductSpan(false);
-        }
-        if (currentList) {
-          // console.log(typeof currentList, currentList);
-
-          setQuantityList(
-            QuantityList.map((list) => {
-              if (list.name == currentList.item.name) {
-                list.quantity += currentList.quantity;
-              }
-              return list;
-            })
-            // localStorage.setItem(
-            //   "QuantityList",
-            //   JSON.stringify(
-
-            //   )
-            // )
-          );
-          setnoProductSpan(false);
-          localStorage.setItem("QuantityList", JSON.stringify(QuantityList));
-        }
-      }
-    } else {
       localStorage.setItem(
         "QuantityList",
 
@@ -277,24 +227,90 @@ const ReportForm = () => {
           },
         ])
       );
-      setnoProductSpan(true);
       // console.log(noProductSpan);
       setQuantityList(JSON.parse(localStorage.getItem("QuantityList")));
     }
-    // console.log(QuantityList.length);
-    // if (QuantityList.length == 0) {
-    //   // console.log("kfdgdjfd");
-    //   let newList = [];
-    //   for (let x = 0; x < Lists.length; x++) {
-    //     newList.push({
-    //       name: Lists[x].item.name,
-    //       quantity: Lists[x].quantity,
-    //     });
-    //   }
-    //   console.log(newList);
-    //   setQuantityList(newList);
-    //   console.log(QuantityList);
-    // }
+    if (!changeName) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#228b22",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, AddQuantity ",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (QuantityListLS) {
+            setQuantityList(JSON.parse(localStorage.getItem("QuantityList")));
+            for (let x = 0; x < QuantityList.length; x++) {
+              const currentList = Lists.find(
+                (list) => list.item.name == QuantityList[x].name
+              );
+
+              const currentListAdd = Lists.find(
+                (list) => list.item.id > QuantityList.length
+              );
+              // console.log(currentListAdd, QuantityList);
+
+              if (currentListAdd) {
+                setQuantityList([
+                  ...QuantityList,
+                  {
+                    name: currentListAdd.item.name,
+                    quantity: currentListAdd.quantity,
+                  },
+                ]);
+                // console.log(QuantityList);
+                localStorage.setItem(
+                  "QuantityList",
+                  JSON.stringify([
+                    ...QuantityList,
+                    {
+                      name: currentListAdd.item.name,
+                      quantity: currentListAdd.quantity,
+                    },
+                  ])
+                );
+                setnoProductSpan(false);
+              }
+              if (currentList) {
+                // console.log(typeof currentList, currentList);
+
+                setQuantityList(
+                  QuantityList.map((list) => {
+                    if (list.name == currentList.item.name) {
+                      list.quantity += currentList.quantity;
+                    }
+                    return list;
+                  })
+                  // localStorage.setItem(
+                  //   "QuantityList",
+                  //   JSON.stringify(
+
+                  //   )
+                  // )
+                );
+
+                setnoProductSpan(false);
+                localStorage.setItem(
+                  "QuantityList",
+                  JSON.stringify(QuantityList)
+                );
+              }
+            }
+          }
+
+          Swal.fire({
+            title: "Add quantity!",
+            text: "Product quantity has been added.",
+            icon: "success",
+          });
+        }
+      });
+    }
+
+    // console.log(QuantityListLS);
   };
   const [ShortName, setShortName] = useState([]);
   // console.log(ShortName);
@@ -330,6 +346,7 @@ const ReportForm = () => {
         {/* <MrInput /> */}
         <Routes>
           <Route path="/" element={<MrInput setTownship={setTownship} />} />
+          <Route path="/DoctorCallList" element={<DoctorCallList />} />
           <Route
             path="/productForm"
             element={

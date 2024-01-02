@@ -8,6 +8,9 @@
 .widthFull {
   width: 1400px;
 }
+.displaynone {
+  display: none;
+}
 .active {
   background: rgb(104 117 245 / var(--tw-bg-opacity));
   color: wheat;
