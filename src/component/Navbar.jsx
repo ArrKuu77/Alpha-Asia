@@ -5,7 +5,7 @@ const Navbar = () => {
   const [navshow, setnavshow] = useState(false);
   return (
     <nav className="bg-slate-900 border-gray-200 dark:bg-gray-900 ">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 relative">
+      <div className=" flex flex-wrap items-center justify-between mx-auto p-4 relative">
         <a
           href="https://www.facebook.com/profile.php?id=100092398663187"
           className="flex items-center"

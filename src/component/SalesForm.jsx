@@ -24,8 +24,8 @@ const SalesForm = () => {
   );
 
   return (
-    <div className=" flex justify-between mx-auto  w-3/5 ">
-      <div className=" mx-auto w-2/5">
+    <div className=" flex justify-between mx-auto  w-full ">
+      <div className="  w-3/12">
         <label className=" flex  ">
           <span className="  text-xl font-medium text-black	">Today Sale -</span>
           <p className=" text-xlborder-black  ps-2 mb-2 ">{todaySale}</p>
@@ -57,7 +57,7 @@ const SalesForm = () => {
           </p>
         </label>
       </div>
-      <div className=" mx-auto  w-3/4 flex  flex-wrap justify-between ">
+      <div className="  w-3/5 mx-auto flex  flex-wrap justify-between ">
         {QuantityList
           ? QuantityList.map((list, index) => {
               console.log(list.quantity);

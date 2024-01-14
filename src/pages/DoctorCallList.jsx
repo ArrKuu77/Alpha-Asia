@@ -31,7 +31,7 @@ const DoctorCallList = () => {
 
   const [DoctorCallListCur, setDoctorCallListCur] = useState(DoctorCallList);
 
-  console.log(DoctorCallList);
+  // console.log(DoctorCallList);
   const currentState = useRef();
   const FilterState = () => {
     const CurrentDoctor = DoctorCallList.filter((doctor) => {
@@ -146,7 +146,7 @@ const DoctorCallList = () => {
 
   const oneDoctorState = (...doctor) => {
     const [CurrentDoctorName, SyntheticBaseEvent] = doctor;
-    console.log(CurrentDoctorName, SyntheticBaseEvent);
+    // console.log(CurrentDoctorName, SyntheticBaseEvent);
     setDoctorCallList(
       DoctorCallList?.map((doctor) => {
         if (doctor.DoctorName == CurrentDoctorName) {
@@ -155,7 +155,7 @@ const DoctorCallList = () => {
         return doctor;
       })
     );
-    console.log(DoctorCallList);
+    // console.log(DoctorCallList);
     localStorage.setItem("DoctorCallList", JSON.stringify([...DoctorCallList]));
   };
   return (
@@ -284,7 +284,7 @@ const DoctorCallList = () => {
                         }`}
                       >
                         <select
-                          onClick={oneDoctorState.bind(this, list.DoctorName)}
+                          onChange={oneDoctorState.bind(this, list.DoctorName)}
                           className=" w-1/2 p-1 text-lg"
                         >
                           {states.map((state, index) => {
