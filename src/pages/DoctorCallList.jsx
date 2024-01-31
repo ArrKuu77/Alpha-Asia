@@ -3,7 +3,6 @@ import Template from "../component/Template";
 import Swal from "sweetalert2";
 import { MdSimCardDownload } from "react-icons/md";
 import html2pdf from "html2pdf.js/dist/html2pdf.bundle";
-import "animate.css";
 import { TiUserDelete } from "react-icons/ti";
 
 const DoctorCallList = () => {
@@ -146,7 +145,7 @@ const DoctorCallList = () => {
 
   const oneDoctorState = (...doctor) => {
     const [CurrentDoctorName, SyntheticBaseEvent] = doctor;
-    // console.log(CurrentDoctorName, SyntheticBaseEvent);
+    console.log(CurrentDoctorName, SyntheticBaseEvent);
     setDoctorCallList(
       DoctorCallList?.map((doctor) => {
         if (doctor.DoctorName == CurrentDoctorName) {

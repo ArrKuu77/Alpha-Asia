@@ -82,6 +82,7 @@ const ReportDoctorForm = ({
         );
         console.log(formRef);
         formRef.current.reset();
+        setOldDoctorName("");
         // ShortName = [];
         console.log(ShortName);
         setCurrentDate(DoctorNameDate.current.value);
@@ -89,6 +90,41 @@ const ReportDoctorForm = ({
         alert("Please select a day!");
       }
     }
+  };
+  const [OldDoctorNameArray, setOldDoctorNameArray] = useState(
+    JSON.parse(localStorage.getItem("DoctorCallList")) == null
+      ? []
+      : JSON.parse(localStorage.getItem("DoctorCallList"))
+  );
+
+  // console.log(OldDoctorNameArray);
+
+  const [filterOldDcotorName, setFilterOldDcotorName] = useState([]);
+  // console.log(filterOldDcotorName);
+
+  const [OldDoctorName, setOldDoctorName] = useState("");
+  // console.log(OldDoctorName);
+
+  const FilterDoctorCallName = (event) => {
+    setOldDoctorName(event.target.value);
+    // console.log(event.target.value == true ? "y" : "n");
+
+    setFilterOldDcotorName(
+      OldDoctorNameArray.filter((e) => {
+        if (!event.target.value) {
+          return;
+        } else {
+          return e.DoctorName.toLowerCase().includes(
+            event.target.value.toLowerCase()
+          );
+        }
+      })
+    );
+  };
+  const handalarOldCurrentName = (event) => {
+    console.log(event.target.innerHTML);
+    setOldDoctorName(event.target.innerHTML);
+    setFilterOldDcotorName([]);
   };
   return (
     <Template>
@@ -144,6 +180,8 @@ const ReportDoctorForm = ({
               Doctor Name
             </label>
             <input
+              value={OldDoctorName}
+              onChange={FilterDoctorCallName}
               required
               name="DoctorName"
               form="DoctorForm"
@@ -151,6 +189,26 @@ const ReportDoctorForm = ({
               className=" border-solid border-2  border-red-800	text-black	"
               placeholder="Doctor Name"
             />
+            {filterOldDcotorName.length > 0 && (
+              <div className="relative">
+                <div className=" absolute   top-1 left-0 right-0">
+                  <div className=" bg-white scroll-smooth   overflow-scroll  w-2/4 mx-auto">
+                    {filterOldDcotorName?.map((e, index) => {
+                      console.log(e, index);
+                      return (
+                        <p
+                          key={index}
+                          onClick={handalarOldCurrentName}
+                          className=" opacity-100 font-semibold text-xl border border-black p-1 "
+                        >
+                          {e.DoctorName}
+                        </p>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <div className="col col-md-3">
             <label htmlFor="" className=" text-2xl block  ">
