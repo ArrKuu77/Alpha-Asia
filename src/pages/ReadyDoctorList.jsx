@@ -113,11 +113,11 @@ const ReadyDoctorList = ({
           // console.log(window.innerWidth + 300);
 
           var opt = {
-            margin: 1,
+            margin: 0.5,
             filename: `${D ? CurrentDate + D : CurrentDate + w}`,
             image: { type: "jpeg", quality: 0.98 },
             html2canvas: {
-              // windowWidth:2000,
+              // windowWidth: 2000,
 
               width: pdfRef.current.offsetWidth,
               scale: 1.5,
