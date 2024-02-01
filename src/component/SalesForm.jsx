@@ -24,7 +24,7 @@ const SalesForm = () => {
   );
 
   return (
-    <div className=" flex justify-between mx-auto  w-full  text-3xl">
+    <div className=" flex justify-center mx-auto  w-4/5  text-3xl">
       <div className="  w-3/12">
         <label className=" flex  ">
           <span className="  font-medium text-black	">Today Sale -</span>

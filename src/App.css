@@ -3,7 +3,6 @@
 @tailwind utilities;
 .maxContent {
   width: max-content;
-  overflow-x: auto;
 }
 .widthFull {
   width: 1550px;

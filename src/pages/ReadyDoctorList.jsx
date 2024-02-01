@@ -17,7 +17,7 @@ const ReadyDoctorList = ({
   CurrentDate,
   Township,
 }) => {
-  // console.log(DoctorList);
+  console.log(DoctorList);
   const pdfRef = useRef();
   // const downloadPDFpage = (D, w) => {
   //   console.log(D, w, CurrentDate);
@@ -39,8 +39,8 @@ const ReadyDoctorList = ({
   const [doctorArray, setdoctorArray] = useState(
     DoctorCallList.map((doctor) => doctor.DoctorName.toLowerCase())
   );
-  // console.log(DoctorCallList);
-  // console.log(doctorArray);
+  console.log(DoctorCallList);
+  console.log(doctorArray);
   const downloadPDF = (D, w) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -87,16 +87,16 @@ const ReadyDoctorList = ({
             );
 
             const trueDoctor = newDoctor.filter((ndoctor) => {
-              // console.log(doctorArray.includes(ndoctor.DoctorName));
+              console.log(doctorArray.includes(ndoctor.DoctorName));
               if (doctorArray.includes(ndoctor.DoctorName.toLowerCase())) {
-                // console.log(ndoctor);
+                console.log(ndoctor);
               } else {
-                // console.log(ndoctor);
+                console.log(ndoctor);
 
                 return ndoctor;
               }
             });
-            // console.log(trueDoctor);
+            console.log(trueDoctor);
             setDoctorCallList([...DoctorCallList, ...trueDoctor]);
             setdoctorArray([
               ...doctorArray,
@@ -108,7 +108,7 @@ const ReadyDoctorList = ({
             );
           }
 
-          // console.log(D, w, CurrentDate);
+          console.log(D, w, CurrentDate);
           console.log(pdfRef.current.offsetWidth, pdfRef.current.offsetHeight);
           // console.log(window.innerWidth + 300);
 
@@ -117,14 +117,14 @@ const ReadyDoctorList = ({
             filename: `${D ? CurrentDate + D : CurrentDate + w}`,
             image: { type: "jpeg", quality: 0.98 },
             html2canvas: {
-              // windowWidth: 2000,
+              // windowWidth:2000,
 
               width: pdfRef.current.offsetWidth,
               scale: 1.5,
             },
             jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
           };
-          // console.log(opt, pdfRef.current);
+          console.log(opt, pdfRef.current);
           html2pdf().set(opt).from(pdfRef.current).save();
 
           swalWithBootstrapButtons.fire({
@@ -174,49 +174,53 @@ const ReadyDoctorList = ({
     <>
       {DoctorList.length > 0 ? (
         <Template>
-          <div className="   bg-slate-500 pt-2 p-1 ">
-            <div className=" p-3   maxContent" ref={pdfRef}>
-              <div className="flex justify-between items-center text-4xl ">
-                <div className=" flex items-center ">
-                  <label htmlFor="" className=" font-medium block  ">
+          <div className="  maxContent bg-slate-500 pt-2 p-1  ">
+            <div className=" p-3 w-full  maxContent " ref={pdfRef}>
+              <div className="flex justify-between items-center ">
+                <div className=" flex items-center">
+                  <label htmlFor="" className=" font-medium text-4xl block  ">
                     MR Name -
                   </label>
-                  <span className="block  text-black 	">
+                  <span className="block text-4xl  text-black 	">
                     {localStorage.getItem("MrName") == null
                       ? "Your Name"
                       : localStorage.getItem("MrName")}
                   </span>
                 </div>
                 <div className=" flex items-center">
-                  <label htmlFor="" className=" font-medium block  ">
+                  <label htmlFor="" className=" font-medium text-4xl block  ">
                     Date -
                   </label>
-                  <span className="block  text-black 	">{CurrentDate}</span>
+                  <span className="block text-4xl  text-black 	">
+                    {CurrentDate}
+                  </span>
                 </div>
                 <div className=" flex items-center">
-                  <label htmlFor="" className=" font-medium block  ">
+                  <label htmlFor="" className=" font-medium text-4xl block  ">
                     Township -
                   </label>
-                  <span className="block  text-black 	">{Township}</span>
+                  <span className="block text-4xl  text-black 	">
+                    {Township}
+                  </span>
                 </div>
               </div>
-              <table className=" mx-auto mb-10 mt-4 table-auto text-center  w-full border-collapse border border-slate-900 ">
+              <table className=" text-3xl mx-auto mb-10 mt-4 table-auto text-center  w-full border-collapse border border-slate-900 ">
                 <thead>
-                  <tr className=" text-4xl">
-                    <th className="border border-slate-900 py-5 px-2 ">No</th>
-                    <th className="border border-slate-900 py-5 px-2">
+                  <tr className="border border-slate-900 p-2 ">
+                    <th className="border border-slate-900 p-2">No</th>
+                    <th className="border border-slate-900 p-2">
                       Customer Name
                     </th>
-                    <th className="border border-slate-900 py-5 px-2">
+                    <th className="border border-slate-900 p-2">
                       Call Purpose
                     </th>
-                    <th className="border border-slate-900 py-5 px-2">
+                    <th className="border border-slate-900 p-2">
                       Product Name
                     </th>
-                    <th className="border border-slate-900 py-5 px-2">
+                    <th className="border border-slate-900 p-2">
                       Customer's Feedback
                     </th>
-                    <th className="border border-slate-900 py-5 px-2">
+                    <th className="border border-slate-900 p-2">
                       Action plan form next call
                     </th>
 
@@ -226,27 +230,27 @@ const ReadyDoctorList = ({
                 <tbody>
                   {DoctorList.map((list, index) => {
                     return (
-                      <tr key={index} className=" text-3xl">
-                        <td className="border px-2 py-5 border-slate-900 text-center">
+                      <tr key={index} className="border border-slate-900">
+                        <td className="border p-3 border-slate-900 text-center">
                           {" "}
                           {index + 1}.{" "}
                         </td>
-                        <td className="border px-2 py-5 border-slate-900 text-center">
+                        <td className="border p-3 border-slate-900 text-center">
                           {" "}
                           {list.DoctorName}{" "}
                         </td>
-                        <td className="border px-2 py-5 border-slate-900">
+                        <td className="border p-3 border-slate-900">
                           {list.CallPurpose}
                         </td>
-                        <td className="border px-2 py-5 border-slate-900">
+                        <td className="border p-3 border-slate-900">
                           {list.ShortName.length <= 0
                             ? "-"
                             : list.ShortName.map((name) => name + ",")}
                         </td>
-                        <td className="border px-2 py-5 border-slate-900">
+                        <td className="border p-3 border-slate-900">
                           {list.CustomerFeedback}
                         </td>
-                        <td className="border px-2 py-5 border-slate-900">
+                        <td className="border p-3 border-slate-900">
                           {list.NextPlan}
                         </td>
                       </tr>
@@ -257,15 +261,15 @@ const ReadyDoctorList = ({
 
               <SalesForm />
             </div>
-            <div className=" text-3xl font-bold  mt-5">
+            <div className=" ">
               <button
-                className="bg-indigo-500 p-5 mb-10 rounded-md border-gray-900 border-2 mx-auto mt-2 text-start block"
+                className="bg-indigo-500 p-2 rounded-md border-gray-900 border-2 mx-auto mt-2 text-start block"
                 onClick={downloadPDF.bind(null, "  DailyReport", null)}
               >
                 Download PDF For Daily
               </button>
               <button
-                className="bg-indigo-500 p-5  rounded-md border-gray-900 border-2 mx-auto mt-2 text-start block"
+                className="bg-indigo-500 p-2 rounded-md border-gray-900 border-2 mx-auto mt-2 text-start block"
                 onClick={downloadPDF.bind(null, null, "  WeeklyReport")}
               >
                 Download PDF For Weekly
