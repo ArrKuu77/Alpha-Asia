@@ -113,13 +113,13 @@ const ReadyDoctorList = ({
           // console.log(window.innerWidth + 300);
 
           var opt = {
-            margin: 0.5,
+            margin: [2, 5, 0, 5],
             filename: `${D ? CurrentDate + D : CurrentDate + w}`,
             image: { type: "jpeg", quality: 0.98 },
             html2canvas: {
               // windowWidth:2000,
-
-              width: pdfRef.current.offsetWidth,
+              letterRendering: true,
+              width: pdfRef.current.offsetWidth + 100,
               scale: 1.5,
             },
             jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
@@ -176,90 +176,92 @@ const ReadyDoctorList = ({
         <Template>
           <div className="  maxContent bg-slate-500 pt-2 p-1  ">
             <div className=" p-3 w-full  maxContent " ref={pdfRef}>
-              <div className="flex justify-between items-center ">
-                <div className=" flex items-center">
-                  <label htmlFor="" className=" font-medium text-4xl block  ">
-                    MR Name -
-                  </label>
-                  <span className="block text-4xl  text-black 	">
-                    {localStorage.getItem("MrName") == null
-                      ? "Your Name"
-                      : localStorage.getItem("MrName")}
-                  </span>
+              <div>
+                <div className="flex justify-between items-center ">
+                  <div className=" flex items-center">
+                    <label htmlFor="" className=" font-medium text-4xl block  ">
+                      MR Name -
+                    </label>
+                    <span className="block text-4xl  text-black 	">
+                      {localStorage.getItem("MrName") == null
+                        ? "Your Name"
+                        : localStorage.getItem("MrName")}
+                    </span>
+                  </div>
+                  <div className=" flex items-center">
+                    <label htmlFor="" className=" font-medium text-4xl block  ">
+                      Date -
+                    </label>
+                    <span className="block text-4xl  text-black 	">
+                      {CurrentDate}
+                    </span>
+                  </div>
+                  <div className=" flex items-center">
+                    <label htmlFor="" className=" font-medium text-4xl block  ">
+                      Township -
+                    </label>
+                    <span className="block text-4xl  text-black 	">
+                      {Township}
+                    </span>
+                  </div>
                 </div>
-                <div className=" flex items-center">
-                  <label htmlFor="" className=" font-medium text-4xl block  ">
-                    Date -
-                  </label>
-                  <span className="block text-4xl  text-black 	">
-                    {CurrentDate}
-                  </span>
-                </div>
-                <div className=" flex items-center">
-                  <label htmlFor="" className=" font-medium text-4xl block  ">
-                    Township -
-                  </label>
-                  <span className="block text-4xl  text-black 	">
-                    {Township}
-                  </span>
-                </div>
+                <table className="  mx-auto mb-10 mt-4 table-auto text-center  w-full border-collapse border border-slate-900 ">
+                  <thead className=" text-3xl">
+                    <tr className="border border-slate-900 p-2 ">
+                      <th className="border border-slate-900 p-2">No</th>
+                      <th className="border border-slate-900 p-2">
+                        Customer Name
+                      </th>
+                      <th className="border border-slate-900 p-2">
+                        Call Purpose
+                      </th>
+                      <th className="border border-slate-900 p-2">
+                        Product Name
+                      </th>
+                      <th className="border border-slate-900 p-2">
+                        Customer's Feedback
+                      </th>
+                      <th className="border border-slate-900 p-2">
+                        Action plan form next call
+                      </th>
+
+                      {/* <th className=" text-center">Edit</th> */}
+                    </tr>
+                  </thead>
+                  <tbody className="text-3xl">
+                    {DoctorList.map((list, index) => {
+                      return (
+                        <tr key={index} className="border border-slate-900">
+                          <td className="border p-3 border-slate-900 ">
+                            {" "}
+                            {index + 1}.{" "}
+                          </td>
+                          <td className="border p-3 border-slate-900 ">
+                            {" "}
+                            {list.DoctorName}{" "}
+                          </td>
+                          <td className="border p-3 border-slate-900">
+                            {list.CallPurpose}
+                          </td>
+                          <td className="border p-3 border-slate-900">
+                            {list.ShortName.length <= 0
+                              ? "-"
+                              : list.ShortName.map((name) => name + ",")}
+                          </td>
+                          <td className="border p-3 border-slate-900">
+                            {list.CustomerFeedback}
+                          </td>
+                          <td className="border p-3 border-slate-900">
+                            {list.NextPlan}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+
+                <SalesForm />
               </div>
-              <table className=" text-3xl mx-auto mb-10 mt-4 table-auto text-center  w-full border-collapse border border-slate-900 ">
-                <thead>
-                  <tr className="border border-slate-900 p-2 ">
-                    <th className="border border-slate-900 p-2">No</th>
-                    <th className="border border-slate-900 p-2">
-                      Customer Name
-                    </th>
-                    <th className="border border-slate-900 p-2">
-                      Call Purpose
-                    </th>
-                    <th className="border border-slate-900 p-2">
-                      Product Name
-                    </th>
-                    <th className="border border-slate-900 p-2">
-                      Customer's Feedback
-                    </th>
-                    <th className="border border-slate-900 p-2">
-                      Action plan form next call
-                    </th>
-
-                    {/* <th className=" text-center">Edit</th> */}
-                  </tr>
-                </thead>
-                <tbody>
-                  {DoctorList.map((list, index) => {
-                    return (
-                      <tr key={index} className="border border-slate-900">
-                        <td className="border p-3 border-slate-900 text-center">
-                          {" "}
-                          {index + 1}.{" "}
-                        </td>
-                        <td className="border p-3 border-slate-900 text-center">
-                          {" "}
-                          {list.DoctorName}{" "}
-                        </td>
-                        <td className="border p-3 border-slate-900">
-                          {list.CallPurpose}
-                        </td>
-                        <td className="border p-3 border-slate-900">
-                          {list.ShortName.length <= 0
-                            ? "-"
-                            : list.ShortName.map((name) => name + ",")}
-                        </td>
-                        <td className="border p-3 border-slate-900">
-                          {list.CustomerFeedback}
-                        </td>
-                        <td className="border p-3 border-slate-900">
-                          {list.NextPlan}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-
-              <SalesForm />
             </div>
             <div className=" ">
               <button
