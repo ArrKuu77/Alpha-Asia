@@ -24,27 +24,31 @@ const SalesForm = () => {
   );
 
   return (
-    <div className=" flex justify-center mx-auto  w-4/5  text-3xl">
+    <div className=" flex justify-between mx-auto  w-full ">
       <div className="  w-3/12">
         <label className=" flex  ">
-          <span className="  font-medium text-black	">Today Sale -</span>
-          <p className=" border-black  ps-2 mb-2 ">{todaySale}</p>
+          <span className="  text-xl font-medium text-black	">Today Sale -</span>
+          <p className=" text-xlborder-black  ps-2 mb-2 ">{todaySale}</p>
         </label>
         <label className=" flex ">
-          <span className=" font-medium text-black	">Previous Sale -</span>
-          <p className=" border-black  ps-2 mb-2">{TotalSales - todaySale}</p>
+          <span className=" text-xl font-medium text-black	">
+            Previous Sale -
+          </span>
+          <p className=" text-xl border-black  ps-2 mb-2">
+            {TotalSales - todaySale}
+          </p>
         </label>
         <label className=" flex ">
-          <span className=" font-medium text-black	">Total Sale -</span>
-          <p className=" border-black  ps-2 mb-2">{TotalSales}</p>
+          <span className=" text-xl font-medium text-black	">Total Sale -</span>
+          <p className=" text-xl border-black  ps-2 mb-2">{TotalSales}</p>
         </label>
         <label className=" flex ">
-          <span className=" font-medium text-black	">Target Sale -</span>
-          <p className=" border-black  ps-2 mb-2">{TotaltargetSales}</p>
+          <span className=" text-xl font-medium text-black	">Target Sale -</span>
+          <p className=" text-xl border-black  ps-2 mb-2">{TotaltargetSales}</p>
         </label>
         <label className=" flex ">
-          <span className=" font-medium text-black	">Achievement -</span>
-          <p className=" border-black  ps-2 mb-2">
+          <span className=" text-xl font-medium text-black	">Achievement -</span>
+          <p className=" text-xl border-black  ps-2 mb-2">
             {(
               (TotalSales / parseInt(localStorage.getItem("Target"))) *
               100
@@ -60,10 +64,10 @@ const SalesForm = () => {
               return (
                 list.quantity > 0 && (
                   <label key={index} className=" flex w-1/2  ">
-                    <span className=" font-medium text-black	">
+                    <span className="  text-xl font-medium text-black	">
                       Total {list.name} -{" "}
                     </span>
-                    <p className="    border-black  ps-2  mb-2">
+                    <p className="  text-lg    border-black  ps-2  mb-2">
                       {list.quantity}
                     </p>
                   </label>
