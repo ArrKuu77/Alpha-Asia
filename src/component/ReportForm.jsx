@@ -72,6 +72,12 @@ const ReportForm = () => {
       SName: "PGB",
       price: 28300,
     },
+    {
+      id: 10,
+      name: "Pedia Boost",
+      SName: "PDB",
+      price: 15200,
+    },
   ]);
   const [Lists, setLists] = useState([]);
   const [DoctorList, setDoctor] = useState([]);
