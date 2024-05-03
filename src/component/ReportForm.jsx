@@ -78,6 +78,24 @@ const ReportForm = () => {
       SName: "PDB",
       price: 15200,
     },
+    {
+      id: 11,
+      name: "Tranexamic Acid",
+      SName: "TNA",
+      price: 33275,
+    },
+    {
+      id: 12,
+      name: "Citiken",
+      SName: "CTK",
+      price: 57200,
+    },
+    {
+      id: 13,
+      name: "Citiken-Plus",
+      SName: "CTKP",
+      price: 59950,
+    },
   ]);
   const [Lists, setLists] = useState([]);
   const [DoctorList, setDoctor] = useState([]);
