@@ -249,6 +249,18 @@ const ReportForm = () => {
             name: "Pregnan Boost",
             quantity: 0,
           },
+          {
+            name: "Tranexamic Acid",
+            quantity: 0,
+          },
+          {
+            name: "Citiken",
+            quantity: 0,
+          },
+          {
+            name: "Citiken-Plus",
+            quantity: 0,
+          },
         ])
       );
       // console.log(noProductSpan);
