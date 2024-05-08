@@ -52,7 +52,7 @@ const ReportForm = () => {
       id: 6,
       name: "Immune-5",
       SName: "IMU",
-      price: 17200,
+      price: 19200,
     },
     {
       id: 7,
