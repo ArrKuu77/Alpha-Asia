@@ -25,7 +25,7 @@ const ProductForm = ({
     const formData = new FormData(formRef.current);
     addList(formData.get("item-id"), parseInt(formData.get("quantity")));
     formRef.current.reset();
-    setCurrentPrice(17700);
+    setCurrentPrice(19900);
   };
   const TotalsalesLGet = JSON.parse(localStorage.getItem("TotalSales"));
   const [TotalSales, setTotalSales] = useState(
