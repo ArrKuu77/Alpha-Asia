@@ -22,19 +22,19 @@ const ReportForm = () => {
       id: 1,
       name: "GI-Boost",
       SName: "GI",
-      price: 19900,
+      price: 22900,
     },
     {
       id: 2,
       name: "Hepa-Boost",
       SName: "HP",
-      price: 28300,
+      price: 31300,
     },
     {
       id: 3,
       name: "4G-Boost",
       SName: "4G",
-      price: 79000,
+      price: 86000,
     },
     {
       id: 4,
@@ -52,25 +52,25 @@ const ReportForm = () => {
       id: 6,
       name: "Immune-5",
       SName: "IMU",
-      price: 19400,
+      price: 22400,
     },
     {
       id: 7,
       name: "Alpha-Lady",
       SName: "ALD",
-      price: 26200,
+      price: 28200,
     },
     {
       id: 8,
       name: "Liver-Boost",
       SName: "LB",
-      price: 24800,
+      price: 26800,
     },
     {
       id: 9,
       name: "Pregnan Boost",
       SName: "PGB",
-      price: 31100,
+      price: 34100,
     },
     {
       id: 10,
@@ -247,6 +247,10 @@ const ReportForm = () => {
           },
           {
             name: "Pregnan Boost",
+            quantity: 0,
+          },
+          {
+            name: "Pedia Boost",
             quantity: 0,
           },
           {
