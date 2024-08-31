@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 
 const Template = ({ children }) => {
   return (
-    <div className="maxContent ">
+    <div className="maxContent  ">
       <Navbar />
       <div>{children}</div>
     </div>

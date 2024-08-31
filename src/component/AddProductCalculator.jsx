@@ -8,6 +8,7 @@ const AddProductCalculator = ({
   changeName,
 }) => {
   const [noProductSpan, setnoProductSpan] = useState(false);
+  console.log(changeName);
 
   const [nextButton, setnextButton] = useState(false);
   return (

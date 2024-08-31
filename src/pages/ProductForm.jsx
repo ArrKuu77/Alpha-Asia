@@ -18,14 +18,29 @@ const ProductForm = ({
 }) => {
   // console.log(Product);
   const formRef = useRef();
-  let [currentPrice, setCurrentPrice] = useState(22900);
+  const copyCPL = JSON.parse(localStorage.getItem("CreateProductList"))
+    ? JSON.parse(localStorage.getItem("CreateProductList"))
+    : 0;
+
+  let [currentPrice, setCurrentPrice] = useState(
+    copyCPL[0]?.price ? copyCPL[0].price : 0
+  );
+  const [widthJust, setWidthJust] = useState(false);
   // console.log(currentPrice);
   const hundalarSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(formRef.current);
-    addList(formData.get("item-id"), parseInt(formData.get("quantity")));
-    formRef.current.reset();
-    setCurrentPrice(19900);
+    console.log(formData.get("item-name"));
+
+    if (formData.get("item-name") == null) {
+      alert("Have not product list");
+      console.log("dfd");
+    } else {
+      addList(formData.get("item-name"), parseInt(formData.get("quantity")));
+      formRef.current.reset();
+      setWidthJust(true);
+      setCurrentPrice(currentPrice);
+    }
   };
   const TotalsalesLGet = JSON.parse(localStorage.getItem("TotalSales"));
   const [TotalSales, setTotalSales] = useState(
@@ -49,11 +64,13 @@ const ProductForm = ({
     setTotalSales(parseInt(TotalAmount));
     console.log(TotalSales);
   };
+  console.log(Product);
+
   const OnchangePrice = () => {
     const formData = new FormData(formRef.current);
     // console.log(formData.get("item-id"));
     const Price = Product.find(
-      (product) => product.id == formData.get("item-id")
+      (product) => product.name == formData.get("item-name")
     );
     // console.log(Price.price);
     setCurrentPrice(Price.price);
@@ -139,9 +156,10 @@ const ProductForm = ({
   //   //   console.log(QuantityList);
   //   // }
   // };
+
   return (
     <Template>
-      <div className="w-screen">
+      <div className={`${widthJust ? "w-full" : "w-screen"} bg-slate-500 `}>
         <NavLink to="/">
           <button className=" bg-indigo-500 p-2 rounded-md border-gray-900 border-2 ms-2 text-start block ">
             Back
@@ -173,71 +191,77 @@ const ProductForm = ({
           </h1>
         </div>
         {SaleShow ? (
-          <div className="">
+          <div className=" w-full">
             <div className=" ">
-              <div className="col col-md-3">
-                <label htmlFor="" className=" text-2xl block  ">
-                  Select Product
-                </label>
-                <select
-                  onChange={OnchangePrice}
-                  form="create"
-                  name="item-id"
-                  id=""
-                  className="w-1/2 p-1 text-lg"
-                >
-                  {Product.map(({ id, name }) => {
-                    return (
-                      <option key={id} value={id} className="">
-                        {name}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-
-              <label className="block">
-                <span className="block text-xl font-medium text-black	">
-                  Product Price
-                </span>
-                <input
-                  value={currentPrice}
-                  disabled
-                  form="create"
-                  type="number"
-                  className=" border-solid border-2  border-red-800	text-black	"
-                  placeholder="Price"
-                />
-                {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
+              {Product.length < 1 ? (
+                <div>
+                  <h1 className=" text-xl font-bold ">
+                    There is no Product List
+                  </h1>
+                </div>
+              ) : (
+                <div className="col col-md-3">
+                  <label htmlFor="" className=" text-2xl block  ">
+                    Select Product
+                  </label>
+                  <select
+                    onChange={OnchangePrice}
+                    form="create"
+                    name="item-name"
+                    id=""
+                    className="w-1/2 p-1 text-lg"
+                  >
+                    {Product?.map(({ name }, index) => {
+                      return (
+                        <option key={index} value={name} className="">
+                          {name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  <label className="block">
+                    <span className="block text-xl font-medium text-black	">
+                      Product Price
+                    </span>
+                    <input
+                      value={currentPrice}
+                      disabled
+                      form="create"
+                      type="number"
+                      className=" border-solid border-2  border-red-800	text-black	"
+                      placeholder="Price"
+                    />
+                    {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
             TownShip
           </p> */}
-              </label>
-
-              <label className="block">
-                <span className="block text-xl font-medium text-black	">
-                  Prodcut Quantity
-                </span>
-                <input
-                  name="quantity"
-                  form="create"
-                  type="number"
-                  required
-                  className=" border-solid border-2  border-red-800	text-black	"
-                  placeholder="Quantity"
-                />
-                {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
+                  </label>
+                  <label className="block">
+                    <span className="block text-xl font-medium text-black	">
+                      Prodcut Quantity
+                    </span>
+                    <input
+                      name="quantity"
+                      form="create"
+                      type="number"
+                      required
+                      className=" border-solid border-2  border-red-800	text-black	"
+                      placeholder="Quantity"
+                    />
+                    {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
             TownShip
           </p> */}
-              </label>
+                  </label>
 
-              <div className=" mt-3 text-center ">
-                <button
-                  form="create"
-                  className=" border border-white bg-blue-900 p-2 text-white "
-                >
-                  Add Product
-                </button>
-              </div>
+                  <div className=" mt-3 text-center ">
+                    <button
+                      form="create"
+                      className=" border border-white bg-blue-900 p-2 text-white "
+                    >
+                      Add Product
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
             <ProductList
               // noProductSpan={noProductSpan}

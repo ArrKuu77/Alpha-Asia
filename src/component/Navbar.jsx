@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const Navbar = () => {
   const [navshow, setnavshow] = useState(false);
   return (
-    <nav className="bg-slate-900 border-gray-200 dark:bg-gray-900 ">
+    <nav className="bg-slate-900  border-gray-200 dark:bg-gray-900 ">
       <div className=" flex flex-wrap items-center justify-between mx-auto p-4 relative">
         <a
           href="https://www.facebook.com/profile.php?id=100092398663187"
@@ -89,6 +89,14 @@ const Navbar = () => {
                 className="block py-2 pl-3 pr-4 text-neutral-300 rounded hover:bg-blue-700	 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
                 DoctorCallList
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/CreateProductList"
+                className="block py-2 pl-3 pr-4 text-neutral-300 rounded hover:bg-blue-700	 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              >
+                Create Product List
               </NavLink>
             </li>
           </ul>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import MrInput from "../pages/MrInput";
 import ProductForm from "../pages/ProductForm";
 import ProductList from "./ProductList";
@@ -14,89 +14,16 @@ import ClearDoctorLists from "../pages/ClearDoctorLists";
 import NotFound from "../pages/NotFound";
 import DoctorCallList from "../pages/DoctorCallList";
 import Swal from "sweetalert2";
+import ProductListHendal from "../pages/CreateProductList";
 // import { list } from "postcss";
 
 const ReportForm = () => {
-  const [Product, setProduct] = useState([
-    {
-      id: 1,
-      name: "GI-Boost",
-      SName: "GI",
-      price: 22900,
-    },
-    {
-      id: 2,
-      name: "Hepa-Boost",
-      SName: "HP",
-      price: 31300,
-    },
-    {
-      id: 3,
-      name: "4G-Boost",
-      SName: "4G",
-      price: 86000,
-    },
-    {
-      id: 4,
-      name: "PantoTop-40",
-      SName: "PT",
-      price: 22000,
-    },
-    {
-      id: 5,
-      name: "Multi-Gin",
-      SName: "MG",
-      price: 21000,
-    },
-    {
-      id: 6,
-      name: "Immune-5",
-      SName: "IMU",
-      price: 22400,
-    },
-    {
-      id: 7,
-      name: "Alpha-Lady",
-      SName: "ALD",
-      price: 28200,
-    },
-    {
-      id: 8,
-      name: "Liver-Boost",
-      SName: "LB",
-      price: 26800,
-    },
-    {
-      id: 9,
-      name: "Pregnan Boost",
-      SName: "PGB",
-      price: 34100,
-    },
-    {
-      id: 10,
-      name: "Pedia Boost",
-      SName: "PDB",
-      price: 16500,
-    },
-    {
-      id: 11,
-      name: "Tranexamic Acid",
-      SName: "TNA",
-      price: 0,
-    },
-    {
-      id: 12,
-      name: "Citiken",
-      SName: "CTK",
-      price: 0,
-    },
-    {
-      id: 13,
-      name: "Citiken-Plus",
-      SName: "CTKP",
-      price: 0,
-    },
-  ]);
+  const [Product, setProduct] = useState(
+    JSON.parse(localStorage.getItem("CreateProductList"))
+      ? JSON.parse(localStorage.getItem("CreateProductList"))
+      : []
+  );
+
   const [Lists, setLists] = useState([]);
   const [DoctorList, setDoctor] = useState([]);
   const createTable = (
@@ -132,13 +59,17 @@ const ReportForm = () => {
   };
   // console.log(DoctorList);
 
-  const addList = (productId, quantity) => {
-    const currentItem = Product.find((product) => product.id == productId);
-    const ExitList = Lists.find((list) => list.item.id === currentItem.id);
+  const addList = (productname, quantity) => {
+    const currentItem = Product.find((product) => product.name == productname);
+    console.log(currentItem);
+
+    const ExitList = Lists.find((list) => list.item.name == currentItem.name);
+    console.log(ExitList);
+
     if (ExitList) {
       setLists(
         Lists.map((list) => {
-          if (list.item.id === currentItem.id) {
+          if (list.item.name == currentItem.name) {
             list.quantity += quantity;
             list.amount = list.quantity * currentItem.price;
           }
@@ -192,85 +123,79 @@ const ReportForm = () => {
   const [QuantityList, setQuantityList] = useState(
     []
     // localStorage.getItem("QuantityList") == null
-    //   ? false
+    //   ? []
     //   : JSON.parse(localStorage.getItem("QuantityList"))
   );
+
+  console.log(QuantityList);
+
   const [changeName, setchangeName] = useState(true);
   // console.log(QuantityList);
   // console.log(changeName);
+  console.log(Lists);
+  const [CPL_name, setCPL_name] = useState();
+  const [Quantity_name, setQuantity_name] = useState();
+
+  useEffect(() => {
+    const copyCPL = JSON.parse(localStorage.getItem("CreateProductList"));
+    const copyCPL_name = new Set(copyCPL?.map((item) => item.name));
+    setCPL_name(copyCPL_name);
+    setQuantity_name(Quantity_name);
+  }, []);
 
   const AddQuantityFuction = (setnoProductSpan) => {
     setchangeName(false);
+    const copyQTY = JSON.parse(localStorage.getItem("QuantityList"))
+      ? JSON.parse(localStorage.getItem("QuantityList"))
+      : [];
+    const Quantity_name = new Set(copyQTY?.map((item) => item.name));
+
     setQuantityList(JSON.parse(localStorage.getItem("QuantityList")));
+    const differenceNames = [...CPL_name].filter(
+      (name) => !Quantity_name.has(name)
+    );
+    // console.log(differenceNames);
+    const DifferenceNameArray = differenceNames.map((list) => {
+      return { name: list, quantity: 0 };
+    });
+
+    console.log(DifferenceNameArray);
+    if (DifferenceNameArray.length > 0) {
+      console.log(QuantityList);
+      setQuantityList([...copyQTY, ...DifferenceNameArray]);
+      localStorage.setItem(
+        "QuantityList",
+        JSON.stringify([...copyQTY, ...DifferenceNameArray])
+      );
+    }
+
+    // if (differenceNames) {
+    //   localStorage.setItem("QuantityList",...QuantityList,)
+    // }
+
+    // setQuantityList(  );
 
     const QuantityListLS =
       JSON.parse(localStorage.getItem("QuantityList")) == null ? false : true;
 
     if (!QuantityListLS) {
+      console.log("have");
+
       setnoProductSpan(true);
+      const CopyCreatProductList = localStorage.getItem("CreateProductList")
+        ? JSON.parse(localStorage.getItem("CreateProductList"))
+        : [];
+      const MainQtyList = CopyCreatProductList.map((list) => {
+        return { name: list.name, quantity: 0 };
+      });
 
-      localStorage.setItem(
-        "QuantityList",
-
-        JSON.stringify([
-          {
-            quantity: 0,
-            name: "GI-Boost",
-          },
-          {
-            quantity: 0,
-            name: "Hepa-Boost",
-          },
-          {
-            quantity: 0,
-            name: "4G-Boost",
-          },
-          {
-            quantity: 0,
-            name: "PantoTop-40",
-          },
-          {
-            name: "Multi-Gin",
-            quantity: 0,
-          },
-          {
-            name: "Immune-5",
-            quantity: 0,
-          },
-          {
-            name: "Alpha-Lady",
-            quantity: 0,
-          },
-          {
-            name: "Liver-Boost",
-            quantity: 0,
-          },
-          {
-            name: "Pregnan Boost",
-            quantity: 0,
-          },
-          {
-            name: "Pedia Boost",
-            quantity: 0,
-          },
-          {
-            name: "Tranexamic Acid",
-            quantity: 0,
-          },
-          {
-            name: "Citiken",
-            quantity: 0,
-          },
-          {
-            name: "Citiken-Plus",
-            quantity: 0,
-          },
-        ])
-      );
+      localStorage.setItem("QuantityList", JSON.stringify(MainQtyList));
       // console.log(noProductSpan);
-      setQuantityList(JSON.parse(localStorage.getItem("QuantityList")));
+      setQuantityList(MainQtyList);
     }
     if (!changeName) {
+      console.log("have");
+
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -287,6 +212,7 @@ const ReportForm = () => {
               const currentList = Lists.find(
                 (list) => list.item.name == QuantityList[x].name
               );
+              console.log(currentList);
 
               const currentListAdd = Lists.find(
                 (list) => list.item.id > QuantityList.length
@@ -294,6 +220,8 @@ const ReportForm = () => {
               // console.log(currentListAdd, QuantityList);
 
               if (currentListAdd) {
+                console.log("have");
+
                 setQuantityList([
                   ...QuantityList,
                   {
@@ -316,6 +244,7 @@ const ReportForm = () => {
               }
               if (currentList) {
                 // console.log(typeof currentList, currentList);
+                console.log("have");
 
                 setQuantityList(
                   QuantityList.map((list) => {
@@ -333,6 +262,7 @@ const ReportForm = () => {
                 );
 
                 setnoProductSpan(false);
+                setQuantityList([...QuantityList]);
                 localStorage.setItem(
                   "QuantityList",
                   JSON.stringify(QuantityList)
@@ -346,6 +276,10 @@ const ReportForm = () => {
             text: "Product quantity has been added.",
             icon: "success",
           });
+        }
+        if (!result.isConfirmed) {
+          console.log("hehfalse");
+          return;
         }
       });
     }
@@ -439,6 +373,7 @@ const ReportForm = () => {
               />
             }
           />
+          <Route path="/CreateProductList" element={<ProductListHendal />} />
           <Route
             path="/ReadyDoctorList"
             element={

@@ -17,8 +17,8 @@ const ProductList = ({
   return (
     <>
       {Lists.length > 0 ? (
-        <div>
-          <table className=" mt-4 table-auto text-end  w-full border-collapse border border-slate-900 ">
+        <div className=" maxContent p-1">
+          <table className=" text-xl  mt-4 table-auto text-end  w-full border-collapse border border-slate-900 ">
             <thead>
               <tr className="border border-slate-900">
                 <th className="border border-slate-900">No</th>

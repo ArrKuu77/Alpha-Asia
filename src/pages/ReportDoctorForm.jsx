@@ -257,10 +257,12 @@ const ReportDoctorForm = ({
           </label>
 
           <div className=" flex flex-col justify-center items-center  m-2">
-            {Product.map((currentItem) => {
+            {Product.map((currentItem, index) => {
+              console.log(index);
+
               return (
                 <div
-                  key={currentItem.id}
+                  key={index}
                   className={`flex items-center justify-between${
                     DoctorList.length == 0 ? "   w-1/2" : " w-1/6"
                   }`}
