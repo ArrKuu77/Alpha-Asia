@@ -126,8 +126,6 @@ const ReadyDoctorList = ({
           const isSafari = /^((?!chrome|android).)*safari/i.test(
             navigator.userAgent
           );
-          console.log(isSafari);
-
           if (isSafari) {
             opt.html2canvas.scale = 1; // Adjust scale specifically for Safari
           }
@@ -211,7 +209,7 @@ const ReadyDoctorList = ({
                   <span className="block text-xl  text-black 	">{Township}</span>
                 </div>
               </div>
-              <table className=" mx-auto mb-10 mt-4 table-auto text-center  w-full border-collapse border border-slate-900 ">
+              <table className="w-full mx-auto mb-10 mt-4 table-auto text-center   border-collapse border border-slate-900 ">
                 <thead>
                   <tr className="border border-slate-900 p-2">
                     <th className="border border-slate-900 p-2">No</th>
@@ -246,7 +244,7 @@ const ReadyDoctorList = ({
                           {" "}
                           {list.DoctorName}{" "}
                         </td>
-                        <td className="border p-3 border-slate-900">
+                        <td className="border   p-3 border-slate-900">
                           {list.CallPurpose}
                         </td>
                         <td className="border p-3 border-slate-900">
@@ -254,10 +252,10 @@ const ReadyDoctorList = ({
                             ? "-"
                             : list.ShortName.map((name) => name + ",")}
                         </td>
-                        <td className="border p-3 border-slate-900">
+                        <td className="border     p-3 border-slate-900">
                           {list.CustomerFeedback}
                         </td>
-                        <td className="border p-3 border-slate-900">
+                        <td className="border  p-3 border-slate-900">
                           {list.NextPlan}
                         </td>
                       </tr>

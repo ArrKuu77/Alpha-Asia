@@ -14,3 +14,9 @@
   background: rgb(104 117 245 / var(--tw-bg-opacity));
   color: wheat;
 }
+.text-nowrap {
+  text-wrap: nowrap;
+}
+.text-wrap {
+  text-wrap: wrap;
+}
