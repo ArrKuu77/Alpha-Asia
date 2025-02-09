@@ -83,7 +83,11 @@ const ReportDoctorForm = ({
           ShortName,
           DoctorNameDate.current.value
         );
-        console.log(formRef);
+        console.log(
+          formRef,
+          formData.get("Hospital"),
+          formData.get("Objective")
+        );
         formRef.current.reset();
         setOldDoctorName("");
         // ShortName = [];

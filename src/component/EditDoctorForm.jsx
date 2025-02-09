@@ -14,9 +14,9 @@ const EditDoctorForm = ({
   // console.log(EditDoctor.ShortName);
   // const [check, setcheck] = useState();
 
-  const [customer, setcustomer] = useState();
+  const [customer, setcustomer] = useState(EditDoctor.CustomerFeedback);
   // const [doctorName, setdoctorName] = useState();
-  const [nextPlan, setnextPlan] = useState();
+  const [nextPlan, setnextPlan] = useState(EditDoctor.NextPlan);
 
   const hundalarSubmit = () => {
     console.log(customer, nextPlan);
@@ -25,7 +25,8 @@ const EditDoctorForm = ({
         if (list.id == EditDoctor.id) {
           console.log("hehe");
           list.DoctorName = EditDoctor.DoctorName;
-          list.CallPurpose = EditDoctor.CallPurpose;
+          list.Hospital = EditDoctor.Hospital;
+          list.Objective = EditDoctor.Objective;
           list.CustomerFeedback = customer;
           list.NextPlan = nextPlan;
           list.ShortName = ShortName;
@@ -70,10 +71,18 @@ const EditDoctorForm = ({
         </div>
         <div className="col col-md-3 mb-3 ">
           <label htmlFor="" className=" font-medium text-2xl block  ">
-            Call Purpose
+            Hospital
           </label>
           <span className="block text-2xl  text-black 	">
-            {EditDoctor.CallPurpose}
+            {EditDoctor.Hospital}
+          </span>
+        </div>
+        <div className="col col-md-3 mb-3 ">
+          <label htmlFor="" className=" font-medium text-2xl block  ">
+            Objective
+          </label>
+          <span className="block text-2xl  text-black 	">
+            {EditDoctor.Objective}
           </span>
         </div>
         <label className="block">
@@ -84,7 +93,7 @@ const EditDoctorForm = ({
             onChange={(e) => {
               setcustomer(e.target.value);
             }}
-            value={customer}
+            defaultValue={EditDoctor.CustomerFeedback}
             name="CustomerFeedback"
             //
             type="text"
@@ -104,7 +113,7 @@ TownShip
             onChange={(e) => {
               setnextPlan(e.target.value);
             }}
-            value={nextPlan}
+            defaultValue={EditDoctor.NextPlan}
             name="NextPlan"
             type="text"
             required

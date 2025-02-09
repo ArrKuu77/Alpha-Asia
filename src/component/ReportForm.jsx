@@ -30,8 +30,8 @@ const ReportForm = () => {
     DoctorName,
     CustomerFeedback,
     NextPlan,
-    Objective,
     Hospital,
+    Objective,
     currentShortName,
     DoctorNameDate
   ) => {
@@ -48,6 +48,8 @@ const ReportForm = () => {
       ShortName: currentShortName,
       id: Date.now(),
     };
+    console.log(NewDoctorlist);
+
     console.log(Lists);
 
     setDoctor([...DoctorList, NewDoctorlist]);
