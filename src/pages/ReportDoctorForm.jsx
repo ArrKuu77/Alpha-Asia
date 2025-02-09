@@ -32,6 +32,8 @@ const ReportDoctorForm = ({
 
   console.log(DoctorListsDate.length);
   const hundalarSubmit = (event) => {
+    console.log(DoctorNameDate.current.value);
+
     if (DoctorListsDate.length > 6) {
       alert("You DoctorList is Full!");
     } else {
@@ -76,7 +78,8 @@ const ReportDoctorForm = ({
           formData.get("DoctorName"),
           formData.get("CustomerFeedback"),
           formData.get("NextPlan"),
-          formData.get("CallPurpose"),
+          formData.get("Hospital"),
+          formData.get("Objective"),
           ShortName,
           DoctorNameDate.current.value
         );
@@ -210,17 +213,38 @@ const ReportDoctorForm = ({
               </div>
             )}
           </div>
+
           <div className="col col-md-3">
-            <label htmlFor="" className=" text-2xl block  ">
-              Call Purpose
+            <label
+              htmlFor=""
+              className=" text-xl font-medium text-black	 block  "
+            >
+              Hospital
             </label>
             <input
               required
-              name="CallPurpose"
+              name="Hospital"
               form="DoctorForm"
               type="text"
               className=" border-solid border-2  border-red-800	text-black	"
-              placeholder="Doctor Name"
+              placeholder="Hospital"
+            />
+          </div>
+
+          <div className="col col-md-3">
+            <label
+              htmlFor=""
+              className=" text-xl font-medium text-black	 block  "
+            >
+              Objective
+            </label>
+            <input
+              required
+              name="Objective"
+              form="DoctorForm"
+              type="text"
+              className=" border-solid border-2  border-red-800	text-black	"
+              placeholder="Objective"
             />
           </div>
 

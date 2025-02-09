@@ -30,7 +30,8 @@ const ReportForm = () => {
     DoctorName,
     CustomerFeedback,
     NextPlan,
-    CallPurpose,
+    Objective,
+    Hospital,
     currentShortName,
     DoctorNameDate
   ) => {
@@ -42,7 +43,8 @@ const ReportForm = () => {
       DoctorName,
       CustomerFeedback,
       NextPlan,
-      CallPurpose,
+      Objective,
+      Hospital,
       ShortName: currentShortName,
       id: Date.now(),
     };
@@ -142,8 +144,19 @@ const ReportForm = () => {
     setCPL_name(copyCPL_name);
     setQuantity_name(Quantity_name);
   }, []);
+  const TotalsalesLGet = JSON.parse(localStorage.getItem("TotalSales"));
 
-  const AddQuantityFuction = (setnoProductSpan) => {
+  const [TotalSales, setTotalSales] = useState(
+    TotalsalesLGet == null ? 0 : parseInt(TotalsalesLGet.TotalSale)
+  );
+
+  const AddQuantityFuction = (setnoProductSpan, calculator) => {
+    let canMinus = true;
+    const OldTodaysale = JSON.parse(
+      localStorage.getItem("TotalSales")
+    ).Todaysales;
+    const Todaysales = Lists.reduce((pv, cv) => pv + cv.amount, 0);
+
     setchangeName(false);
     const copyQTY = JSON.parse(localStorage.getItem("QuantityList"))
       ? JSON.parse(localStorage.getItem("QuantityList"))
@@ -174,7 +187,6 @@ const ReportForm = () => {
     // }
 
     // setQuantityList(  );
-
     const QuantityListLS =
       JSON.parse(localStorage.getItem("QuantityList")) == null ? false : true;
 
@@ -193,6 +205,20 @@ const ReportForm = () => {
       // console.log(noProductSpan);
       setQuantityList(MainQtyList);
     }
+    console.log(Lists, QuantityList);
+
+    Lists.map((list) => {
+      return QuantityList.find((qtyList) => {
+        if (list.item.name == qtyList.name) {
+          if (list.quantity > qtyList.quantity) {
+            canMinus = false;
+            return qtyList;
+          }
+        }
+      });
+    });
+    console.log(canMinus);
+
     if (!changeName) {
       console.log("have");
 
@@ -203,7 +229,7 @@ const ReportForm = () => {
         showCancelButton: true,
         confirmButtonColor: "#228b22",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, AddQuantity ",
+        confirmButtonText: "Yes, Add calculator ",
       }).then((result) => {
         if (result.isConfirmed) {
           if (QuantityListLS) {
@@ -243,39 +269,93 @@ const ReportForm = () => {
                 setnoProductSpan(false);
               }
               if (currentList) {
-                // console.log(typeof currentList, currentList);
-                console.log("have");
+                if (calculator == "SalePlus") {
+                  setQuantityList(
+                    QuantityList.map((list) => {
+                      if (list.name == currentList.item.name) {
+                        return (list.quantity += currentList.quantity);
+                      }
+                      return list;
+                    })
+                  );
+                  Swal.fire({
+                    title: "Add quantity!",
+                    text: "Product quantity has been added.",
+                    icon: "success",
+                  });
+                } else {
+                  if (!canMinus) {
+                    Swal.fire({
+                      title: "Minus quantity!",
+                      text: `Some Product quantity can not  minus.`,
+                      icon: "error",
+                    });
+                    return;
+                  } else {
+                    localStorage.setItem(
+                      "TotalSales",
+                      JSON.stringify({
+                        TotalSale: TotalSales - Todaysales,
+                        Todaysales: OldTodaysale - Todaysales,
+                      })
+                    );
+                    // }
+                    const TotalAmount = JSON.parse(
+                      localStorage.getItem("TotalSales")
+                    ).TotalSale;
+                    // console.log(TotalAmount);
+                    setTotalSales(parseInt(TotalAmount));
+                    setQuantityList(
+                      QuantityList.map((list) => {
+                        if (list.name == currentList.item.name) {
+                          return (list.quantity -= currentList.quantity);
+                        }
+                        return list;
+                      })
+                    );
 
-                setQuantityList(
-                  QuantityList.map((list) => {
-                    if (list.name == currentList.item.name) {
-                      list.quantity += currentList.quantity;
-                    }
-                    return list;
-                  })
-                  // localStorage.setItem(
-                  //   "QuantityList",
-                  //   JSON.stringify(
-
-                  //   )
-                  // )
-                );
-
+                    Swal.fire({
+                      title: "Minus quantity!",
+                      text: "Product quantity has been minus.",
+                      icon: "success",
+                    });
+                  }
+                }
+                const AddTodaySale = !canMinus
+                  ? OldTodaysale + Todaysales
+                  : Todaysales;
                 setnoProductSpan(false);
                 setQuantityList([...QuantityList]);
                 localStorage.setItem(
                   "QuantityList",
                   JSON.stringify(QuantityList)
                 );
+                if (calculator == "SalePlus") {
+                  localStorage.setItem(
+                    "TotalSales",
+                    JSON.stringify({
+                      TotalSale: TotalSales + Todaysales,
+                      Todaysales: AddTodaySale,
+                    })
+                  );
+                }
+                // } else {
+                // localStorage.setItem(
+                //   "TotalSales",
+                //   JSON.stringify({
+                //     TotalSale: TotalSales - Todaysales,
+                //     Todaysales,
+                //   })
+                // );
+                // }
+                const TotalAmount = JSON.parse(
+                  localStorage.getItem("TotalSales")
+                ).TotalSale;
+                // console.log(TotalAmount);
+                setTotalSales(parseInt(TotalAmount));
               }
             }
           }
-
-          Swal.fire({
-            title: "Add quantity!",
-            text: "Product quantity has been added.",
-            icon: "success",
-          });
         }
         if (!result.isConfirmed) {
           console.log("hehfalse");
@@ -325,6 +405,8 @@ const ReportForm = () => {
             path="/productForm"
             element={
               <ProductForm
+                TotalSales={TotalSales}
+                setTotalSales={setTotalSales}
                 Product={Product}
                 addList={addList}
                 // noProductSpan={noProductSpan}
@@ -387,29 +469,6 @@ const ReportForm = () => {
             }
           />
         </Routes>
-        {/* <ProductForm Product={Product} addList={addList} /> */}
-        {/* <ProductList
-          noProductSpan={noProductSpan}
-          AddQuantityFuction={AddQuantityFuction}
-          changeName={changeName}
-          QuantityList={QuantityList}
-          Lists={Lists}
-          DeleteItem={DeleteItem}
-          ItemListShowFunction={ItemListShowFunction}
-        /> */}
-        {/* <ReportDoctorForm
-          // AddShortNameFunction={AddShortNameFunction}
-          Product={Product}
-          ShortName={ShortName}
-          createTable={createTable}
-        /> */}
-        {/* <DoctorFeedbackList
-          // ShortName={ShortName}
-          QuantityList={QuantityList}
-          Lists={Lists}
-          DoctorList={DoctorList}
-          DeleteDoctorList={DeleteDoctorList}
-        /> */}
       </div>
     </div>
   );

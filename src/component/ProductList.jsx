@@ -2,6 +2,7 @@ import React from "react";
 import { TiDelete } from "react-icons/ti";
 import SalesCalculator from "./SalesCalculator";
 import AddProductCalculator from "./AddProductCalculator";
+import ProductCalculator from "./ProductCalculator";
 
 const ProductList = ({
   // noProductSpan,
@@ -74,18 +75,26 @@ const ProductList = ({
               </tr>
             </tfoot>
           </table>
-          <SalesCalculator
+          <ProductCalculator
             Lists={Lists}
             TotalSales={TotalSales}
             setTotalSales={setTotalSales}
+            changeName={changeName}
+            AddQuantityFuction={AddQuantityFuction}
+            QuantityList={QuantityList}
           />
-          <AddProductCalculator
+          {/* <SalesCalculator
+            Lists={Lists}
+            TotalSales={TotalSales}
+            setTotalSales={setTotalSales}
+          /> */}
+          {/* <AddProductCalculator
             Lists={Lists}
             // noProductSpan={noProductSpan}
             changeName={changeName}
             AddQuantityFuction={AddQuantityFuction}
             QuantityList={QuantityList}
-          />
+          /> */}
         </div>
       ) : (
         <div className=" border border-spacing-10 m-4">

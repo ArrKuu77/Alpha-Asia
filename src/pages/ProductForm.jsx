@@ -9,6 +9,8 @@ const ProductForm = ({
   Product,
   addList,
   Lists,
+  TotalSales,
+  setTotalSales,
   // noProductSpan,
   AddQuantityFuction,
   changeName,
@@ -43,7 +45,7 @@ const ProductForm = ({
     }
   };
   const TotalsalesLGet = JSON.parse(localStorage.getItem("TotalSales"));
-  const [TotalSales, setTotalSales] = useState(
+  const [NoTotalSale, setNoTotalSales] = useState(
     TotalsalesLGet == null ? 0 : parseInt(TotalsalesLGet.TotalSale)
   );
   const [SaleShow, setSaleShow] = useState(true);
@@ -54,15 +56,15 @@ const ProductForm = ({
     localStorage.setItem(
       "TotalSales",
       JSON.stringify({
-        TotalSale: TotalSales + Todaysales,
+        TotalSale: NoTotalSale + Todaysales,
         Todaysales,
       })
     );
     const TotalAmount = JSON.parse(
       localStorage.getItem("TotalSales")
     ).TotalSale;
-    setTotalSales(parseInt(TotalAmount));
-    console.log(TotalSales);
+    setNoTotalSales(parseInt(TotalAmount));
+    console.log(NoTotalSale);
   };
   console.log(Product);
 

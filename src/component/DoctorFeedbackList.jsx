@@ -22,7 +22,8 @@ const DoctorFeedbackList = ({
               <tr className="border border-slate-900 p-2">
                 <th className="border border-slate-900 p-2">No</th>
                 <th className="border border-slate-900 p-2">Customer Name</th>
-                <th className="border border-slate-900 p-2">Call Purpose</th>
+                <th className="border border-slate-900 p-2">Hospital</th>
+                <th className="border border-slate-900 p-2">Objective</th>
                 <th className="border border-slate-900 p-2">Product Name</th>
                 <th className="border border-slate-900 p-2">
                   Customer's Feedback
@@ -46,8 +47,12 @@ const DoctorFeedbackList = ({
                       {" "}
                       {list.DoctorName}{" "}
                     </td>
+                    <td className="border p-3 border-slate-900 text-center">
+                      {" "}
+                      {list.Hospital}{" "}
+                    </td>
                     <td className="border p-3 border-slate-900">
-                      {list.CallPurpose}
+                      {list.Objective}
                     </td>
                     <td className="border p-3 border-slate-900">
                       {list.ShortName.length <= 0
