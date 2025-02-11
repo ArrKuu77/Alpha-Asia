@@ -154,10 +154,11 @@ const ReportForm = () => {
 
   const AddQuantityFuction = (setnoProductSpan, calculator) => {
     let canMinus = true;
-    const OldTodaysale = JSON.parse(
-      localStorage.getItem("TotalSales")
-    ).Todaysales;
     const Todaysales = Lists.reduce((pv, cv) => pv + cv.amount, 0);
+    const OldTodaysale = JSON.parse(localStorage.getItem("TotalSales"))
+      ?.Todaysales
+      ? JSON.parse(localStorage.getItem("TotalSales"))?.Todaysales
+      : 0;
 
     setchangeName(false);
     const copyQTY = JSON.parse(localStorage.getItem("QuantityList"))
@@ -297,8 +298,14 @@ const ReportForm = () => {
                     localStorage.setItem(
                       "TotalSales",
                       JSON.stringify({
-                        TotalSale: TotalSales - Todaysales,
-                        Todaysales: OldTodaysale - Todaysales,
+                        TotalSale:
+                          TotalSales - Todaysales < 1
+                            ? 0
+                            : TotalSales - Todaysales,
+                        Todaysales:
+                          OldTodaysale - Todaysales < 1
+                            ? 0
+                            : OldTodaysale - Todaysales,
                       })
                     );
                     // }
@@ -326,6 +333,7 @@ const ReportForm = () => {
                 const AddTodaySale = !canMinus
                   ? OldTodaysale + Todaysales
                   : Todaysales;
+
                 setnoProductSpan(false);
                 setQuantityList([...QuantityList]);
                 localStorage.setItem(

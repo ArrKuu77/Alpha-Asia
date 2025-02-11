@@ -95,7 +95,9 @@ const ProductCalculator = ({
                 Today Sale -
               </span>
               <p className="  text-lg  border-b-2 border-black  ps-2 mb-2 mb-2">
-                {JSON.parse(localStorage.getItem("TotalSales")).Todaysales}
+                {JSON.parse(localStorage.getItem("TotalSales"))?.Todaysales
+                  ? JSON.parse(localStorage.getItem("TotalSales")).Todaysales
+                  : 0}
               </p>
             </label>
             <label className=" flex ">
@@ -113,7 +115,7 @@ const ProductCalculator = ({
               </span>
               <p className="  text-lg  border-b-2 border-black  ps-2 mb-2 mb-2">
                 {TotalSales -
-                  JSON.parse(localStorage.getItem("TotalSales")).Todaysales}
+                  JSON.parse(localStorage.getItem("TotalSales"))?.Todaysales}
               </p>
             </label>
             <label className=" flex  ">
