@@ -8,6 +8,27 @@ import Template from "../component/Template";
 import html2pdf from "html2pdf.js/dist/html2pdf.bundle";
 import Swal from "sweetalert2";
 import { MdSimCardDownload } from "react-icons/md";
+import { supabase } from "../supabase";
+
+ const addReport = async (employeeId = 2, reportDetail, date ) => {
+  console.log(employeeId,reportDetail,date);
+  
+  const { data, error } = await supabase
+      .from('reports_table')
+      .insert([
+          { employee_id: employeeId, report_detail: reportDetail, date: date },
+      ])
+      .select();
+
+  if (error) {
+      console.error('Error adding report:', error);
+      return { error }; // Return the error to handle it outside
+  }
+
+  console.log('Report added:', data);
+  return { data }; // Return the data after insertion
+};
+
 
 const ReadyDoctorList = ({
   DoctorList,
@@ -272,7 +293,7 @@ const ReadyDoctorList = ({
             <div className=" ">
               <button
                 className="bg-indigo-500 p-2 rounded-md border-gray-900 border-2 mx-auto mt-2 text-start block"
-                onClick={downloadPDF.bind(null, "  DailyReport", null)}
+                onClick={()=> addReport(2,DoctorList,CurrentDate)}
               >
                 Download PDF For Daily
               </button>
