@@ -4,6 +4,7 @@ import { MdEditCalendar } from "react-icons/md";
 import { HiOutlineXMark } from "react-icons/hi2";
 import Swal from "sweetalert2";
 import { HiArchiveBoxXMark } from "react-icons/hi2";
+import { TiUserDelete } from "react-icons/ti";
 
 const ClearDoctorLists = ({
   setDoctorListsDate,
@@ -55,6 +56,21 @@ const ClearDoctorLists = ({
     } else {
       return;
     }
+  };
+  const clearMrName = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("MrName");
+      }
+    });
   };
   const [currentDoctorListDate, setCurrentDoctorListDate] = useState(null);
   const [allCLearDateShow, setAllCLearDateShow] = useState(true);
@@ -251,20 +267,29 @@ const ClearDoctorLists = ({
             </button>
           </div>
         </div>
-        <button
-          className="text-slate-300 mt-2  block mx-auto font-bold text-xl  bg-red-600 p-4  rounded border border-red-200"
-          onClick={ClearQuantity}
-        >
-          ClearQuantity
-        </button>
-        {allCLearDateShow && (
+        <div className=" flex justify-evenly flex-wrap gap-3">
           <button
-            className="my-3 text-slate-300  block mx-auto font-bold text-xl  bg-red-600 p-4  rounded border border-red-200"
-            onClick={AllClearDoctorListsDate}
+            className="text-slate-300    font-bold text-sm  bg-red-600 px-4 py-2  rounded border border-red-200 flex gap-3  justify-center items-center"
+            onClick={ClearQuantity}
           >
-            AllClearDoctorDate
+            ClearQuantity
           </button>
-        )}
+          {allCLearDateShow && (
+            <button
+              className=" text-slate-300    font-bold text-sm  bg-red-600 px-4 py-2  rounded border border-red-200 flex gap-3  justify-center items-center"
+              onClick={AllClearDoctorListsDate}
+            >
+              AllClearDoctorDate
+            </button>
+          )}
+          <button
+            onClick={clearMrName}
+            className=" text-slate-300    font-bold text-sm  bg-red-600 px-4 py-2  rounded border border-red-200 flex gap-3  justify-center items-center "
+          >
+            <span>MrNameDelete</span>
+            <TiUserDelete />
+          </button>
+        </div>
       </div>
     </Template>
   );

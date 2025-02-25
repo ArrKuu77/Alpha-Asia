@@ -8,27 +8,9 @@ import Template from "../component/Template";
 import html2pdf from "html2pdf.js/dist/html2pdf.bundle";
 import Swal from "sweetalert2";
 import { MdSimCardDownload } from "react-icons/md";
-import { supabase } from "../supabase";
-
- const addReport = async (employeeId = 2, reportDetail, date ) => {
-  console.log(employeeId,reportDetail,date);
-  
-  const { data, error } = await supabase
-      .from('reports_table')
-      .insert([
-          { employee_id: employeeId, report_detail: reportDetail, date: date },
-      ])
-      .select();
-
-  if (error) {
-      console.error('Error adding report:', error);
-      return { error }; // Return the error to handle it outside
-  }
-
-  console.log('Report added:', data);
-  return { data }; // Return the data after insertion
-};
-
+import { addReport, supabase } from "../supabase";
+import { json } from "react-router-dom";
+import { VscLoading } from "react-icons/vsc";
 
 const ReadyDoctorList = ({
   DoctorList,
@@ -51,6 +33,13 @@ const ReadyDoctorList = ({
   //     doc.save("result.pdf");
   //   });
   // };
+  const [loading, setLoading] = useState(false);
+  const dailySaleLS = localStorage.getItem("TotalSales")
+    ? JSON.parse(localStorage.getItem("TotalSales"))
+    : { TotalSale: 0, Todaysales: 0 };
+  const dailyProductQtyLS = localStorage.getItem("QuantityList")
+    ? JSON.parse(localStorage.getItem("QuantityList"))
+    : [];
 
   const [DoctorCallList, setDoctorCallList] = useState(
     localStorage.getItem("DoctorCallList") == null
@@ -198,6 +187,42 @@ const ReadyDoctorList = ({
     //   console.log(saveDone);
     // });
   };
+  const UploadDoctorList = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to upload data!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, upload it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setLoading(true);
+        const { data, error } = await addReport(
+          3,
+          DoctorList,
+          CurrentDate,
+          dailySaleLS,
+          dailyProductQtyLS
+        );
+        if (data) {
+          Swal.fire({
+            title: "Upload is successful",
+            icon: "success",
+            draggable: true,
+          });
+          setLoading(false);
+        } else {
+          Swal.fire({
+            title: `${error}`,
+            icon: "error",
+            draggable: true,
+          });
+        }
+      }
+    });
+  };
   return (
     <>
       {DoctorList.length > 0 ? (
@@ -293,9 +318,18 @@ const ReadyDoctorList = ({
             <div className=" ">
               <button
                 className="bg-indigo-500 p-2 rounded-md border-gray-900 border-2 mx-auto mt-2 text-start block"
-                onClick={()=> addReport(2,DoctorList,CurrentDate)}
+                onClick={() => UploadDoctorList()}
+                disabled={loading}
               >
-                Download PDF For Daily
+                {loading ? (
+                  <span className=" flex justify-center text-white items-center gap-2 text-xl">
+                    <span className=" ">Loading</span>
+                    <span className="  animate-pulse">...</span>
+                    <VscLoading className=" animate-spin" />
+                  </span>
+                ) : (
+                  <span>UploadDoctorList</span>
+                )}
               </button>
               <button
                 className="bg-indigo-500 p-2 rounded-md border-gray-900 border-2 mx-auto mt-2 text-start block"

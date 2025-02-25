@@ -1,14 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Template from "../component/Template";
 import { NavLink } from "react-router-dom";
+import { employeeTableFetch } from "../supabase";
 
 const MrInput = ({ setTownship }) => {
   const [target, setTarget] = useState(
     localStorage.getItem("Target") == null ? "" : localStorage.getItem("Target")
   );
   const [MrName, setMrName] = useState(
-    localStorage.getItem("MrName") == null ? "" : localStorage.getItem("MrName")
+    localStorage.getItem("MrName") == null ? false : true
   );
+  console.log(MrName);
+
+  const [employeeList, setEmployeeList] = useState([]);
+  console.log(employeeList);
+  const fetchEmployee = async () => {
+    const { employee_table, error } = await employeeTableFetch();
+    if (error) {
+      alert(error);
+    } else {
+      setEmployeeList(employee_table);
+    }
+  };
+  useEffect(() => {
+    MrName
+      ? setMrName(JSON.parse(localStorage.getItem("MrName")))
+      : fetchEmployee();
+  }, []);
   return (
     <Template>
       <div className="bg-slate-500 text-center w-screen h-screen pb-2">
@@ -39,7 +57,38 @@ const MrInput = ({ setTownship }) => {
             <span className="block text-xl font-medium text-black	">
               MR Name
             </span>
-            <input
+            <select
+              value="dValue"
+              onChange={(e) => {
+                const selected = employeeList.find(
+                  (item) => item.id == e.target.value
+                );
+
+                setMrName(
+                  selected ? { mrName: selected.name, mrId: selected.id } : ""
+                );
+                localStorage.setItem(
+                  "MrName",
+                  JSON.stringify({
+                    mrName: selected.name,
+                    mrId: selected.id,
+                  })
+                );
+              }}
+              id="options"
+              className="select select-bordered w-full max-w-xs"
+            >
+              <option value="dValue" disabled={!MrName}>
+                {MrName ? MrName.mrName : "select your name"}
+              </option>
+              {employeeList.map((list) => (
+                <option key={list.id} value={list.id}>
+                  {list.name}
+                </option>
+              ))}
+            </select>
+
+            {/* <input
               required
               type="text"
               onChange={(event) => {
@@ -49,7 +98,7 @@ const MrInput = ({ setTownship }) => {
               value={MrName}
               className=" border-solid border-2  border-red-800	text-black	"
               placeholder="Your Name"
-            />
+            /> */}
             {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
             Please provide a valid email address.
           </p> */}
