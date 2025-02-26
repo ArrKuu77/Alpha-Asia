@@ -28,7 +28,8 @@ export const addReport = async (
   reportDetail,
   date,
   dailySaleLS,
-  dailyProductQtyLS
+  dailyProductQtyLS,
+  Township
 ) => {
   console.log(employeeId, reportDetail, date);
 
@@ -41,6 +42,7 @@ export const addReport = async (
         date: date,
         daily_sale: dailySaleLS,
         daily_productQty: dailyProductQtyLS,
+        township: Township,
       },
     ])
     .select();

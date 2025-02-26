@@ -346,6 +346,12 @@ const ReportForm = () => {
                     JSON.stringify({
                       TotalSale: TotalSales + Todaysales,
                       Todaysales: AddTodaySale,
+                      Achievement: (
+                        (TotalSales /
+                          parseInt(localStorage.getItem("Target"))) *
+                        100
+                      ).toFixed(2),
+                      Target: parseInt(localStorage.getItem("Target")),
                     })
                   );
                 }

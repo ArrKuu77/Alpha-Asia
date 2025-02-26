@@ -9,7 +9,7 @@ import html2pdf from "html2pdf.js/dist/html2pdf.bundle";
 import Swal from "sweetalert2";
 import { MdSimCardDownload } from "react-icons/md";
 import { addReport, supabase } from "../supabase";
-import { json } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import { VscLoading } from "react-icons/vsc";
 
 const ReadyDoctorList = ({
@@ -22,6 +22,7 @@ const ReadyDoctorList = ({
 }) => {
   console.log(DoctorList);
   const pdfRef = useRef();
+  const navigator = useNavigate();
   // const downloadPDFpage = (D, w) => {
   //   console.log(D, w, CurrentDate);
   //   const input = pdfRef.current;
@@ -187,7 +188,20 @@ const ReadyDoctorList = ({
     //   console.log(saveDone);
     // });
   };
+  const MrId =
+    localStorage.getItem("MrName") == null
+      ? null
+      : JSON.parse(localStorage.getItem("MrName")).mrId;
+
   const UploadDoctorList = () => {
+    if (!Township || MrId == null) {
+      Swal.fire({
+        title: "Please check your Township or MR Name",
+        icon: "error",
+      });
+      return;
+    }
+
     Swal.fire({
       title: "Are you sure?",
       text: "You want to upload data!",
@@ -200,19 +214,65 @@ const ReadyDoctorList = ({
       if (result.isConfirmed) {
         setLoading(true);
         const { data, error } = await addReport(
-          3,
+          MrId,
           DoctorList,
           CurrentDate,
           dailySaleLS,
-          dailyProductQtyLS
+          dailyProductQtyLS,
+          Township
         );
         if (data) {
+          const newDoctor = DoctorList.map((doctor) => {
+            return {
+              DoctorName: doctor.DoctorName,
+              DoctorFrequency: 1,
+              DoctorState: "Empty",
+            };
+          });
+          DoctorCallList.map((doctorCall) => {
+            newDoctor.map((newdoctor) => {
+              if (
+                doctorCall.DoctorName.toLowerCase() ==
+                newdoctor.DoctorName.toLowerCase()
+              ) {
+                doctorCall.DoctorFrequency += 1;
+              }
+              return doctorCall;
+            });
+          });
+
+          localStorage.setItem(
+            "DoctorCallList",
+            JSON.stringify([...DoctorCallList])
+          );
+
+          const trueDoctor = newDoctor.filter((ndoctor) => {
+            console.log(doctorArray.includes(ndoctor.DoctorName));
+            if (doctorArray.includes(ndoctor.DoctorName.toLowerCase())) {
+              console.log(ndoctor);
+            } else {
+              console.log(ndoctor);
+
+              return ndoctor;
+            }
+          });
+          console.log(trueDoctor);
+          setDoctorCallList([...DoctorCallList, ...trueDoctor]);
+          setdoctorArray([
+            ...doctorArray,
+            ...trueDoctor.map((d) => d.DoctorName.toLowerCase()),
+          ]);
+          localStorage.setItem(
+            "DoctorCallList",
+            JSON.stringify([...trueDoctor, ...DoctorCallList])
+          );
           Swal.fire({
             title: "Upload is successful",
             icon: "success",
             draggable: true,
           });
           setLoading(false);
+          navigator("/");
         } else {
           Swal.fire({
             title: `${error}`,
