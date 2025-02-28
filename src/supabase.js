@@ -6,15 +6,21 @@ export const supabase = createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqaG1oeWlreWxsdnBpcnNqcGVuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk5Nzk0NTIsImV4cCI6MjA1NTU1NTQ1Mn0.TcyJcTc9CtSH7gSIdGNY4cZHCYUDUGD5ByjYnLks8IA"
 );
 
-// export const fetch = async () => {
-//   let { data: reports_table, error } = await supabase
-//     .from("reports_table")
-//     .select("*")
-//     .eq("date", "2025-2-23")
-//     .eq("employee_id", "1");
+export const repoetData = async (currentDate, employee_id) => {
+  let { data, error } = await supabase
+    .from("reports_table")
+    .select("*")
+    .eq("date", currentDate)
+    .eq("employee_id", employee_id);
 
-//   console.log(reports_table);
-// };
+  if (error) {
+    console.error("Error adding report:", error);
+    return { error }; // Return the error to handle it outside
+  }
+
+  const reports_table = data[0];
+  return { reports_table }; // Return the data after insertion
+};
 
 export const employeeTableFetch = async () => {
   let { data: employee_table, error } = await supabase

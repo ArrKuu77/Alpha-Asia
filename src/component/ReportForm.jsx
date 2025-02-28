@@ -15,6 +15,7 @@ import NotFound from "../pages/NotFound";
 import DoctorCallList from "../pages/DoctorCallList";
 import Swal from "sweetalert2";
 import ProductListHendal from "../pages/CreateProductList";
+import ReportReview from "../pages/ReportReview";
 // import { list } from "postcss";
 
 const ReportForm = () => {
@@ -472,6 +473,7 @@ const ReportForm = () => {
             }
           />
           <Route path="/CreateProductList" element={<ProductListHendal />} />
+          <Route path="/report-review" element={<ReportReview />} />
           <Route
             path="/ReadyDoctorList"
             element={
