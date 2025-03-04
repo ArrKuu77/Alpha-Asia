@@ -61,5 +61,50 @@ export const addReport = async (
   console.log("Report added:", data);
   return { data }; // Return the data after insertion
 };
+export const editReport = async (
+  id,
+  employeeId,
+  reportDetail,
+  date,
+  dailySaleLS,
+  dailyProductQtyLS,
+  Township
+) => {
+  console.log(reportDetail);
+
+  const { data, error } = await supabase
+    .from("reports_table")
+    .update({
+      employee_id: employeeId,
+      report_detail: reportDetail,
+      date: date,
+      daily_sale: dailySaleLS,
+      daily_productQty: dailyProductQtyLS,
+      township: Township,
+    })
+    .match({ id: id });
+
+  if (error) {
+    console.error("Error adding report:", error);
+    return { error }; // Return the error to handle it outside
+  }
+
+  console.log("Report added:", data);
+  return { data }; // Return the data after insertion
+};
+export const DeleteReportReviewFun = async (id) => {
+  const { data, error } = await supabase
+    .from("reports_table")
+    .delete()
+    .match({ id: id });
+
+  if (error) {
+    console.error("Error deleting report:", error);
+    return { error }; // Return the error to handle it outside
+  }
+
+  console.log("Report deleted:", data);
+  return { data }; // Return the data after deletion
+};
 
 // fetch();

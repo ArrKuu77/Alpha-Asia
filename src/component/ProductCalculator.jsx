@@ -21,18 +21,33 @@ const ProductCalculator = ({
     if (changeTotalSales.current.value == "") {
       alert("Please fail total amount!");
     } else {
-      localStorage.setItem(
-        "TotalSales",
-        JSON.stringify({
-          TotalSale: changeTotalSales.current.value,
-          Todaysales,
-        })
-      );
-      const TotalAmount = JSON.parse(
-        localStorage.getItem("TotalSales")
-      ).TotalSale;
-      // console.log(TotalAmount);
-      setTotalSales(parseInt(TotalAmount));
+      if (changeTotalSales.current.value == 0) {
+        localStorage.setItem(
+          "TotalSales",
+          JSON.stringify({
+            TotalSale: changeTotalSales.current.value,
+            Todaysales: 0,
+          })
+        );
+        const TotalAmount = JSON.parse(
+          localStorage.getItem("TotalSales")
+        ).TotalSale;
+        // console.log(TotalAmount);
+        setTotalSales(parseInt(TotalAmount));
+      } else {
+        localStorage.setItem(
+          "TotalSales",
+          JSON.stringify({
+            TotalSale: changeTotalSales.current.value,
+            Todaysales,
+          })
+        );
+        const TotalAmount = JSON.parse(
+          localStorage.getItem("TotalSales")
+        ).TotalSale;
+        // console.log(TotalAmount);
+        setTotalSales(parseInt(TotalAmount));
+      }
     }
   };
 

@@ -16,6 +16,7 @@ import DoctorCallList from "../pages/DoctorCallList";
 import Swal from "sweetalert2";
 import ProductListHendal from "../pages/CreateProductList";
 import ReportReview from "../pages/ReportReview";
+import EditReportReview from "../pages/EditReportReview";
 // import { list } from "postcss";
 
 const ReportForm = () => {
@@ -342,13 +343,15 @@ const ReportForm = () => {
                   JSON.stringify(QuantityList)
                 );
                 if (calculator == "SalePlus") {
+                  const calculateTotal = Todaysales + TotalSales;
+
                   localStorage.setItem(
                     "TotalSales",
                     JSON.stringify({
                       TotalSale: TotalSales + Todaysales,
                       Todaysales: AddTodaySale,
                       Achievement: (
-                        (TotalSales /
+                        (calculateTotal /
                           parseInt(localStorage.getItem("Target"))) *
                         100
                       ).toFixed(2),
@@ -473,7 +476,12 @@ const ReportForm = () => {
             }
           />
           <Route path="/CreateProductList" element={<ProductListHendal />} />
+
           <Route path="/report-review" element={<ReportReview />} />
+          <Route
+            path="/report-review/edit/:id"
+            element={<EditReportReview />}
+          />
           <Route
             path="/ReadyDoctorList"
             element={
