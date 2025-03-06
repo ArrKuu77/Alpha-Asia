@@ -110,10 +110,11 @@ function ReportReview() {
           </div>
           <div>
             <button
+              disabled={loading}
               onClick={() => serchData()}
               className=" py-1 px-2 bg-slate-950 border border-white text-white"
             >
-              Search
+              {loading ? "Loading..." : "Search"}
             </button>
           </div>
         </div>
