@@ -284,11 +284,11 @@ const ProductForm = ({
               TotalSales={TotalSales}
               setTotalSales={setTotalSales}
             />
-            <NavLink to="/doctorListForm">
+            {/* <NavLink to="/doctorListForm">
               <button className=" bg-indigo-500 p-2 rounded-md border-gray-900 border-2  ms-auto w-1/2 font-bold  flex items-center justify-evenly mt-2 ">
                 Next Step <TbPlayerTrackNext />
               </button>
-            </NavLink>
+            </NavLink> */}
           </div>
         )}
       </div>

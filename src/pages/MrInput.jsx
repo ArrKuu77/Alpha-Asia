@@ -53,7 +53,7 @@ const MrInput = ({ setTownship }) => {
             Please provide a valid email address.
           </p> */}
           </label>
-          <label className="block">
+          {/* <label className="block">
             <span className="block text-xl font-medium text-black	">
               MR Name
             </span>
@@ -86,9 +86,9 @@ const MrInput = ({ setTownship }) => {
                   {list.name}
                 </option>
               ))}
-            </select>
+            </select> */}
 
-            {/* <input
+          {/* <input
               required
               type="text"
               onChange={(event) => {
@@ -99,10 +99,10 @@ const MrInput = ({ setTownship }) => {
               className=" border-solid border-2  border-red-800	text-black	"
               placeholder="Your Name"
             /> */}
-            {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
+          {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
             Please provide a valid email address.
           </p> */}
-          </label>
+          {/* </label>
           <label className="block">
             <span className="block text-xl font-medium text-black	">
               Location
@@ -118,7 +118,7 @@ const MrInput = ({ setTownship }) => {
             {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
             TownShip
           </p> */}
-          </label>
+          {/* </label>  */}
         </form>
         <NavLink to="/productForm">
           <button className=" bg-indigo-500 p-2 rounded-md border-gray-900 border-2	">

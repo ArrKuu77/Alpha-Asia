@@ -67,7 +67,7 @@ const Navbar = () => {
                 ProductForm
               </NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink
                 to="/doctorListForm"
                 className="block py-2 pl-3 pr-4 text-neutral-300 rounded hover:bg-blue-700	 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
@@ -82,15 +82,15 @@ const Navbar = () => {
               >
                 ClearDoctorLists
               </NavLink>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <NavLink
                 to="/DoctorCallList"
                 className="block py-2 pl-3 pr-4 text-neutral-300 rounded hover:bg-blue-700	 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
                 DoctorCallList
               </NavLink>
-            </li>
+            </li> */}
             <li>
               <NavLink
                 to="/CreateProductList"
@@ -99,14 +99,14 @@ const Navbar = () => {
                 Create Product List
               </NavLink>
             </li>
-            <li>
+            {/* <li>
               <NavLink
                 to="/report-review"
                 className="block py-2 pl-3 pr-4 text-neutral-300 rounded hover:bg-blue-700	 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
                 ReportReview
               </NavLink>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

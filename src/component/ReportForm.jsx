@@ -141,6 +141,7 @@ const ReportForm = () => {
   console.log(Lists);
   const [CPL_name, setCPL_name] = useState();
   const [Quantity_name, setQuantity_name] = useState();
+  console.log(CPL_name, Quantity_name);
 
   useEffect(() => {
     const copyCPL = JSON.parse(localStorage.getItem("CreateProductList"));
