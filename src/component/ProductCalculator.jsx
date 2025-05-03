@@ -10,6 +10,8 @@ const ProductCalculator = ({
   QuantityList,
   changeName,
 }) => {
+  console.log(QuantityList);
+
   const [noProductSpan, setnoProductSpan] = useState(false);
   const [nextButton, setnextButton] = useState(false);
 
@@ -52,9 +54,7 @@ const ProductCalculator = ({
     const productDetails = QuantityList.filter((item) => item.quantity > 0)
       .map((item) => {
         const total = item.quantity * item.price;
-        return `${item.name} - Price: ${item.price.toLocaleString()} , Qty: ${
-          item.quantity
-        }, Total: ${total.toLocaleString()}`;
+        return `${item.name}-${item.quantity}`;
       })
       .join("\n");
 
@@ -204,7 +204,7 @@ const ProductCalculator = ({
                 {list.name}
               </span>
               <p className="text-sm font-semibold">Qty: {list.quantity}</p>
-              <p className="text-sm">Price: {list.price.toLocaleString()}</p>
+              <p className="text-sm">Price: {list?.price?.toLocaleString()}</p>
               <p className="text-sm font-semibold">
                 Total: {total.toLocaleString()}
               </p>

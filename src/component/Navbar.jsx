@@ -74,7 +74,7 @@ const Navbar = () => {
               >
                 DoctorListForm
               </NavLink>
-            </li>
+            </li>*/}
             <li>
               <NavLink
                 to="/ClearDoctorLists"
@@ -82,7 +82,7 @@ const Navbar = () => {
               >
                 ClearDoctorLists
               </NavLink>
-            </li> */}
+            </li>
             {/* <li>
               <NavLink
                 to="/DoctorCallList"

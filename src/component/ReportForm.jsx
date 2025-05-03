@@ -154,7 +154,11 @@ const ReportForm = () => {
   const [TotalSales, setTotalSales] = useState(
     TotalsalesLGet == null ? 0 : parseInt(TotalsalesLGet.TotalSale)
   );
-
+  const [CreateProductList, setCreateProductList] = useState(
+    localStorage.getItem("CreateProductList") == null
+      ? []
+      : JSON.parse(localStorage.getItem("CreateProductList"))
+  );
   const AddQuantityFuction = (setnoProductSpan, calculator) => {
     let canMinus = true;
     const Todaysales = Lists.reduce((pv, cv) => pv + cv.amount, 0);
@@ -173,9 +177,18 @@ const ReportForm = () => {
     const differenceNames = [...CPL_name].filter(
       (name) => !Quantity_name.has(name)
     );
+
     // console.log(differenceNames);
-    const DifferenceNameArray = differenceNames.map((list) => {
-      return { name: list, quantity: 0 };
+    const DifferenceNameArray = differenceNames.map((name) => {
+      // Find the product in CreateProductList that matches the name
+      const product = CreateProductList.find((item) => item.name === name);
+
+      // If product is found, include its price; otherwise, set price to 0
+      return {
+        name,
+        quantity: 0,
+        price: product ? product.price : 0, // Get the price from CreateProductList
+      };
     });
 
     console.log(DifferenceNameArray);
