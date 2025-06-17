@@ -51,12 +51,21 @@ const ProductCalculator = ({
   };
 
   const handleCopyAll = () => {
-    const productDetails = QuantityList.filter((item) => item.quantity > 0)
-      .map((item) => {
+    const now = new Date();
+
+    const formattedDate = `${now.getDate()}.${
+      now.getMonth() + 1
+    }.${now.getFullYear()} (${now.toLocaleDateString("en-US", {
+      weekday: "long",
+    })})`;
+
+    const productDetails = QuantityList.filter((item) => item.quantity > 0).map(
+      (item) => {
         const total = item.quantity * item.price;
         return `${item.name}-${item.quantity}`;
-      })
-      .join("\n");
+      }
+    );
+    // .join("\n");
 
     const salesDetails = `
       Today Sale: ${
@@ -76,7 +85,7 @@ const ProductCalculator = ({
       ).toFixed(2)}%
     `;
 
-    const allText = `${productDetails}\n\n${salesDetails}`;
+    const allText = `${formattedDate}\n \n${productDetails}\n${salesDetails}`;
 
     navigator.clipboard.writeText(allText);
     alert("Copied all information!");
