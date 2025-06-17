@@ -59,13 +59,12 @@ const ProductCalculator = ({
       weekday: "long",
     })})`;
 
-    const productDetails = QuantityList.filter((item) => item.quantity > 0).map(
-      (item) => {
+    const productDetails = QuantityList.filter((item) => item.quantity > 0)
+      .map((item) => {
         const total = item.quantity * item.price;
         return `${item.name}-${item.quantity}`;
-      }
-    );
-    // .join("\n");
+      })
+      .join("\n");
 
     const salesDetails = `
       Today Sale: ${
