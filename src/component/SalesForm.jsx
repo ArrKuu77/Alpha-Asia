@@ -24,57 +24,61 @@ const SalesForm = () => {
   );
 
   return (
-    <div className=" flex justify-between mx-auto  w-full ">
-      <div className="  w-3/12">
-        <label className=" flex  ">
-          <span className="  text-xl font-medium text-black	">Today Sale -</span>
-          <p className=" text-xlborder-black  ps-2 mb-2 ">{todaySale}</p>
-        </label>
-        <label className=" flex ">
-          <span className=" text-xl font-medium text-black	">
-            Previous Sale -
-          </span>
-          <p className=" text-xl border-black  ps-2 mb-2">
-            {TotalSales - todaySale}
-          </p>
-        </label>
-        <label className=" flex ">
-          <span className=" text-xl font-medium text-black	">Total Sale -</span>
-          <p className=" text-xl border-black  ps-2 mb-2">{TotalSales}</p>
-        </label>
-        <label className=" flex ">
-          <span className=" text-xl font-medium text-black	">Target Sale -</span>
-          <p className=" text-xl border-black  ps-2 mb-2">{TotaltargetSales}</p>
-        </label>
-        <label className=" flex ">
-          <span className=" text-xl font-medium text-black	">Achievement -</span>
-          <p className=" text-xl border-black  ps-2 mb-2">
-            {(
-              (TotalSales / parseInt(localStorage.getItem("Target"))) *
-              100
-            ).toFixed(2)}{" "}
-            %
-          </p>
-        </label>
-      </div>
-      <div className="  w-3/5 mx-auto flex  flex-wrap justify-between ">
-        {QuantityList
-          ? QuantityList.map((list, index) => {
-              console.log(list.quantity);
-              return (
-                list.quantity > 0 && (
-                  <label key={index} className=" flex w-1/2  ">
-                    <span className="  text-xl font-medium text-black	">
-                      Total {list.name} -{" "}
-                    </span>
-                    <p className="  text-lg    border-black  ps-2  mb-2">
-                      {list.quantity}
-                    </p>
-                  </label>
-                )
-              );
-            })
-          : ""}
+    <div className="w-full bg-slate-900 text-white p-4 rounded-md">
+      <div className="flex flex-row gap-6">
+        {/* Left: Sales Summary */}
+        <div className="w-full lg:w-1/2 bg-slate-800 p-4 rounded-md space-y-3 shadow">
+          {[
+            { label: "Today Sale", value: todaySale },
+            { label: "Previous Sale", value: TotalSales - todaySale },
+            { label: "Total Sale", value: TotalSales },
+            { label: "Target Sale", value: TotaltargetSales },
+            {
+              label: "Achievement",
+              value:
+                (
+                  (TotalSales / parseInt(localStorage.getItem("Target"))) *
+                  100
+                ).toFixed(2) + " %",
+            },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="flex justify-between items-center border-b border-slate-700 pb-1"
+            >
+              <span className="text-base sm:text-lg font-semibold text-yellow-400">
+                {item.label}:
+              </span>
+              <p className="text-base sm:text-lg font-medium">{item.value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Right: Product Quantity */}
+        <div className="w-full lg:w-1/2 bg-slate-800 p-4 rounded-md space-y-2 shadow">
+          <h2 className="text-lg font-bold text-yellow-400 mb-2">
+            Product Quantity Summary
+          </h2>
+          <div className="grid grid-cols-2 gap-2">
+            {QuantityList &&
+              QuantityList.map(
+                (list, index) =>
+                  list.quantity > 0 && (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center bg-slate-700 px-3 py-2 rounded"
+                    >
+                      <span className="text-sm sm:text-base font-medium">
+                        Total {list.name}:
+                      </span>
+                      <p className="text-sm sm:text-base font-semibold">
+                        {list.quantity}
+                      </p>
+                    </div>
+                  )
+              )}
+          </div>
+        </div>
       </div>
     </div>
   );

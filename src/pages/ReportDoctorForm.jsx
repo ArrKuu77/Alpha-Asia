@@ -3,6 +3,7 @@ import Template from "../component/Template";
 import DoctorFeedbackList from "../component/DoctorFeedbackList";
 import { list } from "postcss";
 import EditDoctorForm from "../component/EditDoctorForm";
+import { NavLink } from "react-router-dom";
 
 const ReportDoctorForm = ({
   EditDoctor,
@@ -77,7 +78,7 @@ const ReportDoctorForm = ({
         createTable(
           formData.get("DoctorName"),
           formData.get("CustomerFeedback"),
-          formData.get("NextPlan"),
+          // formData.get("NextPlan"),
           formData.get("Hospital"),
           formData.get("Objective"),
           ShortName,
@@ -136,54 +137,39 @@ const ReportDoctorForm = ({
   return (
     <Template>
       <div
-        className={`relative  bg-slate-500 ${
-          DoctorList.length == 0 ? "w-screen" : "w-full"
+        className={`relative bg-slate-900 text-white min-h-screen px-4 py-6 ${
+          DoctorList.length === 0 ? "w-screen" : "w-full"
         }`}
       >
         <form ref={formRef} id="DoctorForm" onSubmit={hundalarSubmit}></form>
-        <div className=" ">
-          <div className="col  col-md-3">
-            <label htmlFor="" className=" text-2xl block  ">
-              Date
-            </label>
+
+        {/* Form Inputs */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {/* Date */}
+          <div>
+            <label className="text-base font-semibold block mb-1">Date</label>
             <input
               onChange={() => {
-                console.log("fkdj");
-
                 setCurrentDate(DoctorNameDate.current.value);
-
                 const arrayDoctor = JSON.parse(
                   localStorage.getItem(`${DoctorNameDate.current.value}`)
                 );
-                console.log(arrayDoctor);
-
-                // if (DoctorList.length == 0) {
-                if (
-                  localStorage.getItem(`${DoctorNameDate.current.value}`) !==
-                  null
-                ) {
-                  console.log(arrayDoctor);
-                  // setcontrolPageWidth(true);
-                  // console.log(controlPageWidth);
+                if (arrayDoctor !== null) {
                   setDoctor([...arrayDoctor]);
-                  console.log(DoctorList);
                 } else {
-                  // setcontrolPageWidth(false);
-                  // console.log(controlPageWidth);
                   setDoctor([]);
                 }
-                // }
               }}
-              // name="DoctorNameDate"
               ref={DoctorNameDate}
-              // form="DoctorForm"
               type="date"
               required
-              className=" border-solid border-2  border-red-800	text-black	"
+              className="w-full p-2 rounded border-2 border-yellow-500 text-black"
             />
           </div>
-          <div className="col col-md-3">
-            <label htmlFor="" className=" text-2xl block  ">
+
+          {/* Doctor Name */}
+          <div className="relative">
+            <label className="text-base font-semibold block mb-1">
               Doctor Name
             </label>
             <input
@@ -193,159 +179,124 @@ const ReportDoctorForm = ({
               name="DoctorName"
               form="DoctorForm"
               type="text"
-              className=" border-solid border-2  border-red-800	text-black	"
               placeholder="Doctor Name"
+              className="w-full p-2 rounded border-2 border-yellow-500 text-black"
             />
             {filterOldDcotorName.length > 0 && (
-              <div className="relative">
-                <div className=" absolute   top-1 left-0 right-0">
-                  <div className=" bg-white scroll-smooth   overflow-scroll  w-2/4 mx-auto">
-                    {filterOldDcotorName?.map((e, index) => {
-                      console.log(e, index);
-                      return (
-                        <p
-                          key={index}
-                          onClick={handalarOldCurrentName}
-                          className=" opacity-100 font-semibold text-xl border border-black p-1 "
-                        >
-                          {e.DoctorName}
-                        </p>
-                      );
-                    })}
-                  </div>
-                </div>
+              <div className="absolute z-10 bg-white text-black mt-1 w-full max-h-40 overflow-y-auto border border-gray-300 rounded">
+                {filterOldDcotorName.map((e, index) => (
+                  <p
+                    key={index}
+                    onClick={handalarOldCurrentName}
+                    className="p-2 hover:bg-gray-200 cursor-pointer text-sm"
+                  >
+                    {e.DoctorName}
+                  </p>
+                ))}
               </div>
             )}
           </div>
 
-          <div className="col col-md-3">
-            <label
-              htmlFor=""
-              className=" text-xl font-medium text-black	 block  "
-            >
-              Hospital
-            </label>
+          {/* Hospital */}
+          <div>
+            <label className="text-base font-semibold block mb-1">Place</label>
             <input
               required
               name="Hospital"
               form="DoctorForm"
               type="text"
-              className=" border-solid border-2  border-red-800	text-black	"
               placeholder="Hospital"
+              className="w-full p-2 rounded border-2 border-yellow-500 text-black"
             />
           </div>
 
-          <div className="col col-md-3">
-            <label
-              htmlFor=""
-              className=" text-xl font-medium text-black	 block  "
-            >
-              Objective
+          {/* Objective */}
+          <div>
+            <label className="text-base font-semibold block mb-1">
+              Speciality
             </label>
             <input
               required
               name="Objective"
               form="DoctorForm"
               type="text"
-              className=" border-solid border-2  border-red-800	text-black	"
               placeholder="Objective"
+              className="w-full p-2 rounded border-2 border-yellow-500 text-black"
             />
           </div>
 
-          <label className="block">
-            <span className="block text-xl font-medium text-black	">
+          {/* Customer Feedback */}
+          <div className="sm:col-span-2">
+            <label className="text-base font-semibold block mb-1">
               Customer Feedback
-            </span>
+            </label>
             <input
               name="CustomerFeedback"
               form="DoctorForm"
               type="text"
-              className=" border-solid border-2  border-red-800	text-black	"
-              placeholder="CustomerFeedback"
+              placeholder="Customer Feedback"
+              className="w-full p-2 rounded border-2 border-yellow-500 text-black"
             />
-            {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
-        TownShip
-      </p> */}
-          </label>
+          </div>
 
-          <label className="block">
-            <span className="block text-xl font-medium text-black	">
+          {/* Action Plan */}
+          {/* <div className="sm:col-span-2">
+            <label className="text-base font-semibold block mb-1">
               Action Plan For Next Call
-            </span>
+            </label>
             <input
               name="NextPlan"
               form="DoctorForm"
               type="text"
-              className=" border-solid border-2  border-red-800	text-black	"
-              placeholder=" Action Plan For Next Call"
+              placeholder="Next Plan"
+              className="w-full p-2 rounded border-2 border-yellow-500 text-black"
             />
-            {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
-        TownShip
-      </p> */}
-          </label>
-
-          <div className=" flex flex-col justify-center items-center  m-2">
-            {Product.map((currentItem, index) => {
-              console.log(index);
-
-              return (
-                <div
-                  key={index}
-                  className={`flex items-center justify-between${
-                    DoctorList.length == 0 ? "   w-1/2" : " w-1/6"
-                  }`}
-                >
-                  <input
-                    form="DoctorForm"
-                    name="checkBox"
-                    onClick={(event) => {
-                      const Shorttrue = ShortName.includes(event.target.value);
-                      if (!Shorttrue) {
-                        event.target.checked = true;
-
-                        console.log(Shorttrue);
-                        ShortName.push(event.target.value);
-                        console.log(ShortName);
-                      } else {
-                        event.target.checked = false;
-
-                        const deleteShortName = ShortName.filter((name) => {
-                          if (name !== event.target.value) {
-                            console.log(name);
-                            return name;
-                          }
-                        });
-                        ShortName = deleteShortName;
-                        console.log(ShortName);
-                      }
-                    }}
-                    // id="teal-checkbox"
-                    type="checkbox"
-                    value={currentItem.SName}
-                    className="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <label
-                    // htmlFor="teal-checkbox"
-                    className=" w-full text-lg font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    {currentItem.name}
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className=" mt-3 text-center ">
-            <button
-              form="DoctorForm"
-              className=" border border-white bg-blue-900 p-2 text-white "
-            >
-              Create Table
-            </button>
-          </div>
+          </div> */}
         </div>
 
-        {EditDoctor ? (
+        {/* Product List */}
+        <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+          {Product.map((currentItem, index) => (
+            <div
+              key={index}
+              className="flex items-center space-x-2 bg-gray-800 p-2 rounded"
+            >
+              <input
+                form="DoctorForm"
+                name="checkBox"
+                type="checkbox"
+                value={currentItem.SName}
+                onClick={(event) => {
+                  const exists = ShortName.includes(event.target.value);
+                  if (!exists) {
+                    event.target.checked = true;
+                    ShortName.push(event.target.value);
+                  } else {
+                    event.target.checked = false;
+                    ShortName = ShortName.filter(
+                      (name) => name !== event.target.value
+                    );
+                  }
+                }}
+                className="w-4 h-4 text-yellow-500"
+              />
+              <label className="text-sm">{currentItem.name}</label>
+            </div>
+          ))}
+        </div>
+
+        {/* Submit Button */}
+        <div className="mt-6 text-center">
+          <button
+            form="DoctorForm"
+            className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded transition"
+          >
+            Create Table
+          </button>
+        </div>
+
+        {/* Conditional Forms */}
+        {EditDoctor && (
           <EditDoctorForm
             setDoctor={setDoctor}
             DoctorList={DoctorList}
@@ -356,17 +307,28 @@ const ReportDoctorForm = ({
             EditDoctor={EditDoctor}
             DoctorNameDate={DoctorNameDate}
           />
-        ) : (
-          <></>
         )}
-        <DoctorFeedbackList
-          Product={Product}
-          ShortName={ShortName}
-          DoctorNameDate={DoctorNameDate}
-          DoctorList={DoctorList}
-          DeleteDoctorList={DeleteDoctorList}
-          EditDoctorList={EditDoctorList}
-        />
+        {DoctorList.length > 0 && (
+          <DoctorFeedbackList
+            Product={Product}
+            ShortName={ShortName}
+            DoctorNameDate={DoctorNameDate}
+            DoctorList={DoctorList}
+            DeleteDoctorList={DeleteDoctorList}
+            EditDoctorList={EditDoctorList}
+          />
+        )}
+
+        {/* PDF Navigation Button */}
+        {DoctorList.length > 0 && (
+          <div className=" flex justify-center">
+            <NavLink to="/ReadyDoctorList">
+              <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold p-2 rounded-md border border-yellow-700 mt-4">
+                Go PDF File
+              </button>
+            </NavLink>
+          </div>
+        )}
       </div>
     </Template>
   );

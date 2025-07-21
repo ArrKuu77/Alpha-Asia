@@ -159,191 +159,172 @@ const DoctorCallList = () => {
   };
   return (
     <Template>
-      <div className="  p-2 bg-slate-500  ">
-        <h1 className=" text-3xl text-white py-2  underline bg-slate-900 font-bold">
+      <div className="p-4 bg-slate-900 min-h-screen text-white">
+        <h1 className="text-3xl font-bold underline bg-slate-800 py-2 px-4 mb-4">
           Doctor Call List
         </h1>
-        <div className=" m-1 flex justify-between items-center">
+
+        <div className="flex flex-row justify-between items-center gap-3 mb-4">
           <button
             onClick={Doctorcalldownload}
-            className=" flex items-center bg-teal-700  py-2 px-1 text-white border-zinc-700 border-2"
+            className="flex items-center gap-2 bg-teal-700 hover:bg-teal-600 transition px-4 py-2 rounded text-white border border-teal-800"
           >
             <p>Download</p>
-            <MdSimCardDownload className=" text-2xl" />
+            <MdSimCardDownload className="text-2xl" />
           </button>
+
           <button
             onClick={ClearDoctorState}
-            className=" bg-red-700  py-2 px-1 text-white border-zinc-700 border-2"
+            className="bg-red-700 hover:bg-red-600 transition px-4 py-2 rounded text-white border border-red-800"
           >
             ClearDoctorState
           </button>
         </div>
-        <div className=" flex justify-between items-center my-2 text-xl  font-semibold ">
-          <div className=" flex justify-center items-center text-base">
-            <label htmlFor="" className="   ">
-              Select DoctorState
+
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-4 text-lg font-semibold">
+          <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+            <label htmlFor="filterState" className="min-w-max">
+              Select DoctorState:
             </label>
             <select
+              id="filterState"
               onChange={FilterState}
               ref={currentState}
-              className="w-1/2 p-1 text-lg"
+              className="w-full sm:w-48 p-2 rounded bg-slate-800 text-white border border-slate-700"
             >
-              {Filterstates.map((state, index) => {
-                return (
-                  <option key={index} value={state} className="">
-                    {state}
-                  </option>
-                );
-              })}
+              {Filterstates.map((state, index) => (
+                <option key={index} value={state}>
+                  {state}
+                </option>
+              ))}
             </select>
           </div>
-          <div className=" flex justify-between items-center">
-            <p>Totaldoctorlist:</p>
-            <p>{DoctorCallList.length}</p>
+
+          <div className="flex gap-2 items-center">
+            <p>Total doctor list:</p>
+            <p className="font-bold">{DoctorCallList.length}</p>
           </div>
         </div>
 
         {DoctorCallListCur.length < 1 ? (
-          <h1 className=" bg-slate-900 text-yellow-100 p-3 font-bold text-xl">
+          <h1 className="bg-slate-800 text-yellow-400 p-4 font-bold text-center rounded">
             There is no state
           </h1>
         ) : (
-          <div ref={DoctorCallpdfRef} className=" mx-auto ">
-            <div className="text-xl font-bold  flex justify-center underline my-5">
-              <p className="">DoctorCallList - </p>
-
-              <p className="">
-                {monthArray[date.getMonth()] + date.getFullYear()}
+          <div
+            ref={DoctorCallpdfRef}
+            className="overflow-x-auto rounded border border-slate-700 bg-slate-800"
+          >
+            <div className="text-xl font-bold flex justify-center underline py-4 text-yellow-400">
+              <p>DoctorCallList - </p>
+              <p className="ml-2">
+                {monthArray[date.getMonth()] + " " + date.getFullYear()}
               </p>
             </div>
-            <table className=" table-auto text-center  w-full border-collapse borde ">
+
+            <table className="table-auto w-full border-collapse text-center text-sm sm:text-base">
               <thead>
-                <tr className="border border-slate-900 p-2">
-                  <th className="border border-slate-900 p-2">No</th>
-                  <th className="border border-slate-900 p-2">Customer Name</th>
-                  <th className="border border-slate-900 p-2">State</th>
-                  <th className="border border-slate-900 p-2">Frequency</th>
+                <tr>
+                  <th className="border border-slate-700 p-2">No</th>
+                  <th className="border border-slate-700 p-2">Customer Name</th>
+                  <th className="border border-slate-700 p-2">State</th>
+                  <th className="border border-slate-700 p-2">Frequency</th>
                   <th
-                    className={`border border-slate-900 p-2 ${
-                      tableDisplayNone && "displaynone"
+                    className={`border border-slate-700 p-2 ${
+                      tableDisplayNone ? "hidden" : ""
                     }`}
                   >
-                    State(Update/Delete)
+                    State (Update/Delete)
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {DoctorCallListCur.map((list, index) => {
-                  return (
-                    <tr key={index} className="border border-slate-900">
-                      <td className="border p-3 border-slate-900 ">
-                        {" "}
-                        {index + 1}.{" "}
-                      </td>
-                      <td className="border p-3 border-slate-900 text-center">
-                        {" "}
-                        {list.DoctorName}{" "}
-                      </td>
-                      <td className="border p-3 border-slate-900">
-                        <h1>{list.DoctorState}</h1>
-                      </td>
-                      <td className=" p-3 flex justify-between items-center ">
-                        <p
-                          className={`px-1 py-2  w-1/12 mx-0.5 ${
-                            list.DoctorFrequency > 0
-                              ? " bg-green-700"
+                {DoctorCallListCur.map((list, index) => (
+                  <tr
+                    key={index}
+                    className="border border-slate-700 even:bg-slate-700 hover:bg-slate-600 transition"
+                  >
+                    <td className="border p-3 border-slate-700">{index + 1}</td>
+                    <td className="border p-3 border-slate-700">
+                      {list.DoctorName}
+                    </td>
+                    <td className="border p-3 border-slate-700">
+                      {list.DoctorState}
+                    </td>
+                    <td className="p-3 flex justify-center items-center gap-1">
+                      {[0, 1, 2, 3].map((i) => (
+                        <span
+                          key={i}
+                          className={`px-2 py-1 w-6 rounded ${
+                            list.DoctorFrequency > i
+                              ? "bg-green-700"
                               : "bg-orange-900"
                           }`}
-                        ></p>
-                        <p
-                          className={`px-1 py-2  w-1/12 mx-0.5 ${
-                            list.DoctorFrequency > 1
-                              ? " bg-green-700"
-                              : "bg-orange-900"
-                          }`}
-                        ></p>
-                        <p
-                          className={`px-1 py-2  w-1/12 mx-0.5 ${
-                            list.DoctorFrequency > 2
-                              ? " bg-green-700"
-                              : "bg-orange-900"
-                          }`}
-                        ></p>
-                        <p
-                          className={`px-1 py-2  w-1/12 mx-0.5 ${
-                            list.DoctorFrequency > 3
-                              ? " bg-green-700"
-                              : "bg-orange-900"
-                          }`}
-                        ></p>
-                      </td>
-                      <td
-                        className={`border p-2 border-slate-900  ${
-                          tableDisplayNone && "displaynone"
-                        }`}
-                      >
-                        <select
-                          onChange={oneDoctorState.bind(this, list.DoctorName)}
-                          className=" w-1/2 p-1 text-lg"
-                        >
-                          {states.map((state, index) => {
-                            return (
-                              <option key={index} value={state} className="">
-                                {state}
-                              </option>
-                            );
-                          })}
-                        </select>
-
-                        <TiUserDelete
-                          onClick={currentDoctorDelete.bind(
-                            null,
-                            list.DoctorName
-                          )}
-                          className=" inline-block  text-red-600 ml-3 text-3xl"
+                          aria-label={`Frequency ${i + 1}`}
                         />
-                      </td>
-                    </tr>
-                  );
-                })}
+                      ))}
+                    </td>
+                    <td
+                      className={`border p-2 border-slate-700 ${
+                        tableDisplayNone ? "hidden" : ""
+                      }`}
+                    >
+                      <select
+                        onChange={() => oneDoctorState(list.DoctorName)}
+                        className="w-1/2 p-1 rounded bg-slate-700 text-white border border-slate-600"
+                      >
+                        {states.map((state, idx) => (
+                          <option key={idx} value={state}>
+                            {state}
+                          </option>
+                        ))}
+                      </select>
+                      <TiUserDelete
+                        onClick={() => currentDoctorDelete(list.DoctorName)}
+                        className="inline-block ml-3 text-red-600 text-3xl cursor-pointer hover:text-red-400 transition"
+                        title="Delete Doctor"
+                      />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         )}
 
-        <div className="flex justify-between items-center m-2">
-          <div className=" flex justify-start items-center w-2/5 ">
-            <p className=" mr-1">Need Call :</p>
-            <p className="px-1 py-2  w-1/12 mx-0.5 bg-orange-900 "></p>
+        <div className="flex flex-col sm:flex-row justify-between items-center my-4 gap-4 text-lg">
+          <div className="flex items-center gap-2">
+            <p>Need Call :</p>
+            <span className="px-3 py-1 bg-orange-900 rounded w-6 h-6 block" />
           </div>
-          <div className=" flex justify-end items-center w-2/5">
-            <p className=" mr-1">Work Done :</p>
-            <p className="px-1 py-2  w-1/12 mx-0.5 bg-green-700 "></p>
+          <div className="flex items-center gap-2">
+            <p>Work Done :</p>
+            <span className="px-3 py-1 bg-green-700 rounded w-6 h-6 block" />
           </div>
         </div>
-        <div className=" border border-red-900 p-2">
-          <div className=" text-2xl underline  font-bold mb-2 ">
-            About Doctor Calllist State{" "}
-          </div>
-          <div className="text-center">
-            <div className=" flex justify-center items-center text-lg font-semibold">
-              <p>Doctor Call State S -</p>
+
+        <div className="border border-red-900 p-4 rounded bg-slate-800 text-center">
+          <h2 className="text-2xl font-bold underline mb-4">
+            About Doctor Calllist State
+          </h2>
+          <div className="space-y-2 text-lg font-semibold">
+            <div className="flex bg-slate-900 py-1 justify-center gap-2 flex-col">
+              <p>Doctor Call State S </p>
               <p>4 Call and more call Work Done</p>
             </div>
-            <div className=" flex justify-center items-center text-lg font-semibold">
-              <p>Doctor Call State A -</p>
+            <div className="flex bg-slate-900 py-1 justify-center gap-2 flex-col">
+              <p>Doctor Call State A </p>
               <p>3 Call Work Done</p>
             </div>
-            <div className=" flex justify-center items-center text-lg font-semibold">
-              <p>Doctor Call State B -</p>
+            <div className="flex bg-slate-900 py-1 justify-center gap-2 flex-col">
+              <p>Doctor Call State B </p>
               <p>2 Call Work Done</p>
             </div>
-            <div className=" flex justify-center items-center text-lg font-semibold">
-              <p>Doctor Call State C -</p>
+            <div className="flex bg-slate-900 py-1 justify-center gap-2 flex-col">
+              <p>Doctor Call State C </p>
               <p>1 Call Work Done</p>
             </div>
-
-            <div className=" flex justify-center items-center text-lg font-semibold">
+            <div className="flex justify-center gap-2">
               <p>Doctor Call State Blank -</p>
               <p>0 Call Work Done</p>
             </div>

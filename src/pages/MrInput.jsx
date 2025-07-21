@@ -4,16 +4,17 @@ import { NavLink } from "react-router-dom";
 import { employeeTableFetch } from "../supabase";
 
 const MrInput = ({ setTownship }) => {
-  const [target, setTarget] = useState(
-    localStorage.getItem("Target") == null ? "" : localStorage.getItem("Target")
-  );
-  const [MrName, setMrName] = useState(
-    localStorage.getItem("MrName") == null ? false : true
-  );
-  console.log(MrName);
-
+  const [target, setTarget] = useState(localStorage.getItem("Target") || "");
+  const [MrName, setMrName] = useState(() => {
+    const stored = localStorage.getItem("MrName");
+    return stored ? JSON.parse(stored) : null;
+  });
   const [employeeList, setEmployeeList] = useState([]);
-  console.log(employeeList);
+
+  useEffect(() => {
+    if (!MrName) fetchEmployee();
+  }, []);
+
   const fetchEmployee = async () => {
     const { employee_table, error } = await employeeTableFetch();
     if (error) {
@@ -22,109 +23,85 @@ const MrInput = ({ setTownship }) => {
       setEmployeeList(employee_table);
     }
   };
-  useEffect(() => {
-    MrName
-      ? setMrName(JSON.parse(localStorage.getItem("MrName")))
-      : fetchEmployee();
-  }, []);
+
+  const handleMrChange = (e) => {
+    const selected = employeeList.find((item) => item.id == e.target.value);
+    const data = { mrName: selected.name, mrId: selected.id };
+    setMrName(data);
+    localStorage.setItem("MrName", JSON.stringify(data));
+  };
+
   return (
     <Template>
-      <div className="bg-slate-500 text-center w-screen h-screen pb-2">
-        <form className=" mb-4 pt-4">
-          <div className=" mb-2">
-            <span className="self-center underline text-2xl  font-semibold whitespace-nowrap text-black">
-              Alpha Asia Daily Report Form
-            </span>
-          </div>
+      <div className="min-h-screen w-full bg-black text-yellow-400 flex items-center justify-center px-4">
+        <form className="w-full max-w-md bg-zinc-900 p-6 rounded-xl shadow-xl space-y-6 border border-yellow-500">
+          <h2 className="text-2xl font-bold text-center underline">
+            Alpha Asia Daily Report Form
+          </h2>
 
-          <label className="block">
-            <span className="block text-xl font-medium text-black	">Target</span>
+          {/* Target Input */}
+          <div>
+            <label className="block text-lg font-semibold mb-1">
+              🎯 Target
+            </label>
             <input
               type="number"
-              onChange={(event) => {
-                localStorage.setItem("Target", event.target.value);
-                setTarget(localStorage.getItem("Target"));
-              }}
               value={target}
-              className=" border-solid border-2  border-red-800	text-black	"
+              onChange={(e) => {
+                localStorage.setItem("Target", e.target.value);
+                setTarget(e.target.value);
+              }}
+              className="w-full p-2 border-2 border-yellow-500 bg-black text-yellow-400 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
               placeholder="Your Target"
             />
-            {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
-            Please provide a valid email address.
-          </p> */}
-          </label>
-          {/* <label className="block">
-            <span className="block text-xl font-medium text-black	">
-              MR Name
-            </span>
-            <select
-              value="dValue"
-              onChange={(e) => {
-                const selected = employeeList.find(
-                  (item) => item.id == e.target.value
-                );
+          </div>
 
-                setMrName(
-                  selected ? { mrName: selected.name, mrId: selected.id } : ""
-                );
-                localStorage.setItem(
-                  "MrName",
-                  JSON.stringify({
-                    mrName: selected.name,
-                    mrId: selected.id,
-                  })
-                );
-              }}
-              id="options"
-              className="select select-bordered w-full max-w-xs"
+          {/* MR Name Select */}
+          <div>
+            <label className="block text-lg font-semibold mb-1">
+              👤 MR Name
+            </label>
+            <select
+              value={MrName?.mrId || "dValue"}
+              onChange={handleMrChange}
+              className="w-full p-2 border-2 border-yellow-500 bg-black text-yellow-400 rounded-md"
             >
-              <option value="dValue" disabled={!MrName}>
-                {MrName ? MrName.mrName : "select your name"}
+              <option value="dValue" disabled>
+                {MrName?.mrName || "Select your name"}
               </option>
-              {employeeList.map((list) => (
-                <option key={list.id} value={list.id}>
-                  {list.name}
+              {employeeList.map((emp) => (
+                <option key={emp.id} value={emp.id}>
+                  {emp.name}
                 </option>
               ))}
-            </select> */}
+            </select>
+          </div>
 
-          {/* <input
-              required
-              type="text"
-              onChange={(event) => {
-                localStorage.setItem("MrName", event.target.value);
-                setMrName(localStorage.getItem("MrName"));
-              }}
-              value={MrName}
-              className=" border-solid border-2  border-red-800	text-black	"
-              placeholder="Your Name"
-            /> */}
-          {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
-            Please provide a valid email address.
-          </p> */}
-          {/* </label>
-          <label className="block">
-            <span className="block text-xl font-medium text-black	">
-              Location
-            </span>
+          {/* Location Input */}
+          <div>
+            <label className="block text-lg font-semibold mb-1">
+              📍 Location
+            </label>
             <input
-              onChange={(e) => {
-                setTownship(e.target.value);
-              }}
               type="text"
-              className=" border-solid border-2  border-red-800	text-black	"
-              placeholder="TownShip"
+              onChange={(e) => setTownship(e.target.value)}
+              className="w-full p-2 border-2 border-yellow-500 bg-black text-yellow-400 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              placeholder="Township"
             />
-            {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
-            TownShip
-          </p> */}
-          {/* </label>  */}
+          </div>
+
+          {/* Submit Button */}
+          <div className="text-center">
+            <NavLink to="/productForm">
+              <button
+                type="button"
+                className="bg-yellow-500 text-black px-6 py-2 rounded-md hover:bg-yellow-600 transition font-semibold"
+              >
+                Next Step →
+              </button>
+            </NavLink>
+          </div>
         </form>
-        <NavLink to="/productForm">
-          <button className=" bg-indigo-500 p-2 rounded-md border-gray-900 border-2	">
-            Next Step
-          </button>
-        </NavLink>
       </div>
     </Template>
   );

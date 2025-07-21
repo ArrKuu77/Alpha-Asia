@@ -171,122 +171,124 @@ const ClearDoctorLists = ({
   };
   return (
     <Template>
-      <div className="w-screen h-screen pb-2">
-        <label className="block">
-          <div className=" border border-red-900 p-2 m-2 ">
-            <span className="block text-2xl text-black underline mb-2 font-bold	">
-              DoctorListsDate
-            </span>
-            {DoctorListsDate.length == 0 ? (
-              <span className="block text-xl font-medium text-black	">
-                There are no Lists !
-              </span>
-            ) : (
-              ""
-            )}
+      <div className="w-full min-h-screen bg-slate-900 text-white px-4 py-2 space-y-6">
+        {/* Doctor Lists Section */}
+        <div className="border border-red-900 rounded p-4">
+          <h2 className="text-2xl font-bold underline mb-2">DoctorListsDate</h2>
+
+          {DoctorListsDate.length === 0 && (
+            <p className="text-xl font-medium text-red-300">
+              There are no Lists!
+            </p>
+          )}
+
+          <div className="space-y-2">
             {DoctorListsDate.map((lists, index) => (
               <div
-                className="flex justify-center items-center gap-5 p-1 m-2 bg-gray-400 "
                 key={index}
+                className="flex flex-wrap justify-between items-center gap-3 bg-gray-700 p-3 rounded"
               >
-                <span className="block text-xl font-medium text-black	">
-                  {lists}
-                </span>
-                <MdEditCalendar
-                  onClick={() => changeDoctorListDateBtn(lists)}
-                  className=" text-2xl text-yellow-800 hover:text-yellow-500"
-                />
-                {!allCLearDateShow && (
-                  <HiArchiveBoxXMark
-                    onClick={() => removeDoctorListDateBtn(lists)}
-                    className=" text-2xl text-red-800 hover:text-red-500"
+                <span className="text-lg font-medium">{lists}</span>
+                <div className="flex gap-2">
+                  <MdEditCalendar
+                    onClick={() => changeDoctorListDateBtn(lists)}
+                    className="text-2xl text-yellow-500 hover:text-yellow-300 cursor-pointer"
                   />
-                )}
+                  {!allCLearDateShow && (
+                    <HiArchiveBoxXMark
+                      onClick={() => removeDoctorListDateBtn(lists)}
+                      className="text-2xl text-red-500 hover:text-red-300 cursor-pointer"
+                    />
+                  )}
+                </div>
               </div>
             ))}
           </div>
+        </div>
 
-          {/* changeDoctorListDateModel */}
-          {currentDoctorListDate && (
-            <div className=" absolute h-screen w-full top-0 flex justify-center items-center bg-black/70">
-              <div className="   p-3 m-3 shadow-xl shadow-amber-900 bg-amber-400 border-2 border-amber-800 w-full">
-                <div className=" flex justify-end items-center ">
-                  <HiOutlineXMark
-                    onClick={() => setCurrentDoctorListDate(null)}
-                    className=" text-red-600  bg-white text-2xl"
+        {/* Change Date Modal */}
+        {currentDoctorListDate && (
+          <div className="fixed inset-0 flex justify-center items-center bg-black/80 z-50">
+            <div className="w-full max-w-md bg-amber-400 text-black p-6 rounded shadow-lg border border-amber-800">
+              <div className="flex justify-end">
+                <HiOutlineXMark
+                  onClick={() => setCurrentDoctorListDate(null)}
+                  className="text-2xl text-red-600 hover:text-red-800 cursor-pointer"
+                />
+              </div>
+
+              <div className="text-center mb-4">
+                <h3 className="text-2xl font-bold">Current Date</h3>
+                <p className="text-lg font-semibold">{currentDoctorListDate}</p>
+              </div>
+
+              <div className="flex flex-col gap-4 items-center">
+                <div className="flex flex-col items-center">
+                  <label htmlFor="newchangeDate" className="font-bold text-lg">
+                    Change Date
+                  </label>
+                  <input
+                    ref={newDoctorListDate}
+                    type="date"
+                    id="newchangeDate"
+                    className="mt-1 border border-black rounded px-2 py-1"
                   />
                 </div>
-                <div className=" flex flex-col justify-center items-center mb-2 gap-1">
-                  <span className=" text-2xl font-bold ">Current Date</span>
-                  {/* <span className=" text-xl font-semibold">2024-08-08</span> */}
-                  <span className=" text-xl font-semibold">
-                    {currentDoctorListDate}
-                  </span>
-                </div>
-                <div className=" flex flex-col justify-between items-center gap-3 mb-3 ">
-                  <div className=" flex flex-col items-center justify-center">
-                    <label id="newchangeDate" className=" font-bold text-lg">
-                      Change Date
-                    </label>
-                    <input
-                      ref={newDoctorListDate}
-                      type="date"
-                      name="newchangeDate"
-                      id=""
-                    />
-                  </div>
-                  <button
-                    onClick={() => changeDoctorListDateFun()}
-                    className=" bg-orange-500 border border-black text-white  px-1 py-2"
-                  >
-                    ChangeDoctorDate
-                  </button>
-                </div>
+                <button
+                  onClick={changeDoctorListDateFun}
+                  className="bg-orange-600 text-white px-4 py-2 rounded border border-black hover:bg-orange-700"
+                >
+                  Change Doctor Date
+                </button>
               </div>
             </div>
-          )}
-        </label>
+          </div>
+        )}
 
-        {/* delete Date */}
+        {/* Delete Date Section */}
         <div>
-          <h1 className=" text-2xl text-slate-300 underline  bg-red-600 p-2">
+          <h2 className="text-2xl underline bg-red-600 text-white p-2 rounded">
             DeleteDoctorLists
-          </h1>
-          <div className=" flex justify-between items-center border border-red-900 p-2 m-2">
+          </h2>
+          <div className="flex flex-wrap gap-3 items-center border border-red-900 rounded p-4 mt-2">
             <input
               ref={DoctorNameDate}
               type="date"
               name="deleteDateLists"
-              className=" border-solid border-2  border-red-800	text-black	"
+              className="border border-red-800 bg-slate-800 text-white px-3 py-2 rounded w-full sm:w-auto"
             />
             <button
-              className="text-slate-300   bg-red-600 p-2  rounded border border-red-200"
               onClick={ClearDoctorListsDate}
+              className="bg-red-600 text-white px-4 py-2 rounded border border-red-200 hover:bg-red-700"
             >
-              ClearDate
+              Clear Date
             </button>
           </div>
         </div>
-        <div className=" flex justify-evenly flex-wrap gap-3">
+
+        {/* Actions */}
+        <div className="flex flex-wrap gap-3 justify-evenly mt-4">
           <button
-            className="text-slate-300    font-bold text-sm  bg-red-600 px-4 py-2  rounded border border-red-200 flex gap-3  justify-center items-center"
             onClick={ClearQuantity}
+            className="bg-red-600 text-white font-bold px-4 py-2 rounded border border-red-200 hover:bg-red-700"
           >
-            ClearQuantity
+            Clear Quantity
           </button>
+
           {allCLearDateShow && (
             <button
-              className=" text-slate-300    font-bold text-sm  bg-red-600 px-4 py-2  rounded border border-red-200 flex gap-3  justify-center items-center"
               onClick={AllClearDoctorListsDate}
+              className="bg-red-600 text-white font-bold px-4 py-2 rounded border border-red-200 hover:bg-red-700"
             >
-              AllClearDoctorDate
+              All Clear Doctor Date
             </button>
           )}
+
           <button
             onClick={clearMrName}
-            className=" text-slate-300    font-bold text-sm  bg-red-600 px-4 py-2  rounded border border-red-200 flex gap-3  justify-center items-center "
+            className="bg-red-600 text-white font-bold px-4 py-2 rounded border border-red-200 hover:bg-red-700 flex items-center gap-2"
           >
-            <span>MrNameDelete</span>
+            <span>Mr Name Delete</span>
             <TiUserDelete />
           </button>
         </div>

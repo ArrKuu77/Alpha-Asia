@@ -11,284 +11,199 @@ const ProductForm = ({
   Lists,
   TotalSales,
   setTotalSales,
-  // noProductSpan,
   AddQuantityFuction,
   changeName,
   QuantityList,
   DeleteItem,
   ItemListShowFunction,
 }) => {
-  // console.log(Product);
   const formRef = useRef();
-  const copyCPL = JSON.parse(localStorage.getItem("CreateProductList"))
-    ? JSON.parse(localStorage.getItem("CreateProductList"))
-    : 0;
 
-  let [currentPrice, setCurrentPrice] = useState(
-    copyCPL[0]?.price ? copyCPL[0].price : 0
+  const storedProducts =
+    JSON.parse(localStorage.getItem("CreateProductList")) || [];
+  const [currentPrice, setCurrentPrice] = useState(
+    storedProducts[0]?.price || 0
   );
+  const [saleActive, setSaleActive] = useState(true);
   const [widthJust, setWidthJust] = useState(false);
-  // console.log(currentPrice);
-  const hundalarSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(formRef.current);
-    console.log(formData.get("item-name"));
 
-    if (formData.get("item-name") == null) {
-      alert("Have not product list");
-      console.log("dfd");
-    } else {
-      addList(formData.get("item-name"), parseInt(formData.get("quantity")));
-      formRef.current.reset();
-      setWidthJust(true);
-      setCurrentPrice(currentPrice);
+  const totalSalesStorage = JSON.parse(localStorage.getItem("TotalSales"));
+  const [noTotalSale, setNoTotalSales] = useState(
+    totalSalesStorage ? parseInt(totalSalesStorage.TotalSale) : 0
+  );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(formRef.current);
+    const itemName = formData.get("item-name");
+    const quantity = parseInt(formData.get("quantity"));
+
+    if (!itemName) {
+      alert("No product selected");
+      return;
+    }
+    addList(itemName, quantity);
+    formRef.current.reset();
+    setWidthJust(true);
+  };
+
+  const handlePriceChange = () => {
+    const formData = new FormData(formRef.current);
+    const selectedProduct = Product.find(
+      (p) => p.name === formData.get("item-name")
+    );
+    if (selectedProduct) {
+      setCurrentPrice(selectedProduct.price);
     }
   };
-  const TotalsalesLGet = JSON.parse(localStorage.getItem("TotalSales"));
-  const [NoTotalSale, setNoTotalSales] = useState(
-    TotalsalesLGet == null ? 0 : parseInt(TotalsalesLGet.TotalSale)
-  );
-  const [SaleShow, setSaleShow] = useState(true);
 
-  const NoSaleFunction = () => {
-    setSaleShow(false);
-    const Todaysales = 0;
+  const handleNoSale = () => {
+    setSaleActive(false);
+    const todaysSales = 0;
     localStorage.setItem(
       "TotalSales",
       JSON.stringify({
-        TotalSale: NoTotalSale + Todaysales,
-        Todaysales,
+        TotalSale: noTotalSale + todaysSales,
+        Todaysales: todaysSales,
       })
     );
-    const TotalAmount = JSON.parse(
-      localStorage.getItem("TotalSales")
-    ).TotalSale;
-    setNoTotalSales(parseInt(TotalAmount));
-    console.log(NoTotalSale);
+    setNoTotalSales(noTotalSale + todaysSales);
   };
-  console.log(Product);
-
-  const OnchangePrice = () => {
-    const formData = new FormData(formRef.current);
-    // console.log(formData.get("item-id"));
-    const Price = Product.find(
-      (product) => product.name == formData.get("item-name")
-    );
-    // console.log(Price.price);
-    setCurrentPrice(Price.price);
-  };
-  // const [noProductSpan, setnoProductSpan] = useState(false);
-  // const [changeName, setchangeName] = useState(true);
-  // const [QuantityList, setQuantityList] = useState(
-  //   []
-  //   // localStorage.getItem("QuantityList") == null
-  //   //   ? false
-  //   //   : JSON.parse(localStorage.getItem("QuantityList"))
-  // );
-  // const AddQuantityFuction = () => {
-  //   setchangeName(false);
-  //   const QuantityListLS =
-  //     JSON.parse(localStorage.getItem("QuantityList")) == null ? false : true;
-  //   console.log(QuantityListLS);
-  //   if (QuantityListLS) {
-  //     console.log(QuantityList);
-  //     setQuantityList(JSON.parse(localStorage.getItem("QuantityList")));
-  //     for (let x = 0; x < QuantityList.length; x++) {
-  //       const currentList = Lists.find(
-  //         (list) => list.item.name == QuantityList[x].name
-  //       );
-
-  //       console.log(typeof currentList, currentList);
-  //       if (currentList) {
-  //         setQuantityList(
-  //           QuantityList.map((list) => {
-  //             if (list.name == currentList.item.name) {
-  //               list.quantity += currentList.quantity;
-  //             }
-  //             return list;
-  //           })
-  //           // localStorage.setItem(
-  //           //   "QuantityList",
-  //           //   JSON.stringify(
-
-  //           //   )
-  //           // )
-  //         );
-  //       }
-  //       localStorage.setItem("QuantityList", JSON.stringify(QuantityList));
-  //     }
-  //   } else {
-  //     localStorage.setItem(
-  //       "QuantityList",
-
-  //       JSON.stringify([
-  //         {
-  //           quantity: 0,
-  //           name: "GI-Boost",
-  //         },
-  //         {
-  //           quantity: 0,
-  //           name: "Hepa-Boost",
-  //         },
-  //         {
-  //           quantity: 0,
-  //           name: "4G-Boost",
-  //         },
-  //         {
-  //           quantity: 0,
-  //           name: "PantoTop-40",
-  //         },
-  //       ])
-  //     );
-  //     setnoProductSpan(true);
-  //     setQuantityList(JSON.parse(localStorage.getItem("QuantityList")));
-  //   }
-  //   console.log(QuantityList.length);
-  //   // if (QuantityList.length == 0) {
-  //   //   // console.log("kfdgdjfd");
-  //   //   let newList = [];
-  //   //   for (let x = 0; x < Lists.length; x++) {
-  //   //     newList.push({
-  //   //       name: Lists[x].item.name,
-  //   //       quantity: Lists[x].quantity,
-  //   //     });
-  //   //   }
-  //   //   console.log(newList);
-  //   //   setQuantityList(newList);
-  //   //   console.log(QuantityList);
-  //   // }
-  // };
 
   return (
     <Template>
-      <div className={`${widthJust ? "w-full" : "w-screen"} bg-slate-500 `}>
+      <div
+        className={`min-h-screen px-4 py-6 bg-gray-900 text-yellow-300 transition-colors duration-500 ${
+          widthJust ? "w-full" : "w-screen"
+        }`}
+      >
         <NavLink to="/">
-          <button className=" bg-indigo-500 p-2 rounded-md border-gray-900 border-2 ms-2 text-start block ">
+          <button className="mb-4 bg-indigo-700 hover:bg-indigo-600 text-white font-semibold px-4 py-2 rounded-md shadow-md transition">
             Back
           </button>
         </NavLink>
-        <form ref={formRef} onSubmit={hundalarSubmit} id="create"></form>
-        <div className="flex justify-center items-cente bg-slate-900 w-3/6 mx-auto my-2 p-1">
-          <h1
-            onClick={() => {
-              setSaleShow(true);
-            }}
-            className={
-              SaleShow
-                ? ` p-2 bg-indigo-500 rounded`
-                : ` text-slate-400 p-2  rounded`
-            }
+
+        <div className="flex justify-center space-x-4 mb-6 max-w-md mx-auto">
+          <button
+            onClick={() => setSaleActive(true)}
+            className={`px-6 py-2 rounded-md font-semibold transition ${
+              saleActive
+                ? "bg-indigo-600 text-white shadow-lg"
+                : "bg-gray-700 text-yellow-400 hover:bg-indigo-700"
+            }`}
           >
             Sale
-          </h1>
-          <h1
-            className={
-              SaleShow
-                ? `text-slate-400 p-2  rounded`
-                : ` bg-red-600 text-white p-2  rounded`
-            }
-            onClick={NoSaleFunction}
+          </button>
+          <button
+            onClick={handleNoSale}
+            className={`px-6 py-2 rounded-md font-semibold transition ${
+              !saleActive
+                ? "bg-red-600 text-white shadow-lg"
+                : "bg-gray-700 text-yellow-400 hover:bg-red-700"
+            }`}
           >
-            NoSale
-          </h1>
+            No Sale
+          </button>
         </div>
-        {SaleShow ? (
-          <div className=" w-full">
-            <div className=" ">
-              {Product.length < 1 ? (
-                <div>
-                  <h1 className=" text-xl font-bold ">
-                    There is no Product List
-                  </h1>
-                </div>
-              ) : (
-                <div className="col col-md-3">
-                  <label htmlFor="" className=" text-2xl block  ">
+
+        {saleActive ? (
+          <div className="max-w-4xl mx-auto bg-black rounded-lg shadow-lg p-6">
+            {Product.length < 1 ? (
+              <h2 className="text-xl font-semibold text-center text-yellow-400">
+                No Products Available
+              </h2>
+            ) : (
+              <form
+                ref={formRef}
+                id="create"
+                onSubmit={handleSubmit}
+                className="flex flex-col md:flex-row md:items-end md:space-x-6 space-y-4 md:space-y-0"
+              >
+                <div className="flex flex-col flex-1">
+                  <label htmlFor="item-name" className="mb-2 font-semibold">
                     Select Product
                   </label>
                   <select
-                    onChange={OnchangePrice}
-                    form="create"
+                    id="item-name"
                     name="item-name"
-                    id=""
-                    className="w-1/2 p-1 text-lg"
+                    onChange={handlePriceChange}
+                    className="p-2 rounded-md bg-gray-700 text-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    required
                   >
-                    {Product?.map(({ name }, index) => {
-                      return (
-                        <option key={index} value={name} className="">
-                          {name}
-                        </option>
-                      );
-                    })}
+                    {Product.map(({ name }, idx) => (
+                      <option key={idx} value={name}>
+                        {name}
+                      </option>
+                    ))}
                   </select>
-                  <label className="block">
-                    <span className="block text-xl font-medium text-black	">
+                </div>
+
+                <div className=" flex justify-between items-center ">
+                  <div className="flex flex-col w-[45%]">
+                    <label htmlFor="price" className="mb-2 font-semibold">
                       Product Price
-                    </span>
+                    </label>
                     <input
+                      type="number"
+                      id="price"
                       value={currentPrice}
                       disabled
-                      form="create"
-                      type="number"
-                      className=" border-solid border-2  border-red-800	text-black	"
-                      placeholder="Price"
+                      className="p-2 rounded-md bg-gray-700 text-yellow-300 cursor-not-allowed"
                     />
-                    {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
-            TownShip
-          </p> */}
-                  </label>
-                  <label className="block">
-                    <span className="block text-xl font-medium text-black	">
-                      Prodcut Quantity
-                    </span>
+                  </div>
+
+                  <div className="flex flex-col w-[45%]">
+                    <label htmlFor="quantity" className="mb-2 font-semibold">
+                      Quantity
+                    </label>
                     <input
-                      name="quantity"
-                      form="create"
                       type="number"
+                      id="quantity"
+                      name="quantity"
+                      min="1"
                       required
-                      className=" border-solid border-2  border-red-800	text-black	"
+                      className="p-2 rounded-md bg-gray-700 text-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                       placeholder="Quantity"
                     />
-                    {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
-            TownShip
-          </p> */}
-                  </label>
-
-                  <div className=" mt-3 text-center ">
-                    <button
-                      form="create"
-                      className=" border border-white bg-blue-900 p-2 text-white "
-                    >
-                      Add Product
-                    </button>
                   </div>
                 </div>
-              )}
+
+                <div>
+                  <button
+                    type="submit"
+                    className="bg-yellow-400 text-black font-semibold px-4 py-2 rounded w-full mb-4 hover:bg-yellow-500"
+                  >
+                    Add Product
+                  </button>
+                </div>
+              </form>
+            )}
+
+            <div className="mt-6">
+              <ProductList
+                TotalSales={TotalSales}
+                setTotalSales={setTotalSales}
+                AddQuantityFuction={AddQuantityFuction}
+                changeName={changeName}
+                QuantityList={QuantityList}
+                Lists={Lists}
+                DeleteItem={DeleteItem}
+                ItemListShowFunction={ItemListShowFunction}
+              />
             </div>
-            <ProductList
-              // noProductSpan={noProductSpan}
-              TotalSales={TotalSales}
-              setTotalSales={setTotalSales}
-              AddQuantityFuction={AddQuantityFuction}
-              changeName={changeName}
-              QuantityList={QuantityList}
-              Lists={Lists}
-              DeleteItem={DeleteItem}
-              ItemListShowFunction={ItemListShowFunction}
-            />
           </div>
         ) : (
-          <div>
+          <div className="max-w-4xl mx-auto bg-gray-800 rounded-lg shadow-lg p-6">
             <SalesCalculator
               Lists={Lists}
               TotalSales={TotalSales}
               setTotalSales={setTotalSales}
             />
-            {/* <NavLink to="/doctorListForm">
-              <button className=" bg-indigo-500 p-2 rounded-md border-gray-900 border-2  ms-auto w-1/2 font-bold  flex items-center justify-evenly mt-2 ">
-                Next Step <TbPlayerTrackNext />
+            <NavLink to="/doctorListForm">
+              <button className="mt-6 w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-md flex items-center justify-center space-x-2 transition shadow-md">
+                <span>Next Step</span> <TbPlayerTrackNext />
               </button>
-            </NavLink> */}
+            </NavLink>
           </div>
         )}
       </div>

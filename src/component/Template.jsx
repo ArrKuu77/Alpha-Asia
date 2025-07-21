@@ -3,9 +3,9 @@ import Navbar from "./Navbar";
 
 const Template = ({ children }) => {
   return (
-    <div className="maxContent  ">
+    <div className="min-h-screen bg-black text-yellow-400">
       <Navbar />
-      <div>{children}</div>
+      <main className="max-w-7xl mx-auto ">{children}</main>
     </div>
   );
 };

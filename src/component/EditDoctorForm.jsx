@@ -43,11 +43,13 @@ const EditDoctorForm = ({
   };
   return (
     <>
-      <div className="  bg-orange-800 w-full absolute opacity-95  h-full top-0 scroll-ml-0 "></div>
+      {/* Background overlay */}
+      <div className="fixed inset-0 bg-black opacity-90 z-10"></div>
 
-      <div className=" absolute top-20 flex flex-col justify-center w-full   ">
+      {/* Main content */}
+      <div className="relative  z-20 flex flex-col items-center w-full px-4 py-8">
         <button
-          className="  ms-2 mb-4 block w-1/6  border border-white bg-blue-900 p-2 text-white "
+          className="mb-6 self-start border border-white bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700"
           onClick={() => {
             setEditDoctor(null);
             setShortName([]);
@@ -55,148 +57,93 @@ const EditDoctorForm = ({
         >
           Back
         </button>
-        <div className=" w-full  flex justify-center">
-          <h1 className=" font-bold text-2xl bg-slate-400 w-1/2 text-center underline p-2 rounded mb-2  ">
-            Edit Doctor List
-          </h1>
+
+        <h1 className="text-2xl font-bold text-white underline bg-slate-700 px-6 py-2 rounded mb-6 text-center w-full max-w-md">
+          Edit Doctor List
+        </h1>
+
+        <div className="w-full max-w-md space-y-4 text-white">
+          <div>
+            <label className="text-lg font-semibold">Doctor Name</label>
+            <p className="text-xl text-yellow-300">{EditDoctor.DoctorName}</p>
+          </div>
+
+          <div>
+            <label className="text-lg font-semibold">Hospital</label>
+            <p className="text-xl text-yellow-300">{EditDoctor.Hospital}</p>
+          </div>
+
+          <div>
+            <label className="text-lg font-semibold">Objective</label>
+            <p className="text-xl text-yellow-300">{EditDoctor.Objective}</p>
+          </div>
+
+          <div>
+            <label className="text-lg font-semibold">Customer Feedback</label>
+            <input
+              onChange={(e) => setcustomer(e.target.value)}
+              defaultValue={EditDoctor.CustomerFeedback}
+              type="text"
+              className="w-full mt-1 p-2 text-black rounded border-2 border-yellow-500"
+            />
+          </div>
+
+          <div>
+            <label className="text-lg font-semibold">
+              Action Plan For Next Call
+            </label>
+            <input
+              onChange={(e) => setnextPlan(e.target.value)}
+              defaultValue={EditDoctor.NextPlan}
+              type="text"
+              className="w-full mt-1 p-2 text-black rounded border-2 border-yellow-500"
+            />
+          </div>
         </div>
 
-        <div className="col col-md-3 mb-3 ">
-          <label htmlFor="" className=" font-medium text-2xl block  ">
-            Doctor Name
-          </label>
-          <span className="block text-2xl  text-black 	">
-            {EditDoctor.DoctorName}
-          </span>
+        {/* Call Purpose Display */}
+        <div className="mt-6 text-center text-white">
+          <h2 className="text-lg font-semibold mb-2">Call Purpose</h2>
+          <div className="flex flex-wrap justify-center gap-2 text-yellow-300">
+            {ShortName.map((name, index) => (
+              <span key={index}>- {name},</span>
+            ))}
+          </div>
         </div>
-        <div className="col col-md-3 mb-3 ">
-          <label htmlFor="" className=" font-medium text-2xl block  ">
-            Hospital
-          </label>
-          <span className="block text-2xl  text-black 	">
-            {EditDoctor.Hospital}
-          </span>
-        </div>
-        <div className="col col-md-3 mb-3 ">
-          <label htmlFor="" className=" font-medium text-2xl block  ">
-            Objective
-          </label>
-          <span className="block text-2xl  text-black 	">
-            {EditDoctor.Objective}
-          </span>
-        </div>
-        <label className="block">
-          <span className="block text-xl font-medium text-black	">
-            Customer Feedback
-          </span>
-          <input
-            onChange={(e) => {
-              setcustomer(e.target.value);
-            }}
-            defaultValue={EditDoctor.CustomerFeedback}
-            name="CustomerFeedback"
-            //
-            type="text"
-            className=" border-solid border-2  border-red-800	text-black	"
-            placeholder={EditDoctor.CustomerFeedback}
-          />
-          {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
-TownShip
-</p> */}
-        </label>
 
-        <label className="block">
-          <span className="block text-xl font-medium text-black	">
-            Action Plan For Next Call
-          </span>
-          <input
-            onChange={(e) => {
-              setnextPlan(e.target.value);
-            }}
-            defaultValue={EditDoctor.NextPlan}
-            name="NextPlan"
-            type="text"
-            required
-            className=" border-solid border-2  border-red-800	text-black	"
-            placeholder={EditDoctor.NextPlan}
-          />
-          {/* <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
-TownShip
-</p> */}
-        </label>
-        <div className=" flex  justify-center items-center m-2">
-          <h1 className=" font-medium text-xl inline-block  ">Call Purpose</h1>
-          {ShortName.map((name, index) => {
-            return (
-              <label
-                key={index}
-                // htmlFor="teal-checkbox"
-                className=" text-lg font-medium  dark:text-gray-300"
-              >
-                {"-  " + name + ","}
-              </label>
-            );
-          })}
-        </div>
-        <div className=" flex flex-col justify-center items-center m-2">
-          {Product.map((currentItem) => {
-            return ShortName.includes(currentItem.SName) ? (
-              ""
-            ) : (
-              <div
-                key={currentItem.id}
-                className=" flex items-center justify-between w-1/6 "
-              >
+        {/* Product Checkbox Section */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6 w-full max-w-md">
+          {Product.map((item) =>
+            ShortName.includes(item.SName) ? null : (
+              <div key={item.id} className="flex items-center gap-2 text-white">
                 <input
-                  name="EditcheckBox"
+                  type="checkbox"
+                  value={item.SName}
                   onClick={(event) => {
-                    console.log(ShortName);
-                    const Shorttrue = ShortName.includes(event.target.value);
-                    if (!Shorttrue) {
-                      event.target.checked = true;
-
-                      console.log(Shorttrue);
-                      // setShortName([...ShortName, event.target.value]);
+                    const isChecked = ShortName.includes(event.target.value);
+                    if (!isChecked) {
                       ShortName.push(event.target.value);
-                      console.log(ShortName);
                     } else {
-                      event.target.checked = false;
-                      console.log(event.target.checked);
-
-                      const deleteShortName = ShortName.filter((name) => {
-                        if (name !== event.target.value) {
-                          console.log(name);
-                          return name;
-                        }
-                      });
-                      // setShortName([deleteShortName]);
-
-                      ShortName = deleteShortName;
-                      console.log(ShortName);
+                      ShortName = ShortName.filter(
+                        (name) => name !== event.target.value
+                      );
                     }
                   }}
-                  // id="teal-checkbox"
-
-                  type="checkbox"
-                  value={currentItem.SName}
-                  className=" w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 text-yellow-400 bg-gray-800 border-gray-600 rounded"
                 />
-                <label
-                  // htmlFor="teal-checkbox"
-                  className=" w-full text-lg font-medium text-gray-900 dark:text-gray-300"
-                >
-                  {currentItem.name}
-                </label>
+                <label className="text-sm">{item.name}</label>
               </div>
-            );
-          })}
+            )
+          )}
         </div>
-        <div className=" mt-3 text-center ">
+
+        {/* Submit Button */}
+        <div className="mt-8">
           <button
             onClick={hundalarSubmit}
-            className=" border border-white bg-blue-900 p-2 text-white "
+            className="bg-blue-700 text-white px-6 py-2 rounded border border-white hover:bg-blue-600"
           >
-            Edit DoctorList
+            Edit Doctor List
           </button>
         </div>
       </div>

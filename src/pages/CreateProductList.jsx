@@ -155,10 +155,14 @@ const ProductListHendal = () => {
   const [createBtn, setCreateBtn] = useState(true);
   return (
     <Template>
-      <div className=" w-full bg-slate-500 h-full">
-        <form className="pt-2 gap-3 flex flex-col" id="create">
-          <div className=" flex justify-center items-center flex-col gap-1">
-            <label htmlFor="productName" className=" text-2xl font-bold">
+      <div className="w-full min-h-screen bg-slate-900 text-white p-4 space-y-6">
+        {/* Form Section */}
+        <form
+          className="w-full max-w-2xl mx-auto flex flex-col gap-4"
+          id="create"
+        >
+          <div className="flex flex-col gap-1">
+            <label htmlFor="productName" className="text-xl font-semibold">
               Product Name
             </label>
             <input
@@ -172,10 +176,12 @@ const ProductListHendal = () => {
                 setFormData({ ...FormData, name: e.target.value })
               }
               value={FormData.name}
+              className="w-full p-2 rounded bg-slate-800 text-white placeholder-gray-400"
             />
           </div>
-          <div className=" flex justify-center items-center flex-col gap-1">
-            <label htmlFor="productName" className=" text-2xl font-bold">
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="SName" className="text-xl font-semibold">
               Product ShortName
             </label>
             <input
@@ -190,10 +196,12 @@ const ProductListHendal = () => {
                 setFormData({ ...FormData, SName: e.target.value })
               }
               value={FormData.SName}
+              className="w-full p-2 rounded bg-slate-800 text-white placeholder-gray-400"
             />
           </div>
-          <div className=" flex justify-center items-center flex-col gap-1">
-            <label htmlFor="prodcutPrice" className=" text-2xl font-bold">
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="prodcutPrice" className="text-xl font-semibold">
               Product Price
             </label>
             <input
@@ -207,20 +215,22 @@ const ProductListHendal = () => {
               value={FormData.price}
               id="prodcutPrice"
               required
+              className="w-full p-2 rounded bg-slate-800 text-white placeholder-gray-400"
             />
           </div>
-          <div className=" text-center">
+
+          <div className="text-center">
             {createBtn ? (
               <button
                 onClick={hundalarSubmit}
-                className="border border-white bg-blue-900 p-2 text-white "
+                className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-4 rounded"
               >
                 Create Product
               </button>
             ) : (
               <button
                 onClick={hendalEditCreate}
-                className="border border-white bg-blue-900 p-2 text-white "
+                className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-2 px-4 rounded"
               >
                 Edit Product
               </button>
@@ -228,61 +238,58 @@ const ProductListHendal = () => {
           </div>
         </form>
 
+        {/* Table Section */}
         {createProductList.length > 0 ? (
-          <div className=" maxContent px-3 py-3">
-            <table className=" mx-auto  pt-4 table-auto text-center  w-full border-collapse border border-slate-900 ">
-              <thead className=" text-xl">
-                <tr className="border  border-slate-900 p-2">
-                  <th className="border border-slate-900 p-2">No</th>
-                  <th className="border border-slate-900 p-2">Product Name</th>
-                  <th className="border border-slate-900 p-2">Short Name</th>
-                  <th className="border border-slate-900 p-2">Product Price</th>
-
-                  <th className="border border-slate-900 p-2">Delete</th>
-                  {/* <th className=" text-center">Edit</th> */}
+          <div className="overflow-x-auto">
+            <table className="w-full table-auto border-collapse border border-slate-700 text-sm sm:text-base">
+              <thead className="bg-slate-800 text-yellow-400 font-bold">
+                <tr>
+                  <th className="border border-slate-700 px-4 py-2">No</th>
+                  <th className="border border-slate-700 px-4 py-2">
+                    Product Name
+                  </th>
+                  <th className="border border-slate-700 px-4 py-2">
+                    Short Name
+                  </th>
+                  <th className="border border-slate-700 px-4 py-2">Price</th>
+                  <th className="border border-slate-700 px-4 py-2">Action</th>
                 </tr>
               </thead>
-              <tbody className=" text-lg">
-                {createProductList?.map((list, index) => {
-                  return (
-                    <tr key={index} className="border border-slate-900">
-                      <td className=" p-3 border-slate-900 flex justify-between align-items-center">
-                        {" "}
-                        {index + 1}.{" "}
-                      </td>
-                      <td className="border p-3 border-slate-900 text-center">
-                        {" "}
-                        {list.name}{" "}
-                      </td>
-                      <td className="border p-3 border-slate-900 text-center">
-                        {" "}
-                        {list.SName}{" "}
-                      </td>
-                      <td className="border p-3 border-slate-900">
-                        {list.price}
-                      </td>
-
-                      <td className="border p-3 border-slate-900 ">
-                        <div className="flex items-center gap-3 justify-center">
-                          <FaUserEdit
-                            onClick={hendalEdit.bind(null, list)}
-                            className="  text-3xl  text-blue-600"
-                          />
-                          <TiDelete
-                            onClick={hendalDelete.bind(null, list.name)}
-                            className="  text-3xl  text-red-600"
-                          />
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
+              <tbody>
+                {createProductList.map((list, index) => (
+                  <tr key={index} className="hover:bg-slate-800 transition">
+                    <td className="border border-slate-700 px-3 py-2 text-center">
+                      {index + 1}
+                    </td>
+                    <td className="border border-slate-700 px-3 py-2">
+                      {list.name}
+                    </td>
+                    <td className="border border-slate-700 px-3 py-2">
+                      {list.SName}
+                    </td>
+                    <td className="border border-slate-700 px-3 py-2 text-center">
+                      {list.price}
+                    </td>
+                    <td className="border border-slate-700 px-3 py-2">
+                      <div className="flex justify-center gap-4">
+                        <FaUserEdit
+                          onClick={() => hendalEdit(list)}
+                          className="text-blue-500 hover:text-blue-400 cursor-pointer text-lg"
+                        />
+                        <TiDelete
+                          onClick={() => hendalDelete(list.name)}
+                          className="text-red-500 hover:text-red-400 cursor-pointer text-lg"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         ) : (
-          <div className=" border text-xl w-screen  font-bold p-3 border-spacing-10 m-4">
-            <h1 className=" ">There are no Product Lists ! </h1>
+          <div className="text-center text-lg font-semibold text-yellow-400">
+            There are no Product Lists!
           </div>
         )}
       </div>

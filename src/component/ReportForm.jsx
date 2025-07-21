@@ -32,7 +32,7 @@ const ReportForm = () => {
   const createTable = (
     DoctorName,
     CustomerFeedback,
-    NextPlan,
+    // NextPlan,
     Hospital,
     Objective,
     currentShortName,
@@ -45,7 +45,7 @@ const ReportForm = () => {
     const NewDoctorlist = {
       DoctorName,
       CustomerFeedback,
-      NextPlan,
+      // NextPlan,
       Objective,
       Hospital,
       ShortName: currentShortName,

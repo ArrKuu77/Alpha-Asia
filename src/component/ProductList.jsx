@@ -1,11 +1,8 @@
 import React from "react";
 import { TiDelete } from "react-icons/ti";
-import SalesCalculator from "./SalesCalculator";
-import AddProductCalculator from "./AddProductCalculator";
 import ProductCalculator from "./ProductCalculator";
 
 const ProductList = ({
-  // noProductSpan,
   TotalSales,
   setTotalSales,
   QuantityList,
@@ -18,87 +15,97 @@ const ProductList = ({
   return (
     <>
       {Lists.length > 0 ? (
-        <div className=" maxContent p-1">
-          <table className=" text-xl  mt-4 table-auto text-end  w-full border-collapse border border-slate-900 ">
-            <thead>
-              <tr className="border border-slate-900">
-                <th className="border border-slate-900">No</th>
-                <th className="border border-slate-900">ProductName</th>
-                <th className="border border-slate-900">Price</th>
-                <th className="border border-slate-900">Quantity</th>
-                <th className="border border-slate-900">Amount</th>
-
-                {/* <th className=" text-center">Edit</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {Lists.map((list, index) => {
-                return (
-                  <tr key={list.id} className="border border-slate-900">
-                    <td className="border border-slate-900 flex justify-between align-items-center">
+        <div>
+          <div className="max-w-full overflow-x-auto p-4 bg-zinc-800 rounded-lg shadow-lg">
+            <table className="min-w-[600px] w-full table-auto border-collapse border border-gray-700 text-yellow-300">
+              <thead>
+                <tr className="bg-zinc-900 border border-gray-700">
+                  <th className="border border-gray-700 px-4 py-2 text-left">
+                    No
+                  </th>
+                  <th className="border border-gray-700 px-4 py-2 text-left">
+                    Product Name
+                  </th>
+                  <th className="border border-gray-700 px-4 py-2 text-right">
+                    Price
+                  </th>
+                  <th className="border border-gray-700 px-4 py-2 text-right">
+                    Quantity
+                  </th>
+                  <th className="border border-gray-700 px-4 py-2 text-right">
+                    Amount
+                  </th>
+                  {/* <th className="border border-gray-700 px-4 py-2 text-center">
+                  Action
+                </th> */}
+                </tr>
+              </thead>
+              <tbody>
+                {Lists.map((list, index) => (
+                  <tr
+                    key={list.id}
+                    className="border border-gray-700 hover:bg-gray-800 transition-colors"
+                  >
+                    <td className="border border-gray-700 px-4 py-2 flex items-center gap-2">
                       <TiDelete
-                        onClick={DeleteItem.bind(null, list.id)}
-                        className="  text-2xl  text-red-600"
-                      />{" "}
-                      {index + 1}.{" "}
+                        onClick={() => DeleteItem(list.id)}
+                        className="cursor-pointer text-red-500 hover:text-red-600"
+                        title="Delete item"
+                        size={20}
+                      />
+                      <span>{index + 1}.</span>
                     </td>
-                    <td className="border border-slate-900 text-center">
-                      {" "}
-                      {list.item.name}{" "}
+                    <td className="border border-gray-700 px-4 py-2">
+                      {list.item.name}
                     </td>
-                    <td className="border border-slate-900">
-                      {list.item.price}
+                    <td className="border border-gray-700 px-4 py-2 text-right">
+                      {list.item.price.toLocaleString()}
                     </td>
-                    <td className="border border-slate-900">{list.quantity}</td>
-                    <td className="border border-slate-900">{list.amount}</td>
-
-                    {/* <td className=" text-center ">
-                    <i
-                      onClick={ItemListShowFunction.bind(null, list)}
-                      className="bi bi-pencil fw-bold text-white me-2   pointer-event bg-primary p-1 border border-2 rounded"
-                    ></i>
-                    <i
-                      onClick={DeleteItem.bind(null, list.id)}
-                      className="bi bi-trash fw-bold text-white   pointer-event bg-danger p-1 border border-2 rounded"
-                    ></i>
-                  </td> */}
+                    <td className="border border-gray-700 px-4 py-2 text-right">
+                      {list.quantity}
+                    </td>
+                    <td className="border border-gray-700 px-4 py-2 text-right">
+                      {list.amount.toLocaleString()}
+                    </td>
+                    {/* <td className="border border-gray-700 px-4 py-2 text-center"> */}
+                    {/* Future Edit button could go here */}
+                    {/* </td> */}
                   </tr>
-                );
-              })}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td className="" colSpan={4}>
-                  Total
-                </td>
-                <td>{Lists.reduce((pv, cv) => pv + cv.amount, 0)}</td>
-              </tr>
-            </tfoot>
-          </table>
-          <ProductCalculator
-            Lists={Lists}
-            TotalSales={TotalSales}
-            setTotalSales={setTotalSales}
-            changeName={changeName}
-            AddQuantityFuction={AddQuantityFuction}
-            QuantityList={QuantityList}
-          />
-          {/* <SalesCalculator
-            Lists={Lists}
-            TotalSales={TotalSales}
-            setTotalSales={setTotalSales}
-          /> */}
-          {/* <AddProductCalculator
-            Lists={Lists}
-            // noProductSpan={noProductSpan}
-            changeName={changeName}
-            AddQuantityFuction={AddQuantityFuction}
-            QuantityList={QuantityList}
-          /> */}
+                ))}
+              </tbody>
+              <tfoot>
+                <tr className="bg-zinc-700 border border-gray-700 font-semibold text-yellow-400">
+                  <td
+                    colSpan={4}
+                    className="border border-gray-700 px-4 py-2 text-right"
+                  >
+                    Total
+                  </td>
+                  <td className="border border-gray-700 px-4 py-2 text-right">
+                    {Lists.reduce(
+                      (pv, cv) => pv + cv.amount,
+                      0
+                    ).toLocaleString()}
+                  </td>
+                  {/* <td className="border border-gray-700 px-4 py-2"></td> */}
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div className="mt-6">
+            <ProductCalculator
+              Lists={Lists}
+              TotalSales={TotalSales}
+              setTotalSales={setTotalSales}
+              changeName={changeName}
+              AddQuantityFuction={AddQuantityFuction}
+              QuantityList={QuantityList}
+            />
+          </div>
         </div>
       ) : (
-        <div className=" border border-spacing-10 m-4">
-          <h1 className=" ">There are no items ! </h1>
+        <div className="p-6 m-4 bg-gray-800 rounded-md text-yellow-400 text-center font-semibold">
+          There are no items!
         </div>
       )}
     </>
