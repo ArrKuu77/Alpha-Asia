@@ -1,6 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* tr {
+  page-break-inside: avoid;
+} */
 /* .maxContent {
   width: max-content;
 }
