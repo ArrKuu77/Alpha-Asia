@@ -347,9 +347,7 @@ const ReportForm = () => {
                     });
                   }
                 }
-                const AddTodaySale = !canMinus
-                  ? OldTodaysale + Todaysales
-                  : Todaysales;
+                const AddTodaySale = !canMinus ? 0 + Todaysales : Todaysales;
 
                 setnoProductSpan(false);
                 setQuantityList([...QuantityList]);

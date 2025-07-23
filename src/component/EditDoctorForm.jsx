@@ -23,12 +23,12 @@ const EditDoctorForm = ({
     setDoctor(
       DoctorList.map((list) => {
         if (list.id == EditDoctor.id) {
-          console.log("hehe");
+          console.log(list.id, EditDoctor.id);
           list.DoctorName = EditDoctor.DoctorName;
           list.Hospital = EditDoctor.Hospital;
           list.Objective = EditDoctor.Objective;
           list.CustomerFeedback = customer;
-          list.NextPlan = nextPlan;
+          // list.NextPlan = nextPlan;
           list.ShortName = ShortName;
         }
         return list;
@@ -79,7 +79,7 @@ const EditDoctorForm = ({
           </div>
 
           <div>
-            <label className="text-lg font-semibold">Customer Feedback</label>
+            <label className="text-lg font-semibold">Remark</label>
             <input
               onChange={(e) => setcustomer(e.target.value)}
               defaultValue={EditDoctor.CustomerFeedback}
@@ -88,7 +88,7 @@ const EditDoctorForm = ({
             />
           </div>
 
-          <div>
+          {/* <div>
             <label className="text-lg font-semibold">
               Action Plan For Next Call
             </label>
@@ -98,7 +98,7 @@ const EditDoctorForm = ({
               type="text"
               className="w-full mt-1 p-2 text-black rounded border-2 border-yellow-500"
             />
-          </div>
+          </div> */}
         </div>
 
         {/* Call Purpose Display */}

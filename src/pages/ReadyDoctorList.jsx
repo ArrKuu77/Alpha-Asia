@@ -32,6 +32,15 @@ const ReadyDoctorList = ({
     DoctorCallList.map((d) => d.DoctorName.toLowerCase())
   );
 
+  const formatDate = (dateStr) => {
+    const [year, month, day] = dateStr.split("-");
+    const shortYear = year; // "25"
+    return `${parseInt(day)}.${parseInt(month)}.${shortYear}`;
+  };
+
+  const dataResult = formatDate(CurrentDate);
+  console.log(dataResult);
+
   const downloadPDF = (D, w) => {
     Swal.fire({
       title: "Are you sure to download the PDF file?",
@@ -84,7 +93,8 @@ const ReadyDoctorList = ({
 
       const opt = {
         margin: 0.2,
-        filename: `${D ? CurrentDate + D : CurrentDate + w}.pdf`,
+        // filename: `${D ? dataResult + D : dataResult + w}.pdf`,
+        filename: `${D ? dataResult + D : dataResult + w}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: "pt", format: "a4", orientation: "landscape" },
@@ -182,13 +192,14 @@ const ReadyDoctorList = ({
             <div className="flex flex-wrap gap-4 justify-between items-center min-w-[700px] my-2">
               <div className="flex gap-2 items-center">
                 <span className="font-semibold text-lg">MR Name -</span>
-                <span className="text-lg text-yellow-400">
-                  {localStorage.getItem("MrName") ?? "Your Name"}
+                <span className="text-lg text-green-500">
+                  {JSON.parse(localStorage.getItem("MrName")).mrName ??
+                    "Your Name"}
                 </span>
               </div>
               <div className="flex gap-2 items-center">
                 <span className="font-semibold text-lg">Date -</span>
-                <span className="text-lg text-yellow-400">{CurrentDate}</span>
+                <span className="text-lg text-green-500">{dataResult}</span>
               </div>
             </div>
 
@@ -200,7 +211,7 @@ const ReadyDoctorList = ({
                   <th className="border p-2">Place</th>
                   <th className="border p-2">Speciality</th>
                   <th className="border p-2">Focus Products</th>
-                  <th className="border p-2">Customer's Feedback</th>
+                  <th className="border p-2">Remark</th>
                 </tr>
               </thead>
               <tbody>
@@ -210,7 +221,7 @@ const ReadyDoctorList = ({
                     <td className="border p-3">{d.DoctorName}</td>
                     <td className="border p-3">{d.Hospital}</td>
                     <td className="border p-3">{d.Objective}</td>
-                    <td className="border p-3 text-yellow-300">
+                    <td className="border p-3 text-green-500 font-semibold">
                       {d.ShortName?.length ? d.ShortName.join(", ") : "-"}
                     </td>
                     <td className="border p-3">{d.CustomerFeedback}</td>
@@ -224,13 +235,13 @@ const ReadyDoctorList = ({
         <div className="flex flex-col sm:flex-row gap-4 mt-6 max-w-sm mx-auto">
           <button
             className="bg-indigo-600 hover:bg-indigo-700 p-3 rounded-md text-white"
-            onClick={() => downloadPDF("DailyReport", null)}
+            onClick={() => downloadPDF("ReportDaily", null)}
           >
             Download PDF For Daily
           </button>
           <button
             className="bg-indigo-600 hover:bg-indigo-700 p-3 rounded-md text-white"
-            onClick={() => downloadPDF(null, "WeeklyReport")}
+            onClick={() => downloadPDF(null, "ReportWeekly")}
           >
             Download PDF For Weekly
           </button>

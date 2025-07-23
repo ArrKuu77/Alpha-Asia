@@ -23,7 +23,7 @@ const DoctorFeedbackList = ({
             <th className="border border-slate-700 p-2">Place</th>
             <th className="border border-slate-700 p-2">Speciality</th>
             <th className="border border-slate-700 p-2">Focus Products</th>
-            <th className="border border-slate-700 p-2">Customer Feedback</th>
+            <th className="border border-slate-700 p-2">Remark</th>
             {/* <th className="border border-slate-700 p-2">Next Call Plan</th> */}
             <th className="border border-slate-700 p-2">Actions</th>
           </tr>

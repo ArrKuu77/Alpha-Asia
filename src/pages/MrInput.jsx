@@ -30,6 +30,7 @@ const MrInput = ({ setTownship }) => {
     setMrName(data);
     localStorage.setItem("MrName", JSON.stringify(data));
   };
+  // console.log(MrName?.mrName || "Select your name");
 
   return (
     <Template>
@@ -66,7 +67,7 @@ const MrInput = ({ setTownship }) => {
               onChange={handleMrChange}
               className="w-full p-2 border-2 border-yellow-500 bg-black text-yellow-400 rounded-md"
             >
-              <option value="dValue" disabled>
+              <option value="dValue">
                 {MrName?.mrName || "Select your name"}
               </option>
               {employeeList.map((emp) => (

@@ -227,9 +227,7 @@ const ReportDoctorForm = ({
 
           {/* Customer Feedback */}
           <div className="sm:col-span-2">
-            <label className="text-base font-semibold block mb-1">
-              Customer Feedback
-            </label>
+            <label className="text-base font-semibold block mb-1">Remark</label>
             <input
               name="CustomerFeedback"
               form="DoctorForm"
