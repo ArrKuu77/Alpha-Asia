@@ -1,10 +1,9 @@
 import { createClient } from "@supabase/supabase-js";
 
 // Create a single supabase client for interacting with your database
-export const supabase = createClient(
-  "https://vjhmhyikyllvpirsjpen.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqaG1oeWlreWxsdnBpcnNqcGVuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk5Nzk0NTIsImV4cCI6MjA1NTU1NTQ1Mn0.TcyJcTc9CtSH7gSIdGNY4cZHCYUDUGD5ByjYnLks8IA"
-);
+const supabaseUrl = "https://bgvxqjymtdtvmbsqxtxk.supabase.co";
+const supabaseKey = "sb_publishable_XidIv5hq7Tw1HPftdDS33w_natGp9u0";
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const repoetData = async (currentDate, employee_id) => {
   let { data, error } = await supabase
@@ -26,7 +25,27 @@ export const employeeTableFetch = async () => {
   let { data: employee_table, error } = await supabase
     .from("employee_table")
     .select("*");
+  console.log(employee_table);
+
   return { employee_table, error };
+};
+export const dailyDoctorListSaveFunction = async (
+  Mr_Name,
+  Doctor_List,
+  CurrentDoctorDate
+) => {
+  let { data, error } = await supabase
+    .from("report_DoctorList_Save")
+    .insert([
+      {
+        Mr_Name,
+        Daily_DoctorList: Doctor_List,
+        doctor_name_current_date: CurrentDoctorDate,
+      },
+    ])
+    .select();
+
+  return { data, error };
 };
 
 export const addReport = async (

@@ -3,7 +3,8 @@ import Template from "../component/Template";
 import DoctorFeedbackList from "../component/DoctorFeedbackList";
 import { list } from "postcss";
 import EditDoctorForm from "../component/EditDoctorForm";
-import { NavLink } from "react-router-dom";
+import { json, NavLink, useNavigate } from "react-router-dom";
+import { dailyDoctorListSaveFunction } from "../supabase";
 
 const ReportDoctorForm = ({
   EditDoctor,
@@ -134,8 +135,41 @@ const ReportDoctorForm = ({
     setOldDoctorName(event.target.innerHTML);
     setFilterOldDcotorName([]);
   };
+  console.log(DoctorList);
+  const [loading, setLoading] = useState(false);
+  const nav = useNavigate();
+  const saveDoctorListSupaBaseFunction = async () => {
+    const MrName = localStorage.getItem("MrName") || "Unknown";
+    const CurrentName = JSON.parse(MrName).mrName;
+    console.log(CurrentName, DoctorNameDate.current.value);
+    setLoading(true);
+    const { data, error } = await dailyDoctorListSaveFunction(
+      CurrentName,
+      DoctorList,
+      DoctorNameDate.current.value
+    );
+    console.log(data, error);
+    if (data) {
+      setLoading(false);
+      nav("/ReadyDoctorList");
+    } else {
+      alert("Software Error! Please contact to developer.");
+      setLoading(false);
+    }
+  };
+
   return (
     <Template>
+      <div>
+        {loading && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white w-full h-full rounded-lg shadow-lg flex flex-col  justify-center items-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+              {/* <p className="text-lg font-semibold">Saving Doctor List...</p> */}
+            </div>
+          </div>
+        )}
+      </div>
       <div
         className={`relative bg-slate-900 text-white min-h-screen px-4 py-6 ${
           DoctorList.length === 0 ? "w-screen" : "w-full"
@@ -319,12 +353,15 @@ const ReportDoctorForm = ({
 
         {/* PDF Navigation Button */}
         {DoctorList.length > 0 && (
-          <div className=" flex justify-center">
-            <NavLink to="/ReadyDoctorList">
-              <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold p-2 rounded-md border border-yellow-700 mt-4">
-                Go PDF File
-              </button>
-            </NavLink>
+          <div
+            onClick={saveDoctorListSupaBaseFunction}
+            className=" flex justify-center"
+          >
+            {/* <NavLink to="/ReadyDoctorList"> */}
+            <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold p-2 rounded-md border border-yellow-700 mt-4">
+              Go PDF File
+            </button>
+            {/* </NavLink> */}
           </div>
         )}
       </div>

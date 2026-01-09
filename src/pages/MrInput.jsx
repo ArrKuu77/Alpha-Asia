@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Template from "../component/Template";
 import { NavLink } from "react-router-dom";
 import { employeeTableFetch } from "../supabase";
+// {"mrName":"Aye Myint Myat Mon","mrId":3}
 
 const MrInput = ({ setTownship }) => {
   const [target, setTarget] = useState(localStorage.getItem("Target") || "");
@@ -9,7 +10,9 @@ const MrInput = ({ setTownship }) => {
     const stored = localStorage.getItem("MrName");
     return stored ? JSON.parse(stored) : null;
   });
+
   const [employeeList, setEmployeeList] = useState([]);
+  console.log(MrName, employeeList);
 
   useEffect(() => {
     if (!MrName) fetchEmployee();
@@ -17,6 +20,8 @@ const MrInput = ({ setTownship }) => {
 
   const fetchEmployee = async () => {
     const { employee_table, error } = await employeeTableFetch();
+    console.log(employee_table);
+
     if (error) {
       alert(error);
     } else {
