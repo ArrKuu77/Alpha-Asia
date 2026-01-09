@@ -160,16 +160,6 @@ const ReportDoctorForm = ({
 
   return (
     <Template>
-      <div>
-        {loading && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white w-full h-full rounded-lg shadow-lg flex flex-col  justify-center items-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
-              {/* <p className="text-lg font-semibold">Saving Doctor List...</p> */}
-            </div>
-          </div>
-        )}
-      </div>
       <div
         className={`relative bg-slate-900 text-white min-h-screen px-4 py-6 ${
           DoctorList.length === 0 ? "w-screen" : "w-full"
@@ -320,6 +310,7 @@ const ReportDoctorForm = ({
         {/* Submit Button */}
         <div className="mt-6 text-center">
           <button
+            disabled={loading}
             form="DoctorForm"
             className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded transition"
           >
@@ -358,7 +349,10 @@ const ReportDoctorForm = ({
             className=" flex justify-center"
           >
             {/* <NavLink to="/ReadyDoctorList"> */}
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold p-2 rounded-md border border-yellow-700 mt-4">
+            <button
+              disabled={loading}
+              className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold p-2 rounded-md border border-yellow-700 mt-4"
+            >
               Go PDF File
             </button>
             {/* </NavLink> */}
