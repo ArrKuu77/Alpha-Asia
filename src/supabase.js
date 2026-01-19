@@ -30,17 +30,17 @@ export const employeeTableFetch = async () => {
   return { employee_table, error };
 };
 export const dailyDoctorListSaveFunction = async (
-  Mr_Name,
+  Mr_id,
   Doctor_List,
-  CurrentDoctorDate
+  CurrentDoctorDate,
 ) => {
   let { data, error } = await supabase
     .from("report_DoctorList_Save")
     .insert([
       {
-        Mr_Name,
-        Daily_DoctorList: Doctor_List,
-        doctor_name_current_date: CurrentDoctorDate,
+        employee_id: Mr_id,
+        report_detail: Doctor_List,
+        date: CurrentDoctorDate,
       },
     ])
     .select();
@@ -54,7 +54,7 @@ export const addReport = async (
   date,
   dailySaleLS,
   dailyProductQtyLS,
-  Township
+  Township,
 ) => {
   console.log(employeeId, reportDetail, date);
 
@@ -87,7 +87,7 @@ export const editReport = async (
   date,
   dailySaleLS,
   dailyProductQtyLS,
-  Township
+  Township,
 ) => {
   console.log(reportDetail);
 

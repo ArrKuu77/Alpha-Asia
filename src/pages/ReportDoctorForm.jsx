@@ -49,7 +49,7 @@ const ReportDoctorForm = ({
         setDoctorListsDate([...DoctorListsDate, DoctorNameDate.current.value]);
         localStorage.setItem(
           "DoctorListsDate",
-          JSON.stringify([...DoctorListsDate, DoctorNameDate.current.value])
+          JSON.stringify([...DoctorListsDate, DoctorNameDate.current.value]),
         );
         console.log([...DoctorListsDate, DoctorNameDate.current.value]);
       } else {
@@ -58,7 +58,7 @@ const ReportDoctorForm = ({
           return;
         }
         const CurrentDcotorListsDate = DoctorListsDate.find(
-          (list) => list == DoctorNameDate.current.value
+          (list) => list == DoctorNameDate.current.value,
         );
         if (!CurrentDcotorListsDate) {
           setDoctorListsDate([
@@ -67,7 +67,7 @@ const ReportDoctorForm = ({
           ]);
           localStorage.setItem(
             "DoctorListsDate",
-            JSON.stringify([...DoctorListsDate, DoctorNameDate.current.value])
+            JSON.stringify([...DoctorListsDate, DoctorNameDate.current.value]),
           );
           console.log([...DoctorListsDate, DoctorNameDate.current.value]);
         }
@@ -83,12 +83,12 @@ const ReportDoctorForm = ({
           formData.get("Hospital"),
           formData.get("Objective"),
           ShortName,
-          DoctorNameDate.current.value
+          DoctorNameDate.current.value,
         );
         console.log(
           formRef,
           formData.get("Hospital"),
-          formData.get("Objective")
+          formData.get("Objective"),
         );
         formRef.current.reset();
         setOldDoctorName("");
@@ -103,7 +103,7 @@ const ReportDoctorForm = ({
   const [OldDoctorNameArray, setOldDoctorNameArray] = useState(
     JSON.parse(localStorage.getItem("DoctorCallList")) == null
       ? []
-      : JSON.parse(localStorage.getItem("DoctorCallList"))
+      : JSON.parse(localStorage.getItem("DoctorCallList")),
   );
 
   // console.log(OldDoctorNameArray);
@@ -124,10 +124,10 @@ const ReportDoctorForm = ({
           return;
         } else {
           return e.DoctorName.toLowerCase().includes(
-            event.target.value.toLowerCase()
+            event.target.value.toLowerCase(),
           );
         }
-      })
+      }),
     );
   };
   const handalarOldCurrentName = (event) => {
@@ -140,13 +140,13 @@ const ReportDoctorForm = ({
   const nav = useNavigate();
   const saveDoctorListSupaBaseFunction = async () => {
     const MrName = localStorage.getItem("MrName") || "Unknown";
-    const CurrentName = JSON.parse(MrName).mrName;
+    const CurrentName = JSON.parse(MrName).mrId;
     console.log(CurrentName, DoctorNameDate.current.value);
     setLoading(true);
     const { data, error } = await dailyDoctorListSaveFunction(
       CurrentName,
       DoctorList,
-      DoctorNameDate.current.value
+      DoctorNameDate.current.value,
     );
     console.log(data, error);
     if (data) {
@@ -176,7 +176,7 @@ const ReportDoctorForm = ({
               onChange={() => {
                 setCurrentDate(DoctorNameDate.current.value);
                 const arrayDoctor = JSON.parse(
-                  localStorage.getItem(`${DoctorNameDate.current.value}`)
+                  localStorage.getItem(`${DoctorNameDate.current.value}`),
                 );
                 if (arrayDoctor !== null) {
                   setDoctor([...arrayDoctor]);
@@ -296,7 +296,7 @@ const ReportDoctorForm = ({
                   } else {
                     event.target.checked = false;
                     ShortName = ShortName.filter(
-                      (name) => name !== event.target.value
+                      (name) => name !== event.target.value,
                     );
                   }
                 }}
